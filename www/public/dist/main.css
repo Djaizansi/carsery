@@ -1,0 +1,307 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Montserrat:400,400i,700,700i&display=swap);* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background-color: #f7f4f4;
+  display: grid;
+  margin-right: 10px;
+  grid-gap: 10px;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(2, minmax(100px, auto));
+  grid-template-areas: "header" "container";
+}
+
+.container {
+  grid-template-rows: repeat(9, minmax(100px, auto));
+  grid-gap: 20px;
+  grid-area: container;
+  display: grid;
+  grid-template-columns: 14em repeat(3, 1fr);
+}
+
+.item {
+  background-color: #FFF;
+}
+
+.item1 {
+  background-color: #616161;
+  grid-row: 1/-1;
+}
+
+.item2 {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+
+.item3,
+.item4,
+.item5 {
+  border-top: 1rem solid;
+}
+
+.item3 {
+  border-top-color: #4E73DF;
+}
+
+.item4 {
+  border-top-color: #1CC88A;
+}
+
+.item5 {
+  border-top-color: #F6C23E;
+}
+
+.item3 p {
+  font-size: 45px;
+  font-style: italic;
+  margin-top: -15px;
+}
+
+.item4 p {
+  font-size: 45px;
+  font-style: italic;
+  margin-top: -15px;
+  margin-left: -30px;
+}
+
+.item5 p {
+  font-size: 45px;
+  font-style: italic;
+  margin-top: -15px;
+}
+
+.item3 h3 {
+  font-size: 13px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.item4 h3 {
+  font-size: 13px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.item5 h3 {
+  font-size: 13px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.item6 {
+  grid-column: span 2;
+  grid-row: span 4;
+}
+
+.item7 {
+  grid-row: span 2;
+}
+
+.item8 {
+  grid-row: span 2;
+}
+
+.item9 {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+
+.header {
+  background-color: #4E73DF;
+  height: 4.375rem;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+/* SIDEBAR */
+
+.sidebar ul li:first-child {
+  margin-top: 13px;
+}
+
+.sidebar ul li {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.sidebar ul li a {
+  color: #FFF;
+  display: block;
+}
+
+.sidebar ul li a .fas {
+  width: 25px;
+}
+
+.sidebar ul li a .far {
+  width: 25px;
+}
+
+.sidebar ul li:hover {
+  background-color: #b4b3b3;
+}
+
+hr {
+  opacity: 0.33;
+  width: 12em;
+  margin: 0 auto;
+  color: #FFF;
+}
+
+.user img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+.user {
+  height: 10em;
+  background-color: #FFF;
+}
+
+.user p {
+  margin-top: 5px;
+  color: #000;
+  font-style: italic;
+  text-align: center;
+}
+
+tbody {
+  text-align: center;
+}
+
+.item7 ul,
+h4 {
+  margin-left: 15px;
+}
+
+.item8 .fas {
+  margin-left: 15px;
+}
+
+.fas {
+  width: 25px;
+}
+
+.border {
+  background-color: #616161;
+  height: 50px;
+  line-height: 50px;
+  white-space: nowrap;
+  margin-bottom: 25px;
+}
+
+.border h3 {
+  color: #FFF;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.info {
+  color: grey;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.img img {
+  float: right;
+  height: 50px;
+  width: 50px;
+  opacity: 0.2;
+  margin-right: 10px;
+}
+
+.fa-chevron-right {
+  float: right;
+}
+
+canvas {
+  margin: 0 auto;
+}
+
+.details {
+  margin-top: 15px;
+  height: 30px;
+  width: 30px;
+  float: left;
+  margin-left: 45%;
+}
+
+/* NAVBAR */
+
+nav {
+  float: right;
+  color: #FFF;
+}
+
+nav a {
+  color: currentColor;
+  text-decoration: none;
+  padding: 1.5em 1em;
+  display: inline-block;
+}
+
+nav form {
+  padding: 1.5em 1em;
+}
+
+nav li {
+  float: left;
+  list-style: none;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  background-color: #284DB8;
+  width: 14.0625rem;
+  text-align: center;
+  height: 3.4375rem;
+  padding-top: 15px;
+  float: left;
+  color: #fff;
+}
+
+header h1 {
+  font-size: 25px;
+}
+
+.style_barre {
+  -webkit-transform: scale(2, 4.6);
+          transform: scale(2, 4.6);
+  margin-top: -3.5px;
+  color: #979797;
+}
+
+.input_search {
+  height: 25px;
+  padding-left: 10px;
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+  background-color: #284DB8;
+}
+
+nav ul li:nth-child(1) {
+  margin-right: 22.8125rem;
+  font-weight: bold;
+}
+
+.left {
+  display: inline;
+}
+
