@@ -2,6 +2,8 @@
 class ForumController {
     public function forumAction() 
     {
-        $myView = new View("forum");
+        if(Session::estConnecte()){
+            $myView = new View("forum");
+        }
     }
 }

@@ -1,0 +1,36 @@
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+.loader-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader {
+    width: 120px;
+    height: 120px;
+    border: 16px solid #e5e5e5;
+    border-top: 16px solid #007bff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform :translate(-50%,-50%) rotate(0deg);
+    box-shadow: 0 0 6px 2px rgba(0,0,0,O.2);
+    animation: loader 1s linear infinite;
+}
+
+@keyframes loader{
+    100% {
+        transform: translate(-50%,-50%) rotate(360deg);
+    }
+}
+

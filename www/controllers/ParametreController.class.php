@@ -2,6 +2,8 @@
 class ParametreController {
     public function parametreAction() 
     {
-        $myView = new View("parametre");
+        if(Session::estConnecte()){
+            $myView = new View("parametre");
+        }
     }
 }

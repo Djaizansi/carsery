@@ -10,6 +10,18 @@ class View
     {
         $this->setTemplate($template);
         $this->setView($view);
+        if($this->template === "back"){
+            $connecter = new Session();
+            $user = new users();
+            $utilisateur = $user->getById($_SESSION['id']);
+            $prenom = $utilisateur->getFirstname();
+            self::assign("firstname",$prenom);
+        }
+    }
+
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
     public function setTemplate($t)
@@ -48,4 +60,8 @@ class View
         include "views/templates/".$this->template.".tpl.php";
         //$firstname = "yves";
     }
+
+    /**
+     * Get the value of template
+     */ 
 }

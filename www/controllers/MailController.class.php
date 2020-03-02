@@ -2,6 +2,8 @@
 class MailController {
     public function mailAction() 
     {
-        $myView = new View("mail");
+        if(Session::estConnecte()){
+            $myView = new View("mail");
+        }
     }
 }

@@ -2,6 +2,8 @@
 class PanierController {
     public function panierAction() 
     {
-        $myView = new View("panier");
+        if(Session::estConnecte()){
+            $myView = new View("panier");
+        }
     }
 }

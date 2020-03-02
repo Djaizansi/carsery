@@ -2,6 +2,8 @@
 class PageController {
     public function pageAction() 
     {
-        $myView = new View("page");
+        if(Session::estConnecte()){
+            $myView = new View("page");
+        }
     }
 }

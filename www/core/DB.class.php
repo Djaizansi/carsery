@@ -41,4 +41,37 @@ class DB
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);
     }
+
+    public function login($email,$pwd){
+        $sql = "SELECT * FROM " .$this->table. " WHERE email='" .$email. "' AND pwd ='" .$pwd. "';";
+        $queryPrepared = $this->pdo->query($sql);
+        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
+        $donnee= $queryPrepared->fetch();
+        if($donnee){
+            echo "CONNEXION RÉUSSI !";
+        }else {
+            echo "CONNEXION ÉCHOUÉE !";
+        }
+        $queryPrepared->closeCursor();
+        return $donnee;
+    }
+
+    public function getById($id){
+        $sql = "SELECT * FROM " .$this->table. " WHERE id=".$id.";";
+        $queryPrepared = $this->pdo->query($sql);
+        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
+        $donnee= $queryPrepared->fetch();
+        if($donnee){
+            $user = new Users();
+            $user->setId($donnee->id);
+            $user->setLastname($donnee->lastname);
+            $user->setFirstname($donnee->firstname);
+            $user->setEmail($donnee->email);
+            $user->setPwd($donnee->pwd);
+            $user->setStatus($donnee->status);
+            return $user;
+        }
+        $queryPrepared->closeCursor();
+        return NULL;
+    }
 }

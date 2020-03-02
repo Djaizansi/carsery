@@ -2,6 +2,8 @@
 class ContactController {
     public function contactAction() 
     {
-        $myView = new View("contact");
+        if(Session::estConnecte()){
+            $myView = new View("contact");
+        }
     }
 }

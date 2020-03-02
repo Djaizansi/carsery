@@ -42,16 +42,16 @@ if (!empty($yaml[$uri])) {
                 //$a = userAction est une méthode de la class UserController
                 $controller->$a();
             } else {
-                die("L'action' n'existe pas");
+                include_once "error/actionNotFound.php";
             }
         } else {
-            die("La class controller n'existe pas");
+            include_once "error/classControllerNotFound.php";
         }
     } else {
-        die("Le fichier controller n'existe pas");
+        include_once "error/controllerNotFound.php";
     }
 } else {
-    die("L'url n'existe pas : Erreur 404");
+    include_once "error/404.php";
 }
 //UTILISER LE FICHIER ROUTES.YML
 
