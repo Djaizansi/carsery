@@ -26,7 +26,6 @@ class DB
         // si y'a des éléments de propChild qui sont pas dans propDB, on les stock dans la
         // variable columnsData
         $columns = array_keys($columnsData);
-        var_dump($columns);
 
         if (!is_numeric($this->id)) {
             $sql = "INSERT INTO ".$this->table. "(".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
@@ -42,6 +41,20 @@ class DB
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);
         var_dump($queryPrepared);
+    }
+
+    protected function sql($sql, $parameters = null)
+    {
+        if ($parameters) {
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute($parameters);
+
+        return $queryPrepared;
+        } else {
+        $queryPrepared = $this->pdo->prepare($sql);
+
+        return $queryPrepared;
+        }
     }
 
     public function login($email,$pwd){
@@ -76,4 +89,45 @@ class DB
         /* return NULL; */
         return NULL;
     }
+
+    public function find(int $id){
+        $sql = "SELECT * FROM $this->table where id = :id";
+        $result = $this->sql($sql, [':id' => $id]);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        return $row;
+        /* if ($row) {
+            $object = new Users();
+            return $object->hydrate($row);
+        } else {
+            return null;
+        } */
+    }
+
+    /* public function find(int $id){
+        /* $sql = "SELECT * FROM $this->table WHERE id=:id";
+        $result = $this->sql[':id' => $id]);
+        $row = $result->fetch(); */
+        /* $sql = "SELECT * FROM $this->table WHERE id=:id";
+        $preparedQuery = $this->pdo->prepare($sql);
+        $preparedQuery->execute(['id' => $id]);
+        $preparedQuery->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = [];
+        $donnee = $preparedQuery->fetch();
+        foreach($donnee as $key => $uneDonnee) {
+            $tab[$key] = $uneDonnee;
+        }
+        return $tab;*/
+        
+        /* $row = $preparedQuery->fetch();
+        if($row) {
+            $object = new users();
+            return $object->hydrate($row);
+        } else {
+            return null;
+        } */
+
+        /* $propChild = get_object_vars($this);
+        $propDB = get_class_vars(get_class());
+        $columnsData = array_diff_key($propChild, $propDB); */
 }

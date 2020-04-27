@@ -13,6 +13,10 @@ class UserController
         $myView = new View("login","account");
         $function = new Session();
         $user = new users();
+        //EXO pour afficher l'objet
+        $uneDonnee = $user->find(1);
+        $test = $user->hydrate($uneDonnee);
+        var_dump($test);
         if(!empty($_POST)){
             $donnee = [];
             $utilisateur = $user->login($_POST['email'], $_POST['mdp']);

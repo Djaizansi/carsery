@@ -34,6 +34,7 @@ class users extends DB
             $this->$method($value);
             }
         }
+        return $this;
     }
     
     public function __construct()
