@@ -21,11 +21,12 @@ class DB
 
         $propChild = get_object_vars($this);
         $propDB = get_class_vars(get_class());
-        $columnsData = array_diff_key($propChild, $propDB); 
+        $columnsData = array_diff_key($propChild, $propDB);
         // faire la différence entre propChild et propDB
         // si y'a des éléments de propChild qui sont pas dans propDB, on les stock dans la
         // variable columnsData
         $columns = array_keys($columnsData);
+        var_dump($columns);
 
         if (!is_numeric($this->id)) {
             $sql = "INSERT INTO ".$this->table. "(".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
@@ -40,6 +41,7 @@ class DB
         
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);
+        var_dump($queryPrepared);
     }
 
     public function login($email,$pwd){
@@ -56,22 +58,22 @@ class DB
         return $donnee;
     }
 
-    public function getById($id){
+    public function getById($id,$model,$tab){
         $sql = "SELECT * FROM " .$this->table. " WHERE id=".$id.";";
         $queryPrepared = $this->pdo->query($sql);
         $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
         $donnee= $queryPrepared->fetch();
         if($donnee){
-            $user = new Users();
-            $user->setId($donnee->id);
-            $user->setLastname($donnee->lastname);
-            $user->setFirstname($donnee->firstname);
-            $user->setEmail($donnee->email);
-            $user->setPwd($donnee->pwd);
-            $user->setStatus($donnee->status);
-            return $user;
+            $uneDonnee = new $model();
+            foreach($tab as $untab){
+                $set = "set".ucfirst($untab);
+                $uneDonnee->$set($donnee->$untab);
+            }
+            return $uneDonnee;
+            /* return $user; */
         }
         $queryPrepared->closeCursor();
+        /* return NULL; */
         return NULL;
     }
 }

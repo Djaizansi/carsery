@@ -42,16 +42,29 @@ class UserController
     public function registerAction()
     {
         $configFormUser = users::getRegisterForm();
+        $user = new users();
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             //Vérification des champs
             $errors = Validator::checkForm($configFormUser ,$_POST);
             //Insertion ou erreurs
-            print_r($errors);
+            if(!empty($errors)){
+                print_r($errors);
+            } else {
+                if(!empty($_POST)){
+                    isset($_POST['lastname']) ? $user->setLastname($_POST['lastname']) : "";
+                    isset($_POST['firstname']) ? $user->setFirstname($_POST['firstname']) : "";
+                    isset($_POST['email']) ? $user->setEmail($_POST['email']) : "";
+                    isset($_POST['pwd']) ? $user->setPwd($_POST['pwd']) : "";
+                    $user->setStatus('Client');
+                    $user->save();
+                }
+            }
         }
-
+        print_r($_POST);
         $myView = new View("register", "account");
         $myView->assign("configFormUser", $configFormUser); //déclarer un nom d'une variable et mettre dedans. Envoyer des variables aux vues
+
     }
 
     public function deconnecterAction(){

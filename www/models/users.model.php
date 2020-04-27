@@ -2,8 +2,8 @@
 class users extends DB
 {
     protected $id;
-    protected $firstname;
     protected $lastname;
+    protected $firstname;
     protected $email;
     protected $pwd;
     protected $status;
@@ -87,16 +87,6 @@ class users extends DB
                                 "submit"=>"S'inscrire"
                             ],
                     "fields"=>[
-                                "firstname"=>[
-                                        "type"=>"text",
-                                        "placeholder"=>"Votre prénom",
-                                        "class"=>"form-control form-control-user",
-                                        "id"=>"",
-                                        "required"=>true,
-                                        "min-lenght"=>2,
-                                        "max-lenght"=>50,
-                                        "errorMsg"=>"Votre prenom doit faire entre 2 et 50 caractères"
-                                ],
                                 "lastname"=>[
                                         "type"=>"text",
                                         "placeholder"=>"Votre nom",
@@ -106,6 +96,16 @@ class users extends DB
                                         "min-lenght"=>2,
                                         "max-lenght"=>100,
                                         "errorMsg"=>"Votre nom doit faire entre 2 et 100 caractères"
+                                ],
+                                "firstname"=>[
+                                        "type"=>"text",
+                                        "placeholder"=>"Votre prénom",
+                                        "class"=>"form-control form-control-user",
+                                        "id"=>"",
+                                        "required"=>true,
+                                        "min-lenght"=>2,
+                                        "max-lenght"=>50,
+                                        "errorMsg"=>"Votre prenom doit faire entre 2 et 50 caractères"
                                 ],
                                 "email"=>[
                                         "type"=>"email",
@@ -139,9 +139,9 @@ class users extends DB
                                         "type"=>"captcha",
                                         "class"=>"form-control form-control-user",
                                         "id"=>"",
+                                        "required"=>true,
                                         "placeholder"=>"Veuillez saisir les caractères",
                                         "errorMsg"=>"Le captcha est incorrect"
-
                                 ]
 
 

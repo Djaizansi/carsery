@@ -13,7 +13,8 @@ class View
         if($this->template === "back"){
             $connecter = new Session();
             $user = new users();
-            $utilisateur = $user->getById($_SESSION['id']);
+            $tab = ["id","lastname","firstname","email","pwd","status"];
+            $utilisateur = $user->getById($_SESSION['id'],"Users",$tab);
             $prenom = $utilisateur->getFirstname();
             self::assign("firstname",$prenom);
         }
