@@ -13,9 +13,9 @@ class View
         if($this->template === "back"){
             $connecter = new Session();
             $user = new users();
-            $tab = ["id","lastname","firstname","email","pwd","status"];
-            $utilisateur = $user->getById($_SESSION['id'],"Users",$tab);
-            $prenom = $utilisateur->getFirstname();
+            $utilisateur = $user->find($_SESSION['id']);
+            $unUtilisateur = $user->hydrate($utilisateur);
+            $prenom = $unUtilisateur->getFirstname();
             self::assign("firstname",$prenom);
         }
     }

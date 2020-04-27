@@ -18,7 +18,6 @@ class DB
 
     public function save()
     {
-
         $propChild = get_object_vars($this);
         $propDB = get_class_vars(get_class());
         $columnsData = array_diff_key($propChild, $propDB);
@@ -71,28 +70,10 @@ class DB
         return $donnee;
     }
 
-    public function getById($id,$model,$tab){
-        $sql = "SELECT * FROM " .$this->table. " WHERE id=".$id.";";
-        $queryPrepared = $this->pdo->query($sql);
-        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
-        $donnee= $queryPrepared->fetch();
-        if($donnee){
-            $uneDonnee = new $model();
-            foreach($tab as $untab){
-                $set = "set".ucfirst($untab);
-                $uneDonnee->$set($donnee->$untab);
-            }
-            return $uneDonnee;
-            /* return $user; */
-        }
-        $queryPrepared->closeCursor();
-        /* return NULL; */
-        return NULL;
-    }
-
     public function find(int $id){
         $sql = "SELECT * FROM $this->table where id = :id";
         $result = $this->sql($sql, [':id' => $id]);
+        var_dump($result);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $row = $result->fetch();
         return $row;
@@ -104,30 +85,21 @@ class DB
         } */
     }
 
-    /* public function find(int $id){
-        /* $sql = "SELECT * FROM $this->table WHERE id=:id";
-        $result = $this->sql[':id' => $id]);
-        $row = $result->fetch(); */
-        /* $sql = "SELECT * FROM $this->table WHERE id=:id";
-        $preparedQuery = $this->pdo->prepare($sql);
-        $preparedQuery->execute(['id' => $id]);
-        $preparedQuery->setFetchMode(PDO::FETCH_ASSOC);
-        $tab = [];
-        $donnee = $preparedQuery->fetch();
-        foreach($donnee as $key => $uneDonnee) {
-            $tab[$key] = $uneDonnee;
+    /* public function getById($id,$model,$tab){
+        $sql = "SELECT * FROM " .$this->table. " WHERE id=".$id.";";
+        $queryPrepared = $this->pdo->query($sql);
+        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
+        $donnee= $queryPrepared->fetch();
+        if($donnee){
+            $uneDonnee = new $model();
+            foreach($tab as $untab){
+                $set = "set".ucfirst($untab);
+                $uneDonnee->$set($donnee->$untab);
+            }
+            return $uneDonnee;
+            //return $user;
         }
-        return $tab;*/
-        
-        /* $row = $preparedQuery->fetch();
-        if($row) {
-            $object = new users();
-            return $object->hydrate($row);
-        } else {
-            return null;
-        } */
-
-        /* $propChild = get_object_vars($this);
-        $propDB = get_class_vars(get_class());
-        $columnsData = array_diff_key($propChild, $propDB); */
+        $queryPrepared->closeCursor();
+        return NULL; 
+    } */
 }
