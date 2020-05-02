@@ -75,4 +75,27 @@ class Validator{
 		$email = trim($email);
 		return filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
+
+    /**
+     * Vérifie la validité d'un champ de type string/input
+     * @param type $field
+     * @param type $regex
+     * @return string
+     */
+    function checkStringFields($field,$regex) : string{
+
+	/*Filtre qui va nettoyer la variable $field en supprimant les balises HTML 
+         et en encodant les caractères spéciaux*/
+        $sanitizedField = filter_var($field, FILTER_SANITIZE_STRING,
+		FILTER_FLAG_STRIP_HIGH);
+	
+        //Etape de validation de l'expression régulière
+        $validatedField = filter_var($sanitizedField, FILTER_VALIDATE_REGEXP,
+		array("options"=>array("regexp"=>$regex) ) );
+		
+	echo $validatedField."<br />";
+	
+	 return(strlen($validatedField) !== " " && $validatedField) ? true: false;
+
+    }
 }
