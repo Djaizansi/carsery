@@ -8,7 +8,7 @@ $back = imagecolorallocate($image, rand(0,100), rand(0,100), rand(0,100));
 
 $charsAuthorized = "abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ0123456789"; //Permet de prendre des chiffres ou des lettres Maj ou Min
 $charsAuthorized = str_shuffle($charsAuthorized);
-$lengthCaptcha = rand(6,8);
+$lengthCaptcha = rand(4,6);
 $captcha = substr($charsAuthorized, 0, $lengthCaptcha);
 
 $_SESSION["captcha"] = $captcha;

@@ -1,4 +1,12 @@
 /:
+  controller: "user"
+  action: "login"
+
+/deconnexion:
+  controller: "user"
+  action: "deconnecter"
+
+/dashboard: 
   controller: "dashboard"
   action: "dashboard"
 
@@ -42,10 +50,6 @@
 /utilisateur:
   controller: "user"
   action: "default"
-
-/connexion:
-  controller: "user"
-  action: "login"
 
 /inscription:
   controller: "user"

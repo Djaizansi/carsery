@@ -16,7 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="public/js/stats.js"></script>
     <!-- Fichier CSS personnalisée -->
-    <link rel="stylesheet" href="public/dist/main.css">
+    <link rel="stylesheet" href="../public/dist/main.css">
+    <link rel="stylesheet" href="../public/dist/loader.css">
+    <link rel="icon" href="../public/img/carsery.png">
+    <!-- SCRIPTJS -->
+    <script src="../public/js/script.js"></script>
 </head>
 <body>
 
@@ -38,7 +42,7 @@
                 <li><a class="style_barre">|</a></li>
                 <li><a href="#"><i class="fas fa-user"></i></a></li>
                 <li><a class="style_barre">|</a></li>
-                <li><a href="#"><i class="fas fa-power-off"></i></a></li>
+                <li><a href="/deconnexion"><i class="fas fa-power-off"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -48,7 +52,7 @@
             <div class="user">
                 <img class="image" src="/public/img/mido.jpg" alt="user">
                 <p>Hi,</p>
-                <p>Mido Striker</p>
+                <p><?= $firstname ?></p>
             </div>
             <ul>
                 <li><a href="<?= Helpers::getUrl("dashboard","dashboard")?>"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
