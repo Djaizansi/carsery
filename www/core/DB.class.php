@@ -76,4 +76,42 @@ class DB
         /* return NULL; */
         return NULL;
     }
+
+    /**
+     * Retourne le résultat d'une requete SELECT sous de tableau d'objets
+     * @param type $sql
+     * @param Object $object
+     * @param Object $params
+     * @return array
+     */
+    function retrieveData($sql,Object $object,$params = null) : array{
+
+        if(empty($params)){
+
+         $statement = $this->pdo->query($sql) or die(print_r($this->pdo->errorInfo()));
+         $statement->execute();
+
+         $this->hydrate($object);
+
+         $results = $statement->fetchAll(PDO::FETCH_CLASS, "vehicules");
+
+         return $results;
+
+        }
+
+        else{
+
+            $statement = $this->pdo->prepare($sql) or die(print_r($this->pdo->errorInfo()));
+            $statement->execute($params);
+
+            $this->hydrate($object);
+
+            //$statement->setFetchMode(PDO::FETCH_CLASS, "vehicules");
+            $results = $statement->fetchAll(PDO::FETCH_CLASS, "vehicules");
+    
+            return $results ;
+
+        }
+
+    }
 }
