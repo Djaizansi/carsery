@@ -135,7 +135,6 @@ class users extends DB
                                         "required"=>true,
                                         "uniq"=>["table"=>"users", "column"=>"email"],
                                         "errorMsg"=>"Votre email ne correspond pas"
-
                                 ],
                                 "pwd"=>[
                                         "type"=>"password",
@@ -143,14 +142,14 @@ class users extends DB
                                         "class"=>"form-control form-control-user",
                                         "id"=>"",
                                         "required"=>true,
-                                        "errorMsg"=>"Votre mot de passe doit être compris entre 6 et 20 caractères 
+                                        "errorMsg"=>"Votre mot de passe doit être compris entre 6 et 16 caractères 
                                         avec une Majuscule et Minuscule"
                                 ],
                                 "pwdConfirm"=>[
                                         "type"=>"password",
                                         "placeholder"=>"Confirmation",
                                         "class"=>"form-control form-control-user",
-                                        "id"=>"",
+                                        "id"=>"idPwdConfirm",
                                         "required"=>true,
                                         "confirmWiths"=>"pwd",
                                         "errorMsg"=>"Votre mot de passe de confirmation ne correspond pas"
@@ -172,7 +171,59 @@ class users extends DB
 
     public static function getLoginForm(){
         return [
-                    
+                    "config"=>[
+                            "method"=>"POST",
+                            "action"=>helpers::getUrl("User", "login"),
+                            "class"=>"user",
+                            "id"=>"formLoginUser",
+                            "submit"=>"Se connecter"
+                    ],
+
+                    "fields"=>[
+                        "email"=>[
+                            "type"=>"email",
+                            "placeholder"=>"Email",
+                            "class"=>"form-control form-control-user",
+                            "id"=>"",
+                            "required"=>true,
+                            "uniq"=>["table"=>"users", "column"=>"email"],
+                            "errorMsg"=>"Votre email n'existe pas"
+                        ],
+
+                        "pwd"=>[
+                            "type"=>"password",
+                            "placeholder"=>"Password",
+                            "class"=>"form-control form-control-user",
+                            "id"=>"",
+                            "required"=>true,
+                            "errorMsg"=>"Votre mot de passe n'est pas correcte"
+                        ]
+                    ]
                 ];
     }
+
+    public static function getMdpForm(){
+        return [
+                    "config"=>[
+                            "method"=>"POST",
+                            "action"=>helpers::getUrl("User", "forget"),
+                            "class"=>"user",
+                            "id"=>"formLoginUser",
+                            "submit"=>"Envoyer"
+                    ],
+
+                    "fields"=>[
+                        "email"=>[
+                            "type"=>"email",
+                            "placeholder"=>"Email",
+                            "class"=>"form-control form-control-user",
+                            "id"=>"",
+                            "required"=>true,
+                            "uniq"=>["table"=>"users", "column"=>"email"],
+                            "errorMsg"=>"Votre email n'est pas valide"
+                        ]
+                    ]
+                ];
+    }
+
 }

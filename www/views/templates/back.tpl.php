@@ -1,3 +1,5 @@
+<?php use carsery\core\Helpers; ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -55,16 +57,16 @@
                 <p><?= $firstname ?></p>
             </div>
             <ul>
-                <li><a href="<?= Helpers::getUrl("dashboard","dashboard")?>"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                <li><a href="<?= Helpers::getUrl("page","page")?>"><i class="far fa-file"></i>Pages<i class="fas fa-chevron-right"></i></a></li>
-                <li><a href="<?= Helpers::getUrl("forum","forum")?>"><i class="far fa-comments"></i>Forum<i class="fas fa-chevron-right"></i></a></li>
-                <li><a href="<?= Helpers::getUrl("media","media")?>"><i class="fas fa-camera"></i>Médias<i class="fas fa-chevron-right"></i></a></li>
-                <li><a href="#"><i class="fas fa-link"></i>Liens<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("Dashboard","dashboard")?>"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                <li><a href="<?= Helpers::getUrl("Page","page")?>"><i class="far fa-file"></i>Pages<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("Forum","forum")?>"><i class="far fa-comments"></i>Forum<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("Media","media")?>"><i class="fas fa-camera"></i>Médias<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("Page","lien")?>"><i class="fas fa-link"></i>Liens<i class="fas fa-chevron-right"></i></a></li>
                 <hr>
-                <li><a href="<?= Helpers::getUrl("apparence","apparence")?>"><i class="fas fa-palette"></i>Apparence<i class="fas fa-chevron-right"></i></a></li>
-                <li><a href="<?= Helpers::getUrl("user","gestionuser")?>"><i class="fas fa-user"></i>Utilisateurs<i class="fas fa-chevron-right"></i></a></li>
-                <li><a href="<?= Helpers::getUrl("mail","mail")?>"><i class="far fa-envelope"></i>MailBox<i class="fas fa-chevron-right"></i></a></li>
-                <li><a href="<?= Helpers::getUrl("parametre","parametre")?>"><i class="fas fa-cogs"></i>Réglages<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("Apparence","apparence")?>"><i class="fas fa-palette"></i>Apparence<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("User","gestionuser")?>"><i class="fas fa-user"></i>Utilisateurs<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("Mail","mail")?>"><i class="far fa-envelope"></i>MailBox<i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="<?= Helpers::getUrl("Parametre","parametre")?>"><i class="fas fa-cogs"></i>Réglages<i class="fas fa-chevron-right"></i></a></li>
             </ul>
         </div>
 
