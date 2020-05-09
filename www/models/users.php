@@ -102,7 +102,7 @@ class users extends DB
                     "config"=>[
                                 "method"=>"POST",
                                 "action"=>helpers::getUrl("user", "register"),
-                                "class"=>"user",
+                                "class"=>"box",
                                 "id"=>"formRegisterUser",
                                 "submit"=>"S'inscrire"
                             ],
@@ -110,7 +110,7 @@ class users extends DB
                                 "lastname"=>[
                                         "type"=>"text",
                                         "placeholder"=>"Votre nom",
-                                        "class"=>"form-control form-control-user",
+                                        /* "class"=>"form-control form-control-user", */
                                         "id"=>"",
                                         "required"=>true,
                                         "min-lenght"=>2,
@@ -120,7 +120,7 @@ class users extends DB
                                 "firstname"=>[
                                         "type"=>"text",
                                         "placeholder"=>"Votre prénom",
-                                        "class"=>"form-control form-control-user",
+                                        /* "class"=>"form-control form-control-user", */
                                         "id"=>"",
                                         "required"=>true,
                                         "min-lenght"=>2,
@@ -130,7 +130,7 @@ class users extends DB
                                 "email"=>[
                                         "type"=>"email",
                                         "placeholder"=>"Votre email",
-                                        "class"=>"form-control form-control-user",
+                                        /* "class"=>"form-control form-control-user", */
                                         "id"=>"",
                                         "required"=>true,
                                         "uniq"=>["table"=>"users", "column"=>"email"],
@@ -139,7 +139,7 @@ class users extends DB
                                 "pwd"=>[
                                         "type"=>"password",
                                         "placeholder"=>"Votre mot de passe",
-                                        "class"=>"form-control form-control-user",
+                                        /* "class"=>"form-control form-control-user", */
                                         "id"=>"",
                                         "required"=>true,
                                         "errorMsg"=>"Votre mot de passe doit être compris entre 6 et 16 caractères 
@@ -148,7 +148,7 @@ class users extends DB
                                 "pwdConfirm"=>[
                                         "type"=>"password",
                                         "placeholder"=>"Confirmation",
-                                        "class"=>"form-control form-control-user",
+                                        /* "class"=>"form-control form-control-user", */
                                         "id"=>"idPwdConfirm",
                                         "required"=>true,
                                         "confirmWiths"=>"pwd",
@@ -156,7 +156,7 @@ class users extends DB
                                 ],
                                 "captcha"=>[
                                         "type"=>"captcha",
-                                        "class"=>"form-control form-control-user",
+                                        /* "class"=>"form-control form-control-user", */
                                         "id"=>"",
                                         "required"=>true,
                                         "placeholder"=>"Veuillez saisir les caractères",
@@ -174,7 +174,7 @@ class users extends DB
                     "config"=>[
                             "method"=>"POST",
                             "action"=>helpers::getUrl("User", "login"),
-                            "class"=>"user",
+                            "class"=>"box",
                             "id"=>"formLoginUser",
                             "submit"=>"Se connecter"
                     ],
@@ -183,7 +183,7 @@ class users extends DB
                         "email"=>[
                             "type"=>"email",
                             "placeholder"=>"Email",
-                            "class"=>"form-control form-control-user",
+                            /* "class"=>"form-control form-control-user", */
                             "id"=>"",
                             "required"=>true,
                             "uniq"=>["table"=>"users", "column"=>"email"],
@@ -193,7 +193,7 @@ class users extends DB
                         "pwd"=>[
                             "type"=>"password",
                             "placeholder"=>"Password",
-                            "class"=>"form-control form-control-user",
+                            /* "class"=>"form-control form-control-user", */
                             "id"=>"",
                             "required"=>true,
                             "errorMsg"=>"Votre mot de passe n'est pas correcte"
@@ -207,7 +207,7 @@ class users extends DB
                     "config"=>[
                             "method"=>"POST",
                             "action"=>helpers::getUrl("User", "forget"),
-                            "class"=>"user",
+                            "class"=>"box",
                             "id"=>"formLoginUser",
                             "submit"=>"Envoyer"
                     ],
@@ -216,7 +216,7 @@ class users extends DB
                         "email"=>[
                             "type"=>"email",
                             "placeholder"=>"Email",
-                            "class"=>"form-control form-control-user",
+                            /* "class"=>"form-control form-control-user", */
                             "id"=>"",
                             "required"=>true,
                             "uniq"=>["table"=>"users", "column"=>"email"],

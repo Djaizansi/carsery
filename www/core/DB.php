@@ -90,17 +90,30 @@ class DB
 
     }
 
-    public function find(int $id){
-        $sql = "SELECT * FROM $this->table where id = :id";
-        $result = $this->sql($sql, [':id' => $id]);
+    public function find(string $recherche ,string $attribut = NULL, $value = NULL){
+        $attribut_exist = isset($attribut) ? " WHERE $attribut = :$attribut" : ';';
+        $donnee_exist = isset($attribut) ? [":$attribut" => $value] : '';
+        $sql = "SELECT $recherche FROM $this->table".$attribut_exist;
+        $result = $this->sql($sql,$donnee_exist);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $row = $result->fetch();
         $class = get_called_class();
-        if ($row) {
-            $object = new $class();
-            return $object->hydrate($row);
-        } else {
-            return null;
+
+        if(isset($attribut)){
+            if ($row) {
+                $object = new $class();
+                return $object->hydrate($row);
+            } else {
+                return null;
+            }
+        }else {
+            while($row){
+                $object = new $class();
+                $users[] = $object->hydrate($row);
+                $row = $result->fetch();
+            }
+            $result->closeCursor();
+            return $users;
         }
     }
 
@@ -117,7 +130,14 @@ class DB
         $result = $this->sql($sql, [":$valueAttribute" => $value, ":$addparameterAttribute" => $addvalue]);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $row = $result->fetch();
-        return $row;
+        
+        $class = get_called_class();
+        if ($row) {
+            $object = new $class();
+            return $object->hydrate($row);
+        } else {
+            return null;
+        }
     }
     
 

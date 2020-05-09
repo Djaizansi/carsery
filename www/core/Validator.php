@@ -3,6 +3,8 @@
 namespace carsery\core;
 
 use carsery\models\users;
+use carsery\models\recuperation;
+
 
 class Validator{
 	//$data = $_POST ou $_GET 
@@ -25,7 +27,7 @@ class Validator{
 				//Vérifier l'email
 				if($config["type"]=="email"){
 					$user = new users();
-					$email = $user->getByAttribut("email","email",$data[$name]);
+					$email = $user->find("email","email",$data[$name]);
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
 					}elseif($email){
@@ -53,7 +55,6 @@ class Validator{
 					if($config["type"]=="password" && $name == "pwd"){
 						$regex = '#(?=.*[a-z])(?=.*[A-Z])(?=.*\d)^[a-zA-Z\d]{6,16}$#';
 						if(!(preg_match($regex,$data[$name]))){
-							echo $data[$name];
 							$listOfErrors[]=$config["errorMsg"];
 						}
 					}
@@ -98,11 +99,23 @@ class Validator{
 				//Vérifier l'email
 				if($config["type"]=="email"){
 					$user = new users();
-					$email = $user->getByAttribut("email","email",$data[$name]);
+					$email = $user->find("email","email",$data[$name]);
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
 					}elseif(!$email){
 						$listOfErrors[]="Votre email n'existe pas";
+					}
+				}
+
+				if($config['type']=="text" && $name = 'code'){
+					$recup = new recuperation();
+					$code = $recup->find('code','mail',$_SESSION['email']);
+					$recup_code = $code->getCode();
+
+					if($recup_code !== $data[$name]){
+						$listOfErrors[]=$config["errorMsg"];
+					}elseif(empty($data[$name])){
+						$listOfErrors[]= "Veuillez entrer votre code de confirmation";
 					}
 				}
 
@@ -112,6 +125,8 @@ class Validator{
 		}
 		return $listOfErrors;
 	}
+
+	
 
 	public static function checkFormPwd($configForm, $data){
 		$listOfErrors = [];
@@ -138,13 +153,11 @@ class Validator{
 				if($config["type"]=="password" && $name == "pwd"){
 					$regex = '#(?=.*[a-z])(?=.*[A-Z])(?=.*\d)^[a-zA-Z\d]{6,16}$#';
 					if(!(preg_match($regex,$data[$name]))){
-						echo $data[$name];
 						$listOfErrors[]=$config["errorMsg"];
 					}
 				}
 			}
 		}else{
-			echo 'bjr';
 			return ["Tentative de hack !!!"];
 		}
 		return $listOfErrors;

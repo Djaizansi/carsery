@@ -117,7 +117,7 @@ class recuperation extends DB
             "config"=>[
                     "method"=>"POST",
                     "action"=>helpers::getUrl("user", "forget"),
-                    "class"=>"user",
+                    "class"=>"box",
                     "id"=>"formCodeRecup",
                     "submit"=>"Valider"
             ],
@@ -126,10 +126,10 @@ class recuperation extends DB
                 "code"=>[
                     "type"=>"text",
                     "placeholder"=>"Code de vérification",
-                    "class"=>"form-control form-control-user",
+                    /* "class"=>"form-control form-control-user", */
                     "id"=>"",
                     "required"=>true,
-                    "errorMsg"=>"Veuillez entrez votre code de confirmation"
+                    "errorMsg"=>"Code incorrect"
                 ]
             ]
         ];
@@ -140,7 +140,7 @@ class recuperation extends DB
             "config"=>[
                     "method"=>"POST",
                     "action"=>helpers::getUrl("user", "forget"),
-                    "class"=>"user",
+                    "class"=>"box",
                     "id"=>"formPwdChange",
                     "submit"=>"Valider"
             ],
@@ -149,7 +149,7 @@ class recuperation extends DB
                 "pwd"=>[
                     "type"=>"password",
                     "placeholder"=>"Votre mot de passe",
-                    "class"=>"form-control form-control-user",
+                    /* "class"=>"form-control form-control-user", */
                     "id"=>"",
                     "required"=>true,
                     "errorMsg"=>"Votre mot de passe doit être compris entre 6 et 16 caractères 
@@ -158,7 +158,7 @@ class recuperation extends DB
                 "pwdConfirm"=>[
                     "type"=>"password",
                     "placeholder"=>"Confirmation",
-                    "class"=>"form-control form-control-user",
+                    /* "class"=>"form-control form-control-user", */
                     "id"=>"idPwdConfirm",
                     "required"=>true,
                     "confirmWiths"=>"pwd",

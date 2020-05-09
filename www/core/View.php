@@ -20,7 +20,7 @@ class View
         if($this->template === "back"){
             $connecter = new Session();
             $user = new users();
-            $utilisateur = $user->find($_SESSION['id']);
+            $utilisateur = $user->find('firstname','id',$_SESSION['id']);
             $prenom = $utilisateur->getFirstname();
             self::assign("firstname",$prenom);
         }
