@@ -6,8 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="../public/dist/main.css">
     <!-- Dashboard CSS -->
-    <link rel="stylesheet" href="../public/css/dashboard.css">
+    <link rel="stylesheet" href="../public/css/dashboards.css">
     <!-- Loader CSS -->
     <link rel="stylesheet" href="../public/css/loader.css">
     <!-- FontAwesome -->

@@ -4,7 +4,6 @@ namespace carsery\core;
 
 use PDO;
 use Exception;
-use carsery\models\users;
 
 class DB
 {
@@ -57,7 +56,7 @@ class DB
         return $queryPrepared;
 
         } else {
-        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared = $this->pdo->query($sql);
 
         return $queryPrepared;
         }
@@ -76,30 +75,19 @@ class DB
         $result->closeCursor();
         return $row;
 
-        /* $sql = "SELECT * FROM $this->table WHERE email='" .$email. "' AND pwd ='" .$pwd. "';";
-        $queryPrepared = $this->pdo->query($sql);
-        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
-        $donnee= $queryPrepared->fetch();
-        if($donnee){
-            echo "CONNEXION RÉUSSI !";
-        }else {
-            echo "CONNEXION ÉCHOUÉE !";
-        }
-        $queryPrepared->closeCursor();
-        return $donnee; */
-
     }
 
     public function find(string $recherche ,string $attribut = NULL, $value = NULL){
-        $attribut_exist = isset($attribut) ? " WHERE $attribut = :$attribut" : ';';
+        $attribut_exist = isset($attribut) ? " WHERE $attribut = :$attribut" : '';
         $donnee_exist = isset($attribut) ? [":$attribut" => $value] : '';
         $sql = "SELECT $recherche FROM $this->table".$attribut_exist;
         $result = $this->sql($sql,$donnee_exist);
         $result->setFetchMode(PDO::FETCH_ASSOC);
+
         $row = $result->fetch();
         $class = get_called_class();
 
-        if(isset($attribut)){
+        if(isset($attribut) && $result->rowCount() < 2){
             if ($row) {
                 $object = new $class();
                 return $object->hydrate($row);
@@ -107,6 +95,8 @@ class DB
                 return null;
             }
         }else {
+            $users = [];
+            isset($users) ? $users : NULL;
             while($row){
                 $object = new $class();
                 $users[] = $object->hydrate($row);
@@ -145,22 +135,4 @@ class DB
         $sql = "DELETE FROM $this->table WHERE $attribut = :$attribut";
         $result = $this->sql($sql, [":$attribut" => $value]);
     }
-
-    /* public function getById($id,$model,$tab){
-        $sql = "SELECT * FROM " .$this->table. " WHERE id=".$id.";";
-        $queryPrepared = $this->pdo->query($sql);
-        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
-        $donnee= $queryPrepared->fetch();
-        if($donnee){
-            $uneDonnee = new $model();
-            foreach($tab as $untab){
-                $set = "set".ucfirst($untab);
-                $uneDonnee->$set($donnee->$untab);
-            }
-            return $uneDonnee;
-            //return $user;
-        }
-        $queryPrepared->closeCursor();
-        return NULL; 
-    } */
 }

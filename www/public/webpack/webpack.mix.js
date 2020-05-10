@@ -11,7 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('../public/dist');
+mix.setPublicPath('../dist');
 
 // mix.babel([
 //  '../src/js/vendor/lazysizes/lazysizes.min.js',
@@ -22,7 +22,7 @@ mix.setPublicPath('../public/dist');
 
 // mix.minify('./dist/main.js');
 
-mix.sass('../public/src/scss/main.scss', '../dist/');
+mix.sass('../src/scss/main.scss', '../dist/');
 
 module.exports = {
   //...
