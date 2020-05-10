@@ -18,8 +18,12 @@ Pour pouvoir commencer avec notre projet, il vous faudra :
 
 ### Installation
 
-Pour pouvoir installer notre projet, il vous faudra lancer Docker
-Tapez la commande suivante afin de créer les différents conteneurs
+Pour pouvoir installer notre projet, télécharger le repository avec la commande ``git clone`` ou cliquez [ici](https://github.com/Djaizansi/carsery/archive/master.zip) :
+
+```git
+git clone https://github.com/Djaizansi/carsery
+```
+Puis tapez la commande suivante afin de créer les différents conteneurs
 
 ```docker
 docker-compose up -d
@@ -27,8 +31,7 @@ docker-compose up -d
 
 ## Démarrage
 
-Pour lancer le projet, c'est le même procédé que l'installation.
-Il faudra lancer la commande suivante : 
+Pour lancer le projet, il faut tout simplement lancer la commande : 
 
 ```docker
 docker-compose up -d
