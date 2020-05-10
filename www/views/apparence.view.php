@@ -106,15 +106,25 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-4">
+        <div class="col-4">
             <div class="theme">
-                <div class="new-theme">
-                    <img src="../public/img/new.png" alt="New" height="150px" width="150px">
+                <div class="theme-spec">
+                    <ul>
+                        <li>Sidebar
+                            <div style="background-color: blue; height: 30px; width: 30px;"></div>
+                        </li>
+                        <li>Header
+                            <div style="background-color: green; height: 30px; width: 30px;"></div>
+                        </li>
+                        <li>Footer
+                            <div style="background-color: yellow; height: 30px; width: 30px;"></div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="theme-info">
-                    Ajouter un nouveau thème
+                    Thème 5
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
