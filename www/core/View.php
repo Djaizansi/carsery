@@ -1,5 +1,11 @@
 <?php
-namespace core;
+
+namespace carsery\core;
+
+use carsery\core\Session;
+use carsery\models\users;
+
+
 
 class View
 {
@@ -14,8 +20,7 @@ class View
         if($this->template === "back"){
             $connecter = new Session();
             $user = new users();
-            $tab = ["id","lastname","firstname","email","pwd","status"];
-            $utilisateur = $user->getById($_SESSION['id'],"Users",$tab);
+            $utilisateur = $user->find('firstname','id',$_SESSION['id']);
             $prenom = $utilisateur->getFirstname();
             self::assign("firstname",$prenom);
         }

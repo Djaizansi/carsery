@@ -1,5 +1,9 @@
 <?php 
-namespace controllers; 
+namespace carsery\controllers;
+
+use carsery\core\View;
+use carsery\core\Session;
+
 
 class DashboardController {
     public function dashboardAction()

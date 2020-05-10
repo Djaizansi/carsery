@@ -1,13 +1,26 @@
-$text-color:rgb(12, 12, 11);
-$light-grey: rgb(247, 244, 244);
+/********** COULEURS **********/
+
 $white: #FFF;
-$green: #0e4928;
-$blue: rgb(27, 77, 170);
-$red: #ce0a0b;
-$pink: rgb(185, 172, 174);
-$brown: brown;
-$black-transparent: rgba(0,0,0,0.6);
-$grey: rgb(93, 118, 146);
-$light-green:#1DB954;
 $dark: #000;
-$blueheader: #284DB8;
+$green: #52FF33;
+$red: #FF4A4A;
+$primary: #4ACBFF;
+$gray: #303030;
+
+$green-alert-background: #d4edda;
+$green-alert-text: #155724;
+$green-alert-border: #c3e6cb;
+
+$red-alert-background: #f8d7da;
+$red-alert-text: #721c24;
+$red-alert-border: #f5c6cb;
+
+
+
+/********** GRILLE **********/
+
+$width: 96%;
+$gutter: 4%;
+$breakpoint-small: 33.75em; // 540px
+$breakpoint-med: 45em; // 720px
+$breakpoint-large: 60em; // 960px

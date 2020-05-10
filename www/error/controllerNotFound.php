@@ -11,9 +11,9 @@
 	<!-- EXTERNAL STYLESHEETS -->
 	<script src="https://kit.fontawesome.com/42ce300797.js" crossorigin="anonymous"></script>
 	<!-- ANIMATION -->
-	<link href="public/dist/animation.css" rel="stylesheet" type="text/css" />
+	<link href="public/css/animation.css" rel="stylesheet" type="text/css" />
 	<!-- MAIN STYLESHEETS -->
-	<link rel="stylesheet" href="public/dist/style.css">
+	<link rel="stylesheet" href="public/css/404.css">
 	<!-- Favicons -->
 	<link rel="icon" href="public/img/carsery.png">
 </head>
@@ -91,27 +91,6 @@
 	
 	<!-- COMMON SCRIPT -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script>
-		function mainWindow(){
-			$(".main-wrapper").css({
-				width: $('html').width(),
-				height: $('html').height() > $(window).height() ? $('html').height() : $(window).height()  
-			});
-		}
-		function animateWindow(){
-			$(".animate-wrp").css({
-				width: $(window).width(),
-				height: $('.main-wrapper').height()
-			});
-		}
-		$(document).ready(function() {
-			mainWindow();
-			animateWindow();
-		});
-		$(window).resize(function(event) {
-			mainWindow();
-			animateWindow();
-		});
-	</script>
+	<script src="public/js/404.js"></script>
 </body>
 </html>
