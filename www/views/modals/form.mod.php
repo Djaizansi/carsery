@@ -1,79 +1,3 @@
-
-
-<?php
-/*
-Array
-(
-    [config] => Array
-        (
-            [method] => POST
-            [action] => /s-inscrire
-            [class] => user
-            [id] => formRegisterUser
-            [submit] => S'inscrire
-        )
-
-    [fields] => Array
-        (
-            [firstname] => Array
-                (
-                    [type] => text
-                    [placeholder] => Votre prénom
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [lastname] => Array
-                (
-                    [type] => text
-                    [placeholder] => Votre nom
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [email] => Array
-                (
-                    [type] => email
-                    [placeholder] => Votre email
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [pwd] => Array
-                (
-                    [type] => password
-                    [placeholder] => Votre mot de passe
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [pwdConfirm] => Array
-                (
-                    [type] => password
-                    [placeholder] => Confirmation
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                    [confirmWith] => pwd
-                )
-
-            [captcha] => Array
-                (
-                    [type] => captcha
-                    [class] => 
-                    [id] => 
-                )
-
-        )
-
-)
-*/
-?>
-
 <?php $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
 
 <form 
@@ -84,8 +8,8 @@ class="<?= $data["config"]["class"]?>">
 
 
       <?php foreach ($data["fields"] as $name => $configField):?>
-        <div class="form-group row">
-          <div class="col-sm-12">
+        <!-- <div class="form-group row">
+          <div class="col-sm-12"> -->
 
 
             <?php if($configField["type"] == "captcha"):?>
@@ -103,14 +27,14 @@ class="<?= $data["config"]["class"]?>">
                 class="<?= $configField["class"]??'' ?>"
                 id="<?= $configField["id"]??'' ?>"
                 <?= (!empty($configField["required"])) ? "required='required'" : "" ?> >
-        </div>
-      </div>
+        <!--  </div>
+      </div> -->
       <?php endforeach;?>
     
 
 
 
-  <button class="btn btn-primary"><?= $data["config"]["submit"];?></button>
+  <button class="btn btn--primary"><?= $data["config"]["submit"];?></button>
 </form>
 
 

@@ -1,5 +1,11 @@
 <?php
-namespace core;
+
+namespace carsery\core;
+
+use PDO;
+use Exception;
+use carsery\models\users;
+
 class DB
 {
     private $table;
@@ -13,13 +19,13 @@ class DB
         } catch (Exception $e) {
             die("Erreur SQL : ".$e->getMessage());
         }
+        $table = DB_PREFIXE.get_called_class();
+        $this->table = DB_PREFIXE.substr($table,strrpos($table,'\\')+1,strlen($table)); //.get_called_class() => la classe appelé quand on se dirige vers register est USER
         
-        $this->table = DB_PREFIXE.get_called_class(); //.get_called_class() => la classe appelé quand on se dirige vers register est USER
     }
 
     public function save()
     {
-
         $propChild = get_object_vars($this);
         $propDB = get_class_vars(get_class());
         $columnsData = array_diff_key($propChild, $propDB);
@@ -27,7 +33,6 @@ class DB
         // si y'a des éléments de propChild qui sont pas dans propDB, on les stock dans la
         // variable columnsData
         $columns = array_keys($columnsData);
-        var_dump($columns);
 
         if (!is_numeric($this->id)) {
             $sql = "INSERT INTO ".$this->table. "(".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
@@ -42,11 +47,36 @@ class DB
         
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);
-        var_dump($queryPrepared);
+    }
+
+    protected function sql($sql, $parameters = null)
+    {
+        if ($parameters) {
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute($parameters);
+        return $queryPrepared;
+
+        } else {
+        $queryPrepared = $this->pdo->prepare($sql);
+
+        return $queryPrepared;
+        }
     }
 
     public function login($email,$pwd){
-        $sql = "SELECT * FROM " .$this->table. " WHERE email='" .$email. "' AND pwd ='" .$pwd. "';";
+        $sql = "SELECT * FROM $this->table WHERE email = :email AND pwd = :pwd";
+        $result = $this->sql($sql, [':email' => $email, ':pwd'=> $pwd]);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        if($row){
+            echo "CONNEXION RÉUSSI !";
+        }else {
+            echo "CONNEXION ÉCHOUÉE !";
+        }
+        $result->closeCursor();
+        return $row;
+
+        /* $sql = "SELECT * FROM $this->table WHERE email='" .$email. "' AND pwd ='" .$pwd. "';";
         $queryPrepared = $this->pdo->query($sql);
         $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
         $donnee= $queryPrepared->fetch();
@@ -56,10 +86,67 @@ class DB
             echo "CONNEXION ÉCHOUÉE !";
         }
         $queryPrepared->closeCursor();
-        return $donnee;
+        return $donnee; */
+
     }
 
-    public function getById($id,$model,$tab){
+    public function find(string $recherche ,string $attribut = NULL, $value = NULL){
+        $attribut_exist = isset($attribut) ? " WHERE $attribut = :$attribut" : ';';
+        $donnee_exist = isset($attribut) ? [":$attribut" => $value] : '';
+        $sql = "SELECT $recherche FROM $this->table".$attribut_exist;
+        $result = $this->sql($sql,$donnee_exist);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        $class = get_called_class();
+
+        if(isset($attribut)){
+            if ($row) {
+                $object = new $class();
+                return $object->hydrate($row);
+            } else {
+                return null;
+            }
+        }else {
+            while($row){
+                $object = new $class();
+                $users[] = $object->hydrate($row);
+                $row = $result->fetch();
+            }
+            $result->closeCursor();
+            return $users;
+        }
+    }
+
+    public function getByAttribut($elementAttribute, $valueAttribute, $value) {
+        $sql = "SELECT $elementAttribute FROM $this->table WHERE $valueAttribute = :$valueAttribute";
+        $result = $this->sql($sql, [":$valueAttribute" => $value]);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        return $row;
+    }
+
+    public function getByAttrubutMultiple($elementAttribute, $valueAttribute, $value, $addparameterAttribute, $addvalue){
+        $sql = "SELECT $elementAttribute FROM $this->table WHERE $valueAttribute = :$valueAttribute AND $addparameterAttribute = :$addparameterAttribute";
+        $result = $this->sql($sql, [":$valueAttribute" => $value, ":$addparameterAttribute" => $addvalue]);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        
+        $class = get_called_class();
+        if ($row) {
+            $object = new $class();
+            return $object->hydrate($row);
+        } else {
+            return null;
+        }
+    }
+    
+
+    public function delete($attribut, $value){
+        $sql = "DELETE FROM $this->table WHERE $attribut = :$attribut";
+        $result = $this->sql($sql, [":$attribut" => $value]);
+    }
+
+    /* public function getById($id,$model,$tab){
         $sql = "SELECT * FROM " .$this->table. " WHERE id=".$id.";";
         $queryPrepared = $this->pdo->query($sql);
         $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
@@ -71,10 +158,9 @@ class DB
                 $uneDonnee->$set($donnee->$untab);
             }
             return $uneDonnee;
-            /* return $user; */
+            //return $user;
         }
         $queryPrepared->closeCursor();
-        /* return NULL; */
-        return NULL;
-    }
+        return NULL; 
+    } */
 }

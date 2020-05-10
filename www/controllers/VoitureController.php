@@ -1,10 +1,17 @@
 <?php 
 
-namespace controllers; 
+namespace carsery\controllers;
+
+use carsery\core\View;
+use carsery\core\Session;
 
 class VoitureController {
     public function voitureAction() 
-    {
-        $myView = new View("voiture");
+    {   
+        if(Session::estConnecte()){
+            $myView = new View("voiture");
+        }else {
+            include_once "./error/notConnected.php";
+        }
     }
 }

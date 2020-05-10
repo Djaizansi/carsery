@@ -1,6 +1,6 @@
 <?php 
 
-namespace core;
+namespace carsery\core;
 
 session_start();
 class Session {
