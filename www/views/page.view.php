@@ -59,7 +59,7 @@ $tri === 'publie' ? $donnee = $tabPublieTotal : ''; */
                 <th>Titre</th>
                 <th>Auteur</th>
                 <th>Date</th>
-                <th>Publié</th>
+                <th>Publiée</th>
                 <th style="width: 30px;">Action</th>
             </tr>
         </thead>
