@@ -11,16 +11,11 @@ $tabPublieTotal[] = $listPagePubliee;
 $total = count($listPage) <= 1 ? count($tabTotal) : count($listPage);
 $cree = count($listPageCree) <= 1 ? count($tabCreeTotal) : count($listPageCree);
 $publie = count($listPagePubliee) <= 1 ? count($tabPublieTotal) : count($listPagePubliee);
-$tri = $_GET['champ'];
 
+$donnee = count($listPage) > 1 ? $listPage : $tabTotal;
+$tri = isset($_GET['champ']) ? $_GET['champ'] : '';
 
-if($tri === 'total'){
-    if(is_array($listPage) && count($listPage) > 1){
-        $donnee = $listPage;
-    }else {
-        $donnee = $tabTotal;
-    }
-}elseif($tri === 'cree'){
+if($tri === 'cree'){
     if(is_array($listPageCree) && count($listPageCree) > 1){
         $donnee = $listPageCree;
     }else {
@@ -45,7 +40,7 @@ $tri === 'publie' ? $donnee = $tabPublieTotal : ''; */
         <h2 class="inline">Pages</h2>
         <a class="btn btn--primary" style="font-size: 0.7rem !important;" href="/ajouter-page">Ajouter</a>
     </div>
-    <a href="/page?champ=total" class="inline">Tous (<?= $total ?>)</a>
+    <a href="/page" class="inline">Tous (<?= $total ?>)</a>
     <p class="inline">|</p>
     <a href="/page?champ=cree" class="inline">Non Publiées (<?= $cree ?>)</a>
     <p class="inline">|</p>
