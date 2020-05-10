@@ -51,14 +51,14 @@ p {
 
 a {
   text-decoration: none;
+  color: #000;
 }
 
 /********** GRILLE **********/
 
 .container {
   width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 1rem auto 3rem auto;
 }
 
 @media only screen and (min-width: 33.75em) {
@@ -69,8 +69,7 @@ a {
 
 @media only screen and (min-width: 60em) {
   .container {
-    width: 75%;
-    max-width: 60rem;
+    width: 90%;
   }
 }
 
