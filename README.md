@@ -1,6 +1,6 @@
-# Projet annuel - Carsery
+# Projet Git
 
-Projet annuel permettant la création d'un CMS pour concessionnaire from scratch.
+Projet annuel permettant la création d'un CMS pour concessionaire from scratch.
 
 ## Pour commencer
 
@@ -35,13 +35,13 @@ docker-compose up -d
 ```
 <img width="773" alt="Capture d’écran 2020-02-01 à 17 02 22" src="https://user-images.githubusercontent.com/52085560/73595109-ee6ced80-4514-11ea-96fa-2ca7bd52f300.png">
 
-Ensuite, rendez-vous sur un navigateur et ecrivez tout simplement ``localhost``ou ``127.0.0.1``
+Ensuite, rendez-vous sur un navigateur et tapez tout simplement ``localhost``ou ``127.0.0.1`` dans l'URL de votre navigateur :
 
 <img width="1440" alt="Capture d’écran 2020-02-01 à 17 05 48" src="https://user-images.githubusercontent.com/52085560/73595128-1f4d2280-4515-11ea-85f2-2a37ab5192e5.png">
 
 ## Fabriqué avec
 
-Ce projet a été fabriqué avec les différents programmes/langages :
+Ce projet a été fabriqué avec les différents programmes/langages : 
 
 * [Visual Studio Code](https://code.visualstudio.com) - Editeur de textes
 * [Docker](https://docs.docker.com/docker-for-mac/install/) - Déploiement d’applications dans des conteneurs
@@ -56,11 +56,10 @@ Liste des versions : [Cliquer pour afficher](https://github.com/Djaizansi/git_pr
 
 ## Auteurs
 Listez le(s) auteur(s) du projet ici !
-* **Youcef Jallali** _alias_ [@Djaizansi](https://github.com/Djaizansi)
-* **Marwane Bouabdellah** _alias_ [@BOUABDELLAHM](https://github.com/BOUABDELLAHM)
-* **Guillaume Welle** _alias_ [@gwelle](https://github.com/gwelle)
-* **Nesrine Tebaili** _alias_ [@Nesnes9](https://github.com/Nesnes9)
-* **Mel Dispagne** _alias_ [@lumay](https://github.com/lumay)
+* **JALLALI Youcef** _alias_ [@Djaizansi](https://github.com/Djaizansi)
+* **BOUADDELLAH Marwane** _alias_ [@BOUABDELLAHM](https://github.com/BOUABDELLAHM)
+* **WELLE Guillaume** _alias_ [@gwelle](https://github.com/gwelle)
+* **TEBAILI Nesrine** _alias_ [@Nesnes9](https://github.com/Nesnes9)
+* **DISPAGNE Mel** _alias_ [@lumay](https://github.com/lumay)
 
 Lisez la liste des [contributeurs](https://github.com/Djaizansi/git_projet/blob/master/CONTRIBUTORS.md) pour voir qui ont aidé au projet !
-
