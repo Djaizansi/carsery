@@ -31,8 +31,7 @@ docker-compose up -d
 
 ## Démarrage
 
-Pour lancer le projet, c'est le même procédé que l'installation.
-Il faudra lancer la commande suivante : 
+Pour lancer le projet, il faut tout simplement lancer la commande : 
 
 ```docker
 docker-compose up -d
