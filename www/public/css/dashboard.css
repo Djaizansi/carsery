@@ -300,3 +300,20 @@ hr {
   width: 12em;
   color: #FFF;
 }
+
+/* Apparence */
+
+.theme {
+  position: relative;
+  height: 250px; 
+  width: 250px;
+  background-color: #F0F0F0
+}
+
+.theme-info {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 10px;
+}
