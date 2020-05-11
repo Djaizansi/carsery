@@ -6,16 +6,13 @@
     <meta name="description" content="">
     <meta name="author" content="Youcef Jallali, Marwane Bouabdellah, Mel Dispagne, Nesrine Tebaili, Guillaume Well">
     <title>Carsery - Espace Authentification</title>
-
     <link rel="stylesheet" href="../public/dist/main.css">
     <!-- CSS personnalisée -->
     <link rel="stylesheet" href="../public/css/styles.css">
-
     <!-- Favicons -->
   <link rel="icon" href="../public/img/carsery.png">
   </head>
-
-  <body>
+<body>
       <?php include "views/".$this->view.".view.php"; ?>
 </body>
 </html>
