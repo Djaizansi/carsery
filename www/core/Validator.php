@@ -103,7 +103,7 @@ class Validator{
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
 					}elseif(!$email){
-						$listOfErrors[]="Votre email n'existe pas";
+						$listOfErrors[]="Votre adresse mail est incorrect ou inexistante.";
 					}
 				}
 
@@ -115,7 +115,7 @@ class Validator{
 					if($recup_code !== $data[$name]){
 						$listOfErrors[]=$config["errorMsg"];
 					}elseif(empty($data[$name])){
-						$listOfErrors[]= "Veuillez entrer votre code de confirmation";
+						$listOfErrors[]= "Veuillez entrer votre code de confirmation.";
 					}
 				}
 
