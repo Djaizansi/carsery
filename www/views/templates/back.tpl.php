@@ -24,9 +24,10 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <!-- Favicon -->
     <link rel="icon" href="../public/img/carsery.png">
-    <!-- SCRIPTJS -->
+    <!-- JavaScript -->
     <script src="../public/js/script.js"></script>
     <script src="../public/js/user.js"></script>
+    <script src="../public/js/apparence.js"></script>
 </head>
 <body>
 
@@ -78,6 +79,7 @@
         </footer>
 
     </div>
+    <!-- Menu pour téléphone et tablette -->
     <script src="../public/js/menu.js"></script>
 </body>
 </html>

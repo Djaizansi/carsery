@@ -19,7 +19,7 @@
                     </ul>
                 </div>
                 <div class="theme-info">
-                    Par défaut
+                    <button type="button" class="btn btn--primary">Par défaut</button>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 <div class="theme-spec">
                     <ul>
                         <li>Sidebar
-                            <div style="background-color: blue; height: 30px; width: 30px;"></div>
+                            <div style="background-color: white; height: 30px; width: 30px;"></div>
                         </li>
                         <li>Header
                             <div style="background-color: green; height: 30px; width: 30px;"></div>
@@ -39,7 +39,7 @@
                     </ul>
                 </div>
                 <div class="theme-info">
-                    Thème 2
+                    <button type="button" onclick="myFunction()" class="btn btn--primary">Thème 2</button>
                 </div>
             </div>
         </div>
@@ -128,3 +128,5 @@
         </div>
     </div>
 </div>
+
+<!-- <script src="../public/js/apparence.js"></script> -->
