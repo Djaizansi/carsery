@@ -18,6 +18,10 @@
   controller: "Apparence"
   action: "apparence"
 
+/apparence/theme2:
+  controller: "Apparence"
+  action: "changement"
+
 /forum: 
   controller: "Forum"
   action: "forum"
@@ -45,7 +49,6 @@
 /ajout-utilisateur:
   controller: "User"
   action: "add"
-
 
 /recupcode:
   controller: "User"
