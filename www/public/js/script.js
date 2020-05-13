@@ -1,5 +1,6 @@
 function showContent(){
-    document.querySelector('.loader-container').classList.add('hidden');
+    var loader = document.querySelector('.loader-container');
+    loader.classList.add('hidden');
 }
 setTimeout(showContent, 3000);
 
