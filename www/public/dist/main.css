@@ -344,3 +344,20 @@ a {
   border-color: #f5c6cb;
 }
 
+.card-theme {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  width: 15rem;
+  background-color: #5DADE2;
+  color: #FFF;
+}
+
+.card-theme:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-theme-info {
+  padding: 2px 16px;
+}
+
