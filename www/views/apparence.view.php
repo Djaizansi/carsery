@@ -10,6 +10,19 @@
     }
     */
     ?>
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+                <p>Some text in the Modal..</p>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-4">
             <div class="card-theme">
@@ -45,140 +58,4 @@
             </div>
         </div>
     </div>
-
-    <!-- <div class="card-theme">
-        <img src="https://pbs.twimg.com/profile_images/791224628140183552/4ij9CwKo_400x400.jpg" alt="Avatar" style="width:100%">
-        <div class="card-theme-info">
-            <h4>
-                <b>John Doe</b>
-            </h4> 
-            <p>Architect & Engineer</p> 
-        </div>
-    </div> -->
-
-    <!-- <div class="row">
-        <div class="col-4">
-            <div class="theme">
-                <div class="theme-spec">
-                    <ul>
-                        <li>Sidebar
-                            <div style="background-color: blue; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Header
-                            <div style="background-color: green; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Footer
-                            <div style="background-color: yellow; height: 30px; width: 30px;"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="theme-info">
-                    <button type="button" class="btn btn--primary">Par défaut</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="theme">
-                <div class="theme-spec">
-                    <ul>
-                        <li>Sidebar
-                            <div style="background-color: white; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Header
-                            <div style="background-color: green; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Footer
-                            <div style="background-color: yellow; height: 30px; width: 30px;"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="theme-info">
-                    <button type="button" onclick="myFunction()" class="btn btn--primary">Thème 2</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="theme">
-                <div class="theme-spec">
-                    <ul>
-                        <li>Sidebar
-                            <div style="background-color: blue; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Header
-                            <div style="background-color: green; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Footer
-                            <div style="background-color: yellow; height: 30px; width: 30px;"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="theme-info">
-                    Thème 3
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <div class="theme">
-                <div class="theme-spec">
-                    <ul>
-                        <li>Sidebar
-                            <div style="background-color: blue; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Header
-                            <div style="background-color: green; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Footer
-                            <div style="background-color: yellow; height: 30px; width: 30px;"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="theme-info">
-                    Thème 4
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="theme">
-                <div class="theme-spec">
-                    <ul>
-                        <li>Sidebar
-                            <div style="background-color: blue; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Header
-                            <div style="background-color: green; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Footer
-                            <div style="background-color: yellow; height: 30px; width: 30px;"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="theme-info">
-                    Thème 5
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="theme">
-                <div class="theme-spec">
-                    <ul>
-                        <li>Sidebar
-                            <div style="background-color: blue; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Header
-                            <div style="background-color: green; height: 30px; width: 30px;"></div>
-                        </li>
-                        <li>Footer
-                            <div style="background-color: yellow; height: 30px; width: 30px;"></div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="theme-info">
-                    Thème 5
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
