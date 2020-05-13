@@ -19,7 +19,10 @@ class ApparenceController {
     public function changementAction()
     {
         $myView = new View("apparence");
-        $prenom = "Marwane";
-        $myView->assign("prenom", $prenom);
+        $myTheme1 = "Par défaut";
+        $myTheme2 = "Thème 2";
+        $myTheme3 = "Thème 3";
+        $myTheme4 = "Thème 4";
+        $myView->assign("myTheme1", $myTheme1);
     }
 }

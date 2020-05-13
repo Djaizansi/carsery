@@ -1,7 +1,16 @@
 <div class="container">
     <h1>Apparence</h1>
     <p>Personnaliser l'apparence de votre dashboard selon vos préférences</p>
-          
+
+    <?php
+
+    /* Test variable
+    if(isset($myTheme1)){
+        echo $myTheme1;
+    }
+    */
+    ?>
+
     <div class="row">
         <div class="col-4">
             <div class="theme">
