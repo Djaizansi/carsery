@@ -27,7 +27,7 @@
     <!-- JavaScript -->
     <script src="../public/js/script.js"></script>
     <script src="../public/js/user.js"></script>
-    <script src="../public/js/apparence.js"></script>
+    <!-- <script src="../public/js/apparence.js"></script> -->
 </head>
 <body>
 

@@ -1,9 +1,7 @@
 <div class="container">
     <h1>Apparence</h1>
     <p>Personnaliser l'apparence de votre dashboard selon vos préférences</p>
-
-    <?php echo $prenom; ?>
-
+          
     <div class="row">
         <div class="col-4">
             <div class="theme">
@@ -130,5 +128,3 @@
         </div>
     </div>
 </div>
-
-<!-- <script src="../public/js/apparence.js"></script> -->
