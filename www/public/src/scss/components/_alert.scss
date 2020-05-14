@@ -13,4 +13,9 @@
         background-color: $red-alert-background;
         border-color: $red-alert-border;    
     }
+    &--primary{
+        color: $primary-alert-text;
+        background-color: $primary-alert-background;
+        border-color: $primary-alert-border;    
+    }
 }
