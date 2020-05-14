@@ -11,18 +11,30 @@ class ApparenceController {
     {
         if(Session::estConnecte()){
             $myView = new View("apparence");
+            $theme = "Par défaut";
+            $myView->assign("theme", $theme);
         }else {
             include_once "./error/notConnected.php";
         }
+
     }
 
     public function changementAction()
     {
         $myView = new View("apparence");
-        $myTheme1 = "Par défaut";
-        $myTheme2 = "Thème 2";
-        $myTheme3 = "Thème 3";
-        $myTheme4 = "Thème 4";
-        $myView->assign("myTheme1", $myTheme1);
+        
+        if(isset($_POST['formtheme'])){
+            if(isset($_POST['theme2'])){
+                $theme2 = $_POST['theme2'];
+                $theme = "Thème 2";
+                $myView->assign("theme", $theme);
+            } else {
+                $theme = "Le thème n'a pas pu être chargé correctement";
+                $myView->assign("theme", $theme);
+            }
+        } else {
+            $theme = "Le thème n'a pas pu être appliqué correctement";
+            $myView->assign("theme", $theme);
+        }
     }
 }

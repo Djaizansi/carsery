@@ -18,7 +18,7 @@
   controller: "Apparence"
   action: "apparence"
 
-/apparence/theme2:
+/apparence/themes:
   controller: "Apparence"
   action: "changement"
 

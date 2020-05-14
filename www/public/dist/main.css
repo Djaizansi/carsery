@@ -235,6 +235,10 @@ a {
   display: none;
 }
 
+.italic {
+  font-style: italic;
+}
+
 /* Composants */
 
 .btn {
@@ -346,6 +350,12 @@ a {
   border-color: #f5c6cb;
 }
 
+.alert--primary {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+
 .card-theme {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   -webkit-transition: 0.3s;
@@ -353,6 +363,7 @@ a {
   width: 15rem;
   background-color: #5DADE2;
   color: #FFF;
+  cursor: pointer;
 }
 
 .card-theme:hover {
@@ -384,6 +395,8 @@ a {
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 /* Modal Content/Box */
