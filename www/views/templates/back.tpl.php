@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <!-- Framework CSS -->
-    <link rel="stylesheet" href="../public/dist/main.css">
+    <link rel="stylesheet" href="../public/dist/mains.css">
     <!-- Dashboard CSS -->
     <link rel="stylesheet" href="../public/css/dashboards.css">
     <!-- Loader CSS -->
@@ -25,7 +25,6 @@
     <!-- Favicon -->
     <link rel="icon" href="../public/img/carsery.png">
     <!-- SCRIPTJS -->
-    <script src="../public/js/script.js"></script>
     <script src="../public/js/user.js"></script>
 </head>
 <body>
@@ -79,5 +78,6 @@
 
     </div>
     <script src="../public/js/menu.js"></script>
+    <script src="../public/js/scriptss.js"></script>
 </body>
 </html>
