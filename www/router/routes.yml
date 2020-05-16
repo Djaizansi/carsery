@@ -70,3 +70,11 @@
 /mdpoublie:
   controller: "User"
   action: "forget"
+
+/ajouter-page:
+    controller: "Page"
+    action: "addPage"
+
+/supprimer-page:
+    controller: "Page"
+    action: "deletePage"
