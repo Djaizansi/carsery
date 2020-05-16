@@ -1,5 +1,8 @@
 <?php
 
+namespace Carsery\Core;
+
+
 class View
 {
     private $template; //pour accéder à template, $this->template

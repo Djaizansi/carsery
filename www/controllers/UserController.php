@@ -1,4 +1,12 @@
 <?php
+namespace Carsery\Controllers;
+
+require('core/View.php');
+require('core/User.php');
+require('core\Session.php');
+use Carsery\Core\View; 
+use Carsery\models\users;
+use Carsery\Core\Session;
 
 class UserController
 {

@@ -1,4 +1,6 @@
 <?php 
+
+namespace Carsery\Core;
 session_start();
 class Validator{
 	//$data = $_POST ou $_GET 

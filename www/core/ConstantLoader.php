@@ -1,4 +1,7 @@
 <?php
+
+namespace Carsery\Core;
+
 class ConstantLoader
 {
     public $extend;

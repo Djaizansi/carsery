@@ -1,4 +1,10 @@
 <?php
+
+namespace Carsery\Models;
+
+require('core/DB.php');
+use Carsery\Core\DB;
+
 class users extends DB
 {
     protected $id;

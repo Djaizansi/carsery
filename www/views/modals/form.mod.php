@@ -1,80 +1,6 @@
 
+<?php $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])];?>
 
-<?php
-/*
-Array
-(
-    [config] => Array
-        (
-            [method] => POST
-            [action] => /s-inscrire
-            [class] => user
-            [id] => formRegisterUser
-            [submit] => S'inscrire
-        )
-
-    [fields] => Array
-        (
-            [firstname] => Array
-                (
-                    [type] => text
-                    [placeholder] => Votre prénom
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [lastname] => Array
-                (
-                    [type] => text
-                    [placeholder] => Votre nom
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [email] => Array
-                (
-                    [type] => email
-                    [placeholder] => Votre email
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [pwd] => Array
-                (
-                    [type] => password
-                    [placeholder] => Votre mot de passe
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                )
-
-            [pwdConfirm] => Array
-                (
-                    [type] => password
-                    [placeholder] => Confirmation
-                    [class] => 
-                    [id] => 
-                    [required] => 1
-                    [confirmWith] => pwd
-                )
-
-            [captcha] => Array
-                (
-                    [type] => captcha
-                    [class] => 
-                    [id] => 
-                )
-
-        )
-
-)
-*/
-?>
-
-<?php $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
 
 <form 
 method="<?= $data["config"]["method"]?>" 
@@ -82,71 +8,90 @@ action="<?= $data["config"]["action"]?>"
 id="<?= $data["config"]["id"]?>"
 class="<?= $data["config"]["class"]?>">
 
-
+	  <!--Récupération des informations-->
       <?php foreach ($data["fields"] as $name => $configField):?>
         <div class="form-group row">
           <div class="col-sm-12">
 
-
+			<!--Si le champ est de type captcha : 
+			
+				* Intégration de l'image du captcha
+				* Intégration d'un champ de type input [text]-->
             <?php if($configField["type"] == "captcha"):?>
+			
                 <img src="script/captcha.php" width="300px">
-            <?php endif;?>
 
-            <input 
-                value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
-                  <?php  /* $inputData -> $_POST | $name => les champs : firstname, lastname, email ... | $inputdData[$name]
-                  => $_POST[$name]=> ex: $_POST["firstname"] 
-                  value ici permet de stocker la valeur et de la laisser dans le champs */ ?>
-                type="<?= $configField["type"]??'' ?>"
-                name="<?= $name??'' ?>"
-                placeholder="<?= $configField["placeholder"]??'' ?>"
-                class="<?= $configField["class"]??'' ?>"
-                id="<?= $configField["id"]??'' ?>"
-                <?= (!empty($configField["required"])) ? "required='required'" : "" ?> >
+				<input 
+					value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name]:'' ?>"
+					type="<?= $configField["type"]??'' ?>"
+					name="<?= $name??'' ?>"
+					placeholder="<?= $configField["placeholder"]??'' ?>"
+					class="<?= $configField["class"]??'' ?>"
+					id="<?= $configField["id"]??'' ?>"
+					<?=(!empty($configField["required"]))?"required='required'":""?>>
+				
+			
+			<!--Sinon si le champ est de type text ou number : 
+			
+				* Intégration d'un champ de type input [text]
+				* Intégration d'un champ de type input [number]-->
+			<?php elseif($configField["type"]== 'text' || $configField["type"]== 'number') : ?>
+
+				<input 
+					value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name]:'' ?>"
+					type="<?= $configField["type"]??'' ?>"
+					name="<?= $name??'' ?>"
+					placeholder="<?= $configField["placeholder"]??'' ?>"
+					class="<?= $configField["class"]??'' ?>"
+					id="<?= $configField["id"]??'' ?>"
+					<?=(!empty($configField["required"]))?"required='required'":""?>>
+					
+			<!--Sinon si le champ est de type select: 
+			
+				* Intégration d'une liste déroulante-->
+			<?php elseif($configField["type"]== 'select'):?>
+			
+				<select name="<?= $name??'' ?>" 
+						class="<?= $configField["class"]??'' ?>"
+						id="<?= $configField["id"]??'' ?>"
+						<?=(!empty($configField["required"]))?"required='required'":""?>>
+						
+						<option value="" disabled="disabled">Veuillez choisir un(e) <?= $name??'' ?></option>
+						
+						<!--Si le tableau de la liste déroulante contenant les valeurs n'est pas vide : 
+							* On parcours le tableau des clés
+								* On parcours le tableau des valeurs
+								* On affiche chaque valeur du tableau par la variable $value-->
+						<?php if(!empty($configField['valuesInSelect'])) : ?>
+						
+							<?php foreach($configField['valuesInSelect'] as $values) : ?>
+
+								<?php foreach ($values as $key => $value) : ?>
+									
+									<option value="<?= $value?>"
+										<?=(isset($inputData[$name]) && $inputData[$name] == $value) ? "selected='selected'":""?>><?= $value?>
+										
+									</option>
+							
+								<?php endforeach; ?>
+
+							<?php endforeach; ?>
+
+							
+						<?php endif;?>
+
+				</select>
+			
+			<?php endif;?>
+
+
+			
         </div>
       </div>
       <?php endforeach;?>
-    
 
-
+      <?php if(!empty($this->data['errors'])) print_r("<span>".implode("<br />",$this->data['errors'])."</span><br /><br />");?>
 
   <button class="btn btn-primary"><?= $data["config"]["submit"];?></button>
 </form>
 
-
-
-
-
-<!--
-  <form class="user">
-    <div class="form-group row">
-      <div class="col-sm-6 mb-3 mb-sm-0">
-        <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
-      </div>
-      <div class="col-sm-6">
-        <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
-      </div>
-    </div>
-    <div class="form-group">
-      <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
-    </div>
-    <div class="form-group row">
-      <div class="col-sm-6 mb-3 mb-sm-0">
-        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-      </div>
-      <div class="col-sm-6">
-        <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
-      </div>
-    </div>
-    <a href="login.html" class="btn btn-primary btn-user btn-block">
-      Register Account
-    </a>
-    <hr>
-    <a href="index.html" class="btn btn-google btn-user btn-block">
-      <i class="fab fa-google fa-fw"></i> Register with Google
-    </a>
-    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-      <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-    </a>
-  </form>
-  -->

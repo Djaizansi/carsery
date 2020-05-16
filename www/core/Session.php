@@ -1,4 +1,7 @@
 <?php 
+
+namespace Carsery\Core;
+
 session_start();
 class Session {
 

@@ -1,6 +1,8 @@
 <?php
 
-class Helpers
+namespace Carsery\Core;
+
+class Helper
 {
     public static function getUrl($controller, $action)
     {
