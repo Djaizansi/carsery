@@ -26,17 +26,28 @@ class DB
         var_dump($this->table); */
     }
 
-    public function save()
+    protected function sql($sql, $parameters = null)
     {
-        $propChild = get_object_vars($this);
-        $propDB = get_class_vars(get_class());
-        $columnsData = array_diff_key($propChild, $propDB);
-        // faire la différence entre propChild et propDB
-        // si y'a des éléments de propChild qui sont pas dans propDB, on les stock dans la
-        // variable columnsData
-        $columns = array_keys($columnsData);
+        if ($parameters) {
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute($parameters);
+        return $queryPrepared;
 
-        if (!is_numeric($this->id)) {
+        } else {
+        $queryPrepared = $this->pdo->query($sql);
+        return $queryPrepared;
+        }
+    }
+
+    public function save($objectToSave)
+    {
+        $objectArray = $objectToSave->__toArray();
+        $columnsData = array_values($objectArray);
+        $columns = array_keys($objectArray);
+
+        $params = array_combine(array_map(function($k){ return ':'.$k; }, array_keys($objectArray)),$objectArray);
+
+        if (!is_numeric($objectToSave->getId())) {
             $sql = "INSERT INTO ".$this->table. "(".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
         } else {
             //"UPDATE users SET id=:id, firstname=:firstname, .... WHERE id = :id;"
@@ -47,39 +58,10 @@ class DB
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
         
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($columnsData);
+        $this->sql($sql, $params);
     }
 
-    protected function sql($sql, $parameters = null)
-    {
-        if ($parameters) {
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($parameters);
-        return $queryPrepared;
-
-        } else {
-        $queryPrepared = $this->pdo->query($sql);
-
-        return $queryPrepared;
-        }
-    }
-
-    public function login($email,$pwd){
-        $sql = "SELECT * FROM $this->table WHERE email = :email AND pwd = :pwd";
-        $result = $this->sql($sql, [':email' => $email, ':pwd'=> $pwd]);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        if($row){
-            echo "CONNEXION RÉUSSI !";
-        }else {
-            echo "CONNEXION ÉCHOUÉE !";
-        }
-        $result->closeCursor();
-        return $row;
-
-    }
-
+    
     public function findAll() : array 
     {
         $sql = "SELECT * FROM $this->table";
@@ -230,5 +212,13 @@ class DB
     public function getTable()
     {
         return $this->table;
+    }
+
+    /**
+     * Get the value of class
+     */ 
+    public function getClass()
+    {
+        return $this->class;
     }
 }

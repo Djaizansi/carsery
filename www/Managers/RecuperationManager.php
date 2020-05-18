@@ -16,7 +16,22 @@ class RecuperationManager extends DB {
     {
         $table = $this->getTable();
         $sql = "SELECT * FROM $table WHERE mail = :mail";
-        $result = $this->sql($sql, [':mail' => $email]);
+        $results = $this->sql($sql,[":mail" => $email]);
+        $row = $results->fetch();
+        
+        if ($row) {
+            $object = new $this->class;
+            return $object->hydrate($row);
+        }else {
+            return null;
+        }
+    }
+
+    public function findById($id)
+    {
+        $table = $this->getTable();
+        $sql = "SELECT * FROM $table WHERE id = :id";
+        $result = $this->sql($sql, [':id' => $id]);
         
         $row = $result->fetch();
         
@@ -36,7 +51,7 @@ class RecuperationManager extends DB {
         return [
             "config"=>[
                     "method"=>"POST",
-                    "action"=>helpers::getUrl("user", "forget"),
+                    "action"=>helpers::getUrl("User", "recupcode"),
                     "class"=>"box",
                     "id"=>"formCodeRecup",
                     "submit"=>"Valider"
@@ -59,7 +74,7 @@ class RecuperationManager extends DB {
         return [
             "config"=>[
                     "method"=>"POST",
-                    "action"=>helpers::getUrl("user", "forget"),
+                    "action"=>helpers::getUrl("User", "changemdp"),
                     "class"=>"box",
                     "id"=>"formPwdChange",
                     "submit"=>"Valider"

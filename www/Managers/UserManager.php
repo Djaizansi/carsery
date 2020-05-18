@@ -32,6 +32,26 @@ class UserManager extends DB {
         }
     }
 
+    public function findById($id)
+    {
+        $table = $this->getTable();
+        $sql = "SELECT * FROM $table WHERE id = :id";
+        $result = $this->sql($sql, [':id' => $id]);
+        
+        $row = $result->fetch();
+        
+        if ($row) {
+
+            $object = new $this->class();
+            return $object->hydrate($row);
+
+        } else {
+
+            return null;
+
+        }
+    }
+
     public static function getRegisterForm(){
         return [
                     "config"=>[

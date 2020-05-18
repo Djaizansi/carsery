@@ -3,8 +3,8 @@
 namespace carsery\core;
 
 use carsery\Managers\UserManager;
-use carsery\models\recuperation;
-
+use carsery\Managers\RecuperationManager;
+use carsery\models\Recuperation;
 
 class Validator{
 	//$data = $_POST ou $_GET 
@@ -93,7 +93,6 @@ class Validator{
 				
 				//Vérifie que l'on a bien les champs attendus
 				//Vérifier les required
-
 				if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
 					return ["Tentative de hack !!!"];
 				}
@@ -112,18 +111,15 @@ class Validator{
 				}
 
 				if($config['type']=="text" && $name = 'code'){
-					$recup = new recuperation();
-/* 					$code = $recup->find('code','mail',$_SESSION['email']); */
-					$code = $recup->findBy(['mail' => $_SESSION['email']])/* 'code','mail',$_SESSION['email']) */;
-					$recup_code = $code->getCode();
-
-					if($recup_code !== $data[$name]){
+					$recupManager = new RecuperationManager();
+					$code = $recupManager->findByEmail($_SESSION['email']);
+					isset($code) ? $recup_code = $code->getCode() : '';
+					if(empty($recup_code) || $recup_code !== $data[$name]){
 						$listOfErrors[]=$config["errorMsg"];
 					}elseif(empty($data[$name])){
 						$listOfErrors[]= "Veuillez entrer votre code de confirmation";
 					}
 				}
-
 			}
 		}else{
 			return ["Tentative de hack !!!"];
