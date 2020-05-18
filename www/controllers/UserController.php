@@ -159,15 +159,15 @@ class UserController
                     if(isset($_POST['code'])){
                         if(!empty($_POST['code'])){
                             $verif_code = htmlspecialchars($_POST['code']);
-                            $id_exist_code = $recup->getByAttrubutMultiple('id','mail', $_SESSION['email'], 'code', $verif_code);
-                            $id_exist_confirme = $recup->find('id','mail',$_SESSION['email']);
+                            $id_exist_code = $recup->findBy(['mail' => $_SESSION['email'], 'code' => $verif_code]);
+                            $id_exist_confirme = $recup->findByEmail(['mail' => $_SESSION['email']]);
 
                             $id_exist = $id_exist_confirme->getId();
                             $id_isset_code = $id_exist_code->getId();
 
                             $id = isset($id_exist) ? $id_exist : '';
                             $id_code = isset($id_isset_code) ? $id_isset_code : '';
-                            $donneeCodeConfirme = $recup->find('*','id',$id);
+                            $donneeCodeConfirme = $recup->find($id);
 
                             if(!empty($id_code)){
                                 if(!empty($id_exist_confirme)){
@@ -203,7 +203,7 @@ class UserController
         $recup = new RecuperationManager();
         $_SESSION['email'] = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 
-        $confirme = $recup->find('confirme', 'mail', $_SESSION['email']);
+        $confirme = $recup->findByEmail(['mail' => $_SESSION['email']]);
 
         $confirmation = isset($confirme) ? $confirme->getConfirme() : '';
 
