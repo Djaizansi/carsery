@@ -24,7 +24,7 @@ class PageController {
 
     public function deletePageAction(){
         $page = new Page();
-        $pageFound = $page->find('*','id',$_GET['id']);
+        $pageFound = $page->find($_GET['id']);
         if(!isset($pageFound)){
             include_once "./error/404.php";
         }else {

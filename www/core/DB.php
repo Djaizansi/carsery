@@ -9,18 +9,21 @@ class DB
 {
     private $table;
     private $pdo;
+    protected $class;
 
-    public function __construct()
+    public function __construct(string $class, string $table)
     {
+        $this->class = $class;
         //SINGLETON
         try {
             $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
         } catch (Exception $e) {
             die("Erreur SQL : ".$e->getMessage());
         }
-        $table = DB_PREFIXE.get_called_class();
+        $this->table = DB_PREFIXE.$table;
+        /* $table = DB_PREFIXE.get_called_class();
         $this->table = DB_PREFIXE.substr($table,strrpos($table,'\\')+1,strlen($table)); //.get_called_class() => la classe appelé quand on se dirige vers register est USER
-        
+        var_dump($this->table); */
     }
 
     public function save()
@@ -77,7 +80,92 @@ class DB
 
     }
 
-    public function find(string $recherche ,string $attribut = NULL, $value = NULL){
+    public function findAll() : array 
+    {
+        $sql = "SELECT * FROM $this->table";
+        $result = $this->sql($sql);
+        $rows = $result->fetchAll();
+        $find = [];
+        foreach($rows as $row){
+            $object = new $this->class();
+            array_push($find, $object->hydrate($row));
+        }
+        
+        return $find;
+    }
+
+    public function findBy(array $params, array $order = null): array{
+        $results = array();
+        $sql = "SELECT * FROM $this->table WHERE ";
+        foreach($params as $key => $value){
+            if(is_string($value)){
+                $comparator = 'LIKE';
+            }else{
+                $comparator = '=';
+            }
+            $sql .= "$key $comparator :$key AND ";
+
+            $params[":$key"] = $value;
+            unset($params[$key]);
+        }
+        $sql = rtrim($sql,'AND ');
+
+        if($order){
+            $sql .= "ORDER BY '". key($order). " ". $order[key($order)];
+        }
+
+        $result = $this->sql($sql, $params);
+        $rows = $result->fetchAll();
+
+        foreach($rows as $row){
+            $object = new $this->class();
+            array_push($results, $object->hydrate($row));
+        }
+
+        return $results;
+    }
+
+    public function count(array $params): int
+    {
+        $results = array();
+
+        $sql = "SELECT COUNT(*) FROM $this->table WHERE";
+
+        foreach($params as $key => $value){
+            if(is_string($value)){
+                $comparator = 'LIKE';
+            }else{
+                $comparator = '=';
+            }
+            $sql .= "$key $comparator :$key AND";
+
+            $params[":$key"] = $value;
+            unset($params[$key]);
+        }
+        $sql = rtrim($sql, 'AND');
+
+        $result = $this->sql($sql, $params);
+        return $result->fetchColumn();
+
+        
+    }
+
+    public function find(int $id): ?\carsery\models\Model
+    {
+        $sql = "SELECT * FROM $this->table WHERE id =:id";
+        $results = $this->sql($sql,[':id' => $id]);
+        $row = $results->fetch();
+
+        if ($row) {
+            $object = new $this->class;
+            return $object->hydrate($row);
+        }else {
+            return null;
+        }
+
+    }
+
+    /* public function find(string $recherche ,string $attribut = NULL, $value = NULL){
         $attribut_exist = isset($attribut) ? " WHERE $attribut = :$attribut" : '';
         $donnee_exist = isset($attribut) ? [":$attribut" => $value] : '';
         $sql = "SELECT $recherche FROM $this->table".$attribut_exist;
@@ -105,7 +193,7 @@ class DB
             $result->closeCursor();
             return $users;
         }
-    }
+    } */
 
     public function getByAttribut($elementAttribute, $valueAttribute, $value) {
         $sql = "SELECT $elementAttribute FROM $this->table WHERE $valueAttribute = :$valueAttribute";
@@ -134,5 +222,13 @@ class DB
     public function delete($attribut, $value){
         $sql = "DELETE FROM $this->table WHERE $attribut = :$attribut";
         $result = $this->sql($sql, [":$attribut" => $value]);
+    }
+
+    /**
+     * Get the value of table
+     */ 
+    public function getTable()
+    {
+        return $this->table;
     }
 }

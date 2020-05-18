@@ -2,7 +2,7 @@
 
 namespace carsery\core;
 
-use carsery\models\users;
+use carsery\Managers\UserManager;
 use carsery\models\recuperation;
 
 
@@ -26,11 +26,13 @@ class Validator{
 				
 				//Vérifier l'email
 				if($config["type"]=="email"){
-					$user = new users();
-					$email = $user->find("email","email",$data[$name]);
+					$user = new UserManager();
+					$email = $user->findByEmail($data[$name]);
+					!is_null($email) ? $unEmail = $email->getEmail() : '';
+					$mail = isset($unEmail) ? $unEmail : '';
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
-					}elseif($email){
+					}elseif($mail){
 						$listOfErrors[]="Votre email existe déjà";
 					}
 				}
@@ -98,18 +100,21 @@ class Validator{
 				
 				//Vérifier l'email
 				if($config["type"]=="email"){
-					$user = new users();
-					$email = $user->find("email","email",$data[$name]);
+					$user = new UserManager();
+					$email = $user->findByEmail($data[$name]);
+					!is_null($email) ? $unEmail = $email->getEmail() : '';
+					$mail = isset($unEmail) ? $unEmail : '';
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
-					}elseif(!$email){
+					}elseif(!$mail){
 						$listOfErrors[]="Votre email n'existe pas";
 					}
 				}
 
 				if($config['type']=="text" && $name = 'code'){
 					$recup = new recuperation();
-					$code = $recup->find('code','mail',$_SESSION['email']);
+/* 					$code = $recup->find('code','mail',$_SESSION['email']); */
+					$code = $recup->findBy(['mail' => $_SESSION['email']])/* 'code','mail',$_SESSION['email']) */;
 					$recup_code = $code->getCode();
 
 					if($recup_code !== $data[$name]){

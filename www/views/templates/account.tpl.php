@@ -7,7 +7,7 @@
     <meta name="author" content="Youcef Jallali, Marwane Bouabdellah, Mel Dispagne, Nesrine Tebaili, Guillaume Well">
     <title>Carsery - Espace Authentification</title>
 
-    <link rel="stylesheet" href="../public/dist/main.css">
+    <link rel="stylesheet" href="../public/dist/mains.css">
     <!-- CSS personnalisée -->
     <link rel="stylesheet" href="../public/css/styles.css">
 
