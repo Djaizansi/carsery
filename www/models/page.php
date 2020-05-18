@@ -2,11 +2,7 @@
 
 namespace carsery\models;
 
-use carsery\core\DB;
-use carsery\core\Helpers;
-
-
-class page extends DB
+class page extends Model
 {
     protected $id;
     protected $titre;
@@ -14,26 +10,6 @@ class page extends DB
     protected $date;
     protected $publie;
     protected $action;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function hydrate(array $donnees){
-        foreach ($donnees as $key => $value){
-        // On récupère le nom du setter correspondant à l'attribut.
-            $method = 'set'.ucfirst($key);
-        // Si le setter correspondant existe bien.
-            if (method_exists($this, $method)){
-            // On appelle le setter.
-            $this->$method($value);
-            }
-        }
-        return $this;
-    }
-
-    
 
     /**
      * Get the value of id
@@ -153,37 +129,5 @@ class page extends DB
         $this->action = $action;
 
         return $this;
-    }
-
-    public static function getPageForm(){
-        return [
-                    "config"=>[
-                            "method"=>"POST",
-                            "action"=>Helpers::getUrl("Page", "addPage"),
-                            "class"=>"box",
-                            "id"=>"formAddPage",
-                            "submit"=>"Créer"
-                    ],
-
-                    "fields"=>[
-                        "titre"=>[
-                            "type"=>"text",
-                            "placeholder"=>"Entrez un titre",
-                            /* "class"=>"form-control form-control-user", */
-                            "id"=>"id_titre",
-                            "required"=>true,
-                            "errorMsg"=>"Votre email n'est pas valide"
-                        ],
-
-                        "action"=>[
-                            "type"=>"text",
-                            "placeholder"=>"Quel est votre action",
-                            /* "class"=>"form-control form-control-user", */
-                            "id"=>"id_action",
-                            "required"=>true,
-                            "errorMsg"=>"Votre email n'est pas valide"
-                        ],
-                    ]
-                ];
     }
 }

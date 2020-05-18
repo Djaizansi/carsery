@@ -82,3 +82,8 @@
 /test:
   controller: "User"
   action: "get"
+
+
+/azerty:
+    controller: "Page"
+    action: "azertyuiop"

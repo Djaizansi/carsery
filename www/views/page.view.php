@@ -1,45 +1,18 @@
 <?php
-$listPage = $page->find('*');
-$listPageCree = $page->find('*', 'publie', 0);
-$listPagePubliee = $page->find('*', 'publie', 1);
+$listPage = $pageManager->findAll();
+$listPageCree = $pageManager->findBy(['publie' => 0]);
+$listPagePubliee = $pageManager->findBy(['publie' => 1]);
 
-!empty($listPage) ? $tabTotal[] = $listPage : $tabTotal = [];
-!empty($listPageCree) ? $tabCreeTotal[] = $listPageCree : $tabCreeTotal = [];
-!empty($listPagePubliee) ? $tabPublieTotal[] = $listPagePubliee : $tabPublieTotal = [];
-
-
-$total = count($listPage) <= 1 ? count($tabTotal) : count($listPage);
-$cree = count($listPageCree) <= 1 ? count($tabCreeTotal) : count($listPageCree);
-$publie = count($listPagePubliee) <= 1 ? count($tabPublieTotal) : count($listPagePubliee);
+$total = count($listPage);
+$cree = count($listPageCree);
+$publie = count($listPagePubliee);
 
 
-$donnee = count($listPage) > 1 ? $listPage : $tabTotal;
+$donnee = $listPage;
 $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
 
-if(count($listPage) < 1){
-    $donnee = $tabTotal;
-}else{
-    $donnee = $listPage;
-}
-
-if($tri === 'cree'){
-    if(is_array($listPageCree) && count($listPageCree) > 1){
-        $donnee = $listPageCree;
-    }else {
-        $donnee = $tabCreeTotal;
-    }
-}elseif($tri === 'publie'){
-    if(is_array($listPagePubliee) && count($listPagePubliee) > 1){
-        $donnee = $listPagePubliee;
-    }else {
-        $donnee = $tabPublieTotal;
-    }
-}
-
-/* $tri === 'total' ? $donnee = $listPage : '';
-$tri === 'cree' ? $donnee = $listPageCree : '';
-$tri === 'publie' ? $donnee = $tabPublieTotal : ''; */
-
+($tri === 'cree') ? $donnee = $listPageCree : '';
+($tri === 'publie') ? $donnee = $listPagePubliee : '';
 
 ?>
 <div class="container">

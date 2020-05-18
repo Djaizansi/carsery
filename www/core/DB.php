@@ -147,58 +147,7 @@ class DB
 
     }
 
-    /* public function find(string $recherche ,string $attribut = NULL, $value = NULL){
-        $attribut_exist = isset($attribut) ? " WHERE $attribut = :$attribut" : '';
-        $donnee_exist = isset($attribut) ? [":$attribut" => $value] : '';
-        $sql = "SELECT $recherche FROM $this->table".$attribut_exist;
-        $result = $this->sql($sql,$donnee_exist);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
 
-        $row = $result->fetch();
-        $class = get_called_class();
-
-        if(isset($attribut) && $result->rowCount() < 2){
-            if ($row) {
-                $object = new $class();
-                return $object->hydrate($row);
-            } else {
-                return null;
-            }
-        }else {
-            $users = [];
-            isset($users) ? $users : NULL;
-            while($row){
-                $object = new $class();
-                $users[] = $object->hydrate($row);
-                $row = $result->fetch();
-            }
-            $result->closeCursor();
-            return $users;
-        }
-    } */
-
-    public function getByAttribut($elementAttribute, $valueAttribute, $value) {
-        $sql = "SELECT $elementAttribute FROM $this->table WHERE $valueAttribute = :$valueAttribute";
-        $result = $this->sql($sql, [":$valueAttribute" => $value]);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        return $row;
-    }
-
-    public function getByAttrubutMultiple($elementAttribute, $valueAttribute, $value, $addparameterAttribute, $addvalue){
-        $sql = "SELECT $elementAttribute FROM $this->table WHERE $valueAttribute = :$valueAttribute AND $addparameterAttribute = :$addparameterAttribute";
-        $result = $this->sql($sql, [":$valueAttribute" => $value, ":$addparameterAttribute" => $addvalue]);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        
-        $class = get_called_class();
-        if ($row) {
-            $object = new $class();
-            return $object->hydrate($row);
-        } else {
-            return null;
-        }
-    }
     
 
     public function delete($attribut, $value){
