@@ -5,11 +5,13 @@ namespace carsery\controllers;
 use carsery\core\Helpers;
 use carsery\core\View;
 use carsery\core\Session;
-use carsery\models\users;
 use carsery\core\Validator;
-use carsery\models\recuperation;
+use carsery\Managers\RecuperationManager;
 use carsery\mail\template\ForgetMail;
 use carsery\core\Mail;
+use carsery\Managers\UserManager;
+use carsery\models\Recuperation;
+use carsery\models\User;
 
 class UserController
 {
@@ -22,13 +24,21 @@ class UserController
         }
     }
 
+    public function getAction($params = null)
+    {
+        $userManager = new UserManager();
+        $liste = $userManager->findAll();
+        $partialUsers = $userManager->findBy(['firstname' => "Youcef", 'lastname' => "Jallali"]);
+        $test = $partialUsers->getFirstname();
+    }
+
     public function loginAction(){
 
         $function = new Session();
         if(empty($_SESSION['id'])){
             $myView = new View("login","account");
-            $configFormUser = users::getLoginForm();
-            $user = new users();
+            $configFormUser = UserManager::getLoginForm();
+            $userManager = new UserManager();
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 //Vérification des champs
@@ -38,9 +48,10 @@ class UserController
                     $myView->assign('errors',$errors);
                 } else {
                     if(!empty($_POST)){
-                        $user_found = $user->find('*','email',$_POST['email']);
-                        $pwd = $user_found->getPwd();
-                        $email = $user_found->getEmail();
+                        /* $user_found = $user->find('*','email',$_POST['email']); */
+                        $user_found = $userManager->findByEmail($_POST['email']);
+                        !is_null($user_found) ? $pwd = $user_found->getPwd() : '';
+                        !is_null($user_found) ? $email = $user_found->getEmail() : '';
 
                         $pwd_user = isset($pwd) ? $pwd : '';
                         $email_user = isset($email) ? $email : '';
@@ -76,9 +87,10 @@ class UserController
 
         if(empty($_SESSION['id'])){
             $myView = new View("forget", "account");
-            $configFormUser = users::getMdpForm();
-            $user = new users();
-            $recup = new recuperation();
+            $configFormUser = UserManager::getMdpForm();
+            $userManager = new UserManager();
+            $recup = new Recuperation();
+            $recupManager = new RecuperationManager();
             $envoie = new Mail();
             isset($_POST['code']) ? $_POST['code'] : '';
 
@@ -91,8 +103,8 @@ class UserController
                 } else {
                     $recup_email = $_POST['email'];
 
-                    $user_found_lastname = $user->find('lastname','email',$recup_email);
-                    $user_found_id = $recup->find('id','mail',$recup_email);
+                    $user_found_lastname = $userManager->findByEmail($recup_email);
+                    $user_found_id = $recupManager->findByEmail($recup_email);
 
                     $nom = isset($user_found_lastname) ? $user_found_lastname->getLastname() : '';
                     $id = isset($user_found_id) ? $user_found_id->getId() : '';
@@ -103,16 +115,16 @@ class UserController
                         $recup_code .= mt_rand(0,9);
                     }
                     if(!empty($_POST) && empty($id)){
-                        isset($_POST['email']) ? $recup->setMail($_POST['email']) : "";
+                        var_dump(isset($_POST['email']) ? $recup->setMail($_POST['email']) : "");
                         $recup->setCode($recup_code);
                         $recup->setConfirme('0');
-                        $recup->save();
+                        $recupManager->save($recup);
                     }else {
                         $recup->setId($id);
                         isset($_POST['email']) ? $recup->setMail($_POST['email']) : "";
                         $recup->setCode($recup_code);
                         $recup->setConfirme('0');
-                        $recup->save();
+                        $recupManager->save($recup);
                     }
                     $unMail = ForgetMail::forgetpwd($nom, $recup_code);
                     $unEnvoie = $envoie->sendmail('Récupération mot de passe', $unMail, $recup_email);
@@ -135,9 +147,11 @@ class UserController
 
         $function = new Session();
         if(!empty($_SESSION['email'])){
-            $recup = new recuperation();
-            $configFormRecup = recuperation::getCodeForm();
+            $recupManager = new RecuperationManager();
+            $recup = new Recuperation();
+            $configFormRecup = RecuperationManager::getCodeForm();
             $myView = new View("recupcode", "account");
+            $myView->assign("configFormRecup", $configFormRecup);
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 //Vérification des champs
@@ -150,15 +164,16 @@ class UserController
                     if(isset($_POST['code'])){
                         if(!empty($_POST['code'])){
                             $verif_code = htmlspecialchars($_POST['code']);
-                            $id_exist_code = $recup->getByAttrubutMultiple('id','mail', $_SESSION['email'], 'code', $verif_code);
-                            $id_exist_confirme = $recup->find('id','mail',$_SESSION['email']);
+                            $id_exist_code = $recupManager->findBy(['mail' => $_SESSION['email'], 'code' => $verif_code])[0];
+                            var_dump($id_exist_code);
+                            $id_exist_confirme = $recupManager->findByEmail($_SESSION['email']);
 
-                            $id_exist = $id_exist_confirme->getId();
                             $id_isset_code = $id_exist_code->getId();
+                            $id_exist = $id_exist_confirme->getId();
 
                             $id = isset($id_exist) ? $id_exist : '';
                             $id_code = isset($id_isset_code) ? $id_isset_code : '';
-                            $donneeCodeConfirme = $recup->find('*','id',$id);
+                            $donneeCodeConfirme = $recupManager->findById($id);
 
                             if(!empty($id_code)){
                                 if(!empty($id_exist_confirme)){
@@ -170,7 +185,7 @@ class UserController
                                     $recup->setMail($unMail);
                                     $recup->setCode($unCode);
                                     $recup->setConfirme('1');
-                                    $recup->save();
+                                    $recupManager->save($recup);
 
                                     header('Location: http://localhost/changemdp');
                                 }
@@ -180,34 +195,33 @@ class UserController
                         }
                     }
                 }
-            $myView->assign("configFormRecup", $configFormRecup);
-        }
+            }
     }else{
         include_once "error/404.php";
     }
     }
 
     public function changemdpAction() {
-        $configFormPwd = recuperation::getPwdForm();
-        $user = new users();
+        $configFormPwd = RecuperationManager::getPwdForm();
+        $userManager = new UserManager();
+        $user = new User();
         $function = new Session();
-        $recup = new recuperation();
+        $recup = new RecuperationManager();
         $_SESSION['email'] = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 
-        $confirme = $recup->find('confirme', 'mail', $_SESSION['email']);
+        $confirme = $recup->findByEmail($_SESSION['email']);
 
         $confirmation = isset($confirme) ? $confirme->getConfirme() : '';
 
         if($confirmation == 1) {
-            $id_exist_user = $user->find('id','email',$_SESSION['email']);
+            $id_exist_user = $userManager->findByEmail($_SESSION['email']);/* 'id','email',$_SESSION['email']); */
             $id = $id_exist_user->getId();
             
-            $unUser = $user->find('*', 'id', $id);
-
+            $unUser = $userManager->findById($id);
             $unPrenom = $unUser->getFirstname();
             $unNom = $unUser->getLastname();
-            $unStatut = $unUser->getStatut();
-            $myView = new View("changemdp", "front");
+            $unStatut = $unUser->getStatus();
+            $myView = new View("changemdp", "account");
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $errors = Validator::checkFormPwd($configFormPwd ,$_POST);
@@ -222,7 +236,7 @@ class UserController
                         $user->setEmail($_SESSION['email']);
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus($unStatut);
-                        $user->save();
+                        $userManager->save($user);
                         header("Location: /");
                         $del = $recup->delete('mail',$_SESSION['email']);
                         session_destroy();
@@ -237,8 +251,9 @@ class UserController
 
     public function registerAction()
     {
-        $configFormUser = users::getRegisterForm();
-        $user = new users();
+        $configFormUser = UserManager::getRegisterForm();
+        $userManager = new UserManager();
+        $user = new User();
         $Session_Start = new Session();
         $myView = new View("register", "account");
         
@@ -257,7 +272,7 @@ class UserController
                         isset($_POST['email']) ? $user->setEmail($_POST['email']) : "";
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus('Client');
-                        $user->save();
+                        $userManager->save($user);
                         header("Location: /");
                     }
                 }

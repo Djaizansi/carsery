@@ -235,11 +235,18 @@ a {
   display: none;
 }
 
-.italic {
-  font-style: italic;
+.box-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
 }
 
-/* Composants */
+.border {
+  border: 1px solid #babbbd !important;
+}
 
 .btn {
   text-transform: uppercase;
@@ -350,80 +357,212 @@ a {
   border-color: #f5c6cb;
 }
 
-.alert--primary {
-  color: #004085;
-  background-color: #cce5ff;
-  border-color: #b8daff;
-}
-
-.card-theme {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  width: 15rem;
-  background-color: #5DADE2;
-  color: #FFF;
-  cursor: pointer;
-}
-
-.card-theme:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.card-theme-info {
-  padding: 2px 16px;
-}
-
-/* The Modal (background) */
-
 .modal {
-  display: none;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Sit on top */
   left: 0;
   top: 0;
   width: 100%;
-  /* Full width */
   height: 100%;
-  /* Full height */
+  display: none;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+          align-items: flex-start;
+  /* or center */
+  z-index: 1000;
+  /* depending on what z-index values exist in your page, in order for the modal layer to sit on top of other content */
   overflow: auto;
-  /* Enable scroll if needed */
-  background-color: black;
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  /* enable scrolling if needed - although this is not really necessary since we are going take care of overflow in modal-content */
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* Modal Content/Box */
+.modal.modal-show {
+  -webkit-animation: fadeIn 0.1s ease-in-out forwards;
+          animation: fadeIn 0.1s ease-in-out forwards;
+}
+
+.modal.modal-hide {
+  -webkit-animation: fadeOut 0.1s ease-in-out 0.1s forwards;
+          animation: fadeOut 0.1s ease-in-out 0.1s forwards;
+}
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40%;
-  /* Could be more or less, depending on screen size */
+  position: relative;
+  background-color: #fff;
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 0.25rem;
+  width: 50%;
+  max-height: 75%;
+  overflow: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* The Close Button */
+.modal.modal-show .modal-content {
+  -webkit-animation: fadeInDown 0.3s ease-in-out forwards;
+          animation: fadeInDown 0.3s ease-in-out forwards;
+}
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+.modal.modal-hide .modal-content {
+  -webkit-animation: fadeOutUp 0.2s ease-in-out forwards;
+          animation: fadeOutUp 0.2s ease-in-out forwards;
+}
+
+.modal-content h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-content p {
+  margin: 1rem 0;
+  line-height: 1.5rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.75rem;
   font-weight: bold;
+  padding: 0 0.75rem;
+  /* width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+.modal-close:hover,
+.modal-close:focus {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-3rem);
+            transform: translateY(-3rem);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-3rem);
+            transform: translateY(-3rem);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-3rem);
+            transform: translateY(-3rem);
+  }
+}
+
+@keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-3rem);
+            transform: translateY(-3rem);
+  }
+}
+
+@media (max-width: 992px) {
+  html {
+    font-size: 14px;
+  }
+
+  .modal-content {
+    width: 80%;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    font-size: 12px;
+  }
+
+  .modal-content {
+    padding: 2rem 1rem 1rem 1rem;
+    width: 90%;
+  }
+
+  .modal-content h1 {
+    margin-bottom: 1.5rem;
+  }
 }
 

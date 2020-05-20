@@ -22,7 +22,7 @@ mix.setPublicPath('../dist');
 
 // mix.minify('./dist/main.js');
 
-mix.sass('../src/scss/main.scss', '../dist/');
+mix.sass('../src/scss/mains.scss', '../dist/');
 
 module.exports = {
   //...

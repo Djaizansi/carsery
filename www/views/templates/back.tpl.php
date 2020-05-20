@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <!-- Framework CSS -->
-    <link rel="stylesheet" href="../public/dist/main.css">
+    <link rel="stylesheet" href="../public/dist/mains.css">
     <!-- Dashboard CSS -->
-    <link rel="stylesheet" href="../public/css/dashboard.css">
+    <link rel="stylesheet" href="../public/css/dashboards.css">
     <!-- Loader CSS -->
     <link rel="stylesheet" href="../public/css/loader.css">
     <!-- FontAwesome -->
@@ -24,9 +24,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <!-- Favicon -->
     <link rel="icon" href="../public/img/carsery.png">
-    <!-- Loader -->
-    <script src="../public/js/loader.js"></script>
-    <!-- Graph utilisateur -->
+    <!-- SCRIPTJS -->
     <script src="../public/js/user.js"></script>
 </head>
 <body>
@@ -38,7 +36,7 @@
     
         <header class="header">
             <div class="header__search">Bienvenue sur votre dashboard</div>
-            <div class="header__avatar"><a href="<?= Helpers::getUrl("User","deconnecter")?>" style="text-decoration: none; color: #fff;"><i class="fas fa-sign-in-alt" style="padding-right: 10px"></i>Quitter</a></div>
+            <div class="header__avatar"><a href="<?= Helpers::getUrl("User","deconnecter")?>" style="text-decoration: none; color: #fff;">Déconnexion</a></div>
         </header>
 
         <aside class="sidenav">
@@ -79,9 +77,7 @@
         </footer>
 
     </div>
-    <!-- Menu pour téléphone et tablette -->
     <script src="../public/js/menu.js"></script>
-    <!-- Modals -->
-    <script src="../public/js/modals.js"></script>
+    <script src="../public/js/scriptss.js"></script>
 </body>
 </html>

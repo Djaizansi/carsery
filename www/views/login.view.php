@@ -16,7 +16,7 @@
         <?php $this->addModal("form", $configFormUser );?>
 
         <div class="txt-center">
-            <a href="<?php echo Helpers::getUrl("User", "register") ?>">Nouveau membre ?</a>
+            <a href="<?php echo Helpers::getUrl("User", "register") ?>">Sign up</a>
             <br>
             <a href="<?php echo Helpers::getUrl("User", "forget") ?>">Mot de passe oublié ?</a>
         </div>

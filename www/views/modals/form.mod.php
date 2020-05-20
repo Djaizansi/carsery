@@ -34,7 +34,7 @@ class="<?= $data["config"]["class"]?>">
 
 
 
-  <button class="btn btn--primary"><?= $data["config"]["submit"];?></button>
+  <button class="btn btn--primary" id="btnAdd"><?= $data["config"]["submit"];?></button>
 </form>
 
 

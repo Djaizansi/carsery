@@ -5,12 +5,14 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Vous n'êtes pas connecté</title>
-	<!-- Fonts -->
+
+	<!-- FONTS -->
 	<link href='http://fonts.googleapis.com/css?family=Signika:400,300,600,700' rel='stylesheet' type='text/css'>
+	<!-- EXTERNAL STYLESHEETS -->
 	<script src="https://kit.fontawesome.com/42ce300797.js" crossorigin="anonymous"></script>
-	<!-- Animation -->
+	<!-- ANIMATION -->
 	<link href="public/css/animation.css" rel="stylesheet" type="text/css" />
-	<!-- Fichier CSS personnalisé -->
+	<!-- MAIN STYLESHEETS -->
 	<link rel="stylesheet" href="public/css/404.css">
 	<!-- Favicons -->
 	<link rel="icon" href="public/img/carsery.png">
