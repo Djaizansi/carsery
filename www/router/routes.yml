@@ -18,10 +18,6 @@
   controller: "Apparence"
   action: "apparence"
 
-/apparence/themes:
-  controller: "Apparence"
-  action: "changement"
-
 /forum: 
   controller: "Forum"
   action: "forum"
@@ -50,6 +46,7 @@
   controller: "User"
   action: "add"
 
+
 /recupcode:
   controller: "User"
   action: "recupcode"
@@ -73,3 +70,20 @@
 /mdpoublie:
   controller: "User"
   action: "forget"
+
+/ajouter-page:
+    controller: "Page"
+    action: "addPage"
+
+/supprimer-page:
+    controller: "Page"
+    action: "deletePage"
+
+/test:
+  controller: "User"
+  action: "get"
+
+
+/azerty:
+    controller: "Page"
+    action: "azertyuiop"

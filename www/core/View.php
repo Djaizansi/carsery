@@ -3,8 +3,7 @@
 namespace carsery\core;
 
 use carsery\core\Session;
-use carsery\models\users;
-
+use carsery\Managers\UserManager;
 
 
 class View
@@ -19,8 +18,8 @@ class View
         $this->setView($view);
         if($this->template === "back"){
             $connecter = new Session();
-            $user = new users();
-            $utilisateur = $user->find('firstname','id',$_SESSION['id']);
+            $userManager = new UserManager();
+            $utilisateur = $userManager->find($_SESSION['id']);
             $prenom = $utilisateur->getFirstname();
             self::assign("firstname",$prenom);
         }
