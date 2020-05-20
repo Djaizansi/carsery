@@ -36,7 +36,7 @@
     
         <header class="header">
             <div class="header__search">Bienvenue sur votre dashboard</div>
-            <div class="header__avatar"><a href="<?= Helpers::getUrl("User","deconnecter")?>" style="text-decoration: none; color: #fff;">Déconnexion</a></div>
+            <div class="header__avatar"><a href="<?= Helpers::getUrl("User","deconnecter")?>" style="text-decoration: none; color: #fff;"><i class="fas fa-sign-in-alt" style="padding-right: 10px"></i>Quitter</a></div>
         </header>
 
         <aside class="sidenav">

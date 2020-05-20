@@ -248,6 +248,10 @@ a {
   border: 1px solid #babbbd !important;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .btn {
   text-transform: uppercase;
   display: inline-block;
@@ -355,6 +359,30 @@ a {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
+}
+
+.alert--primary {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+
+.card-theme {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  width: 15rem;
+  background-color: #5DADE2;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.card-theme:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-theme-info {
+  padding: 2px 16px;
 }
 
 .modal {
