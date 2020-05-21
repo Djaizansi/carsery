@@ -66,7 +66,7 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
                         <td>
                             <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
                             <button data-modal-target="modal1" data-id="<?= $unePage->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
-                            
+                            <a href="/edit-page?id=<?=$unePage->getId()?>"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>
@@ -77,7 +77,7 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
     <div class="modal" id="modal1"> <!-- This is the background overlay -->
         <div class="modal-content"> <!-- This is the actual modal/popup box -->
             <span class="modal-close">&times;</span>
-            <p>Souhaitez-vous vraiment supprimer cette ?</p>
+            <p>Souhaitez-vous vraiment supprimer cette page?</p>
 			<a id="btnYes" class="btn btn--success">Oui</a>
 			<a id="btnNo" class="btn btn--danger">Non</a>
         </div>
