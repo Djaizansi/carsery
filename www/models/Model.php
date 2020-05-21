@@ -4,7 +4,11 @@ namespace carsery\models;
 
 use carsery\core\Exceptions\BDDException;
 
-class Model
+interface iModel {
+    public function hydrate(array $donnees);
+}
+
+class Model implements iModel
 {
     public function __toArray(): array
     {
