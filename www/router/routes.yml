@@ -79,11 +79,10 @@
     controller: "Page"
     action: "deletePage"
 
-/test:
-  controller: "User"
-  action: "get"
+/edit-page:
+  controller: "Page"
+  action: "modifierPage"
 
-
-/azerty:
-    controller: "Page"
-    action: "azertyuiop"
+/json:
+  controller: "Page"
+  action: "json"
