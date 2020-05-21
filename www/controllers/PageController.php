@@ -9,8 +9,17 @@ use carsery\core\Session;
 use carsery\models\Page;
 use carsery\Managers\PageManager;
 use carsery\Managers\UserManager;
+use carsery\models\Json;
 
 class PageController {
+
+    public function jsonAction(){
+        $userManager = new UserManager();
+        $user = $userManager->find(1)->__toArray();
+        $json = new Json($user);
+        echo json_encode($json,JSON_PRETTY_PRINT);
+    }
+
     public function pageAction() 
     {
         if(Session::estConnecte()){
