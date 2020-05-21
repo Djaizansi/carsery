@@ -11,7 +11,7 @@ class VoitureController {
         if(Session::estConnecte()){
             $myView = new View("voiture");
         }else {
-            include_once "./error/notConnected.php";
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }

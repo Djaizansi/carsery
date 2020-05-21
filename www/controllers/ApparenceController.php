@@ -2,6 +2,7 @@
 
 namespace carsery\controllers;
 
+use carsery\core\Exceptions\RouteException;
 use carsery\core\Session;
 use carsery\core\View;
 
@@ -11,7 +12,7 @@ class ApparenceController {
         if(Session::estConnecte()){
             $myView = new View("apparence");
         }else {
-            include_once "./error/notConnected.php";
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }

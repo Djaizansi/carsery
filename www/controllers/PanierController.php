@@ -2,6 +2,7 @@
 
 namespace carsery\controllers;
 
+use carsery\core\Exceptions\RouteException;
 use carsery\core\View;
 use carsery\core\Session;
 
@@ -11,7 +12,7 @@ class PanierController {
         if(Session::estConnecte()){
             $myView = new View("panier");
         }else {
-            include_once "./error/notConnected.php";
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }
