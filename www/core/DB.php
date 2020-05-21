@@ -3,7 +3,6 @@
 namespace carsery\core;
 
 use carsery\core\Exceptions\BDDException;
-use carsery\core\Exceptions\MyThrowable;
 use PDO;
 use Exception;
 
@@ -74,7 +73,7 @@ class DB
             $object = new $this->class();
             try {
                 array_push($find, $object->hydrate($row));
-            } catch (MyThrowable $e){
+            } catch (BDDException $e){
                 die($e->getMessage());
             }
         }
