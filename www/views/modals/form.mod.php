@@ -1,4 +1,8 @@
-<?php $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
+<?php
+
+use carsery\Managers\PageManager;
+
+$inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
 
 <form 
 method="<?= $data["config"]["method"]?>" 
@@ -16,17 +20,36 @@ class="<?= $data["config"]["class"]?>">
                 <img src="script/captcha.php" width="300px">
             <?php endif;?>
 
-            <input 
-                value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
-                  <?php  /* $inputData -> $_POST | $name => les champs : firstname, lastname, email ... | $inputdData[$name]
-                  => $_POST[$name]=> ex: $_POST["firstname"] 
-                  value ici permet de stocker la valeur et de la laisser dans le champs */ ?>
-                type="<?= $configField["type"]??'' ?>"
+            <?php if($configField["balise"] === "textarea"): ?>
+              <textarea
+                value="<?= (isset($inputData[$name])) ? $inputData[$name] : '' ?>"
                 name="<?= $name??'' ?>"
-                placeholder="<?= $configField["placeholder"]??'' ?>"
-                class="<?= $configField["class"]??'' ?>"
                 id="<?= $configField["id"]??'' ?>"
-                <?= (!empty($configField["required"])) ? "required='required'" : "" ?> >
+                type="<?= $configField["type"]??'' ?>"
+                placeholder="<?= $configField["placeholder"]??'' ?>"
+              >
+              <?php if(empty($configField["placeholder"])): ?>
+                  <?php $pageManager = new PageManager() ?>
+                  <?php $pageFound = $pageManager->find($_GET['id']) ?>
+                  <?php $titre = $pageFound->getTitre() ?>
+                  <?= file_get_contents("Views/$titre.view.php") ?>
+              <?php else: ?>
+              <?php endif ?>
+
+              </textarea>
+            <?php else: ?>
+              <input 
+                  value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
+                    <?php  /* $inputData -> $_POST | $name => les champs : firstname, lastname, email ... | $inputdData[$name]
+                    => $_POST[$name]=> ex: $_POST["firstname"] 
+                    value ici permet de stocker la valeur et de la laisser dans le champs */ ?>
+                  type="<?= $configField["type"]??'' ?>"
+                  name="<?= $name??'' ?>"
+                  placeholder="<?= $configField["placeholder"]??'' ?>"
+                  class="<?= $configField["class"]??'' ?>"
+                  id="<?= $configField["id"]??'' ?>"
+                  <?= (!empty($configField["required"])) ? "required='required'" : "" ?> >
+            <?php endif ?>
         <!--  </div>
       </div> -->
       <?php endforeach;?>
