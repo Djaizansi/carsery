@@ -2,6 +2,7 @@
 
 namespace carsery\controllers;
 
+use carsery\core\Exceptions\RouteException;
 use carsery\core\Helpers;
 use carsery\core\View;
 use carsery\core\Session;
@@ -20,16 +21,8 @@ class UserController
         if(Session::estConnecte()){
             $myView = new View("gestionuser");
         }else {
-            include_once "./error/notConnected.php";
+            throw new RouteException("Vous n'êtes pas connecté");
         }
-    }
-
-    public function getAction($params = null)
-    {
-        $userManager = new UserManager();
-        $liste = $userManager->findAll();
-        $partialUsers = $userManager->findBy(['firstname' => "Youcef", 'lastname' => "Jallali"]);
-        $test = $partialUsers->getFirstname();
     }
 
     public function loginAction(){
@@ -77,7 +70,8 @@ class UserController
             }
             $myView->assign("configFormUser", $configFormUser);
         }else {
-            header('Location: /dashboard');
+            $location = Helpers::getUrl('dashboard','dashboard');
+            header("Location: $location");
         }
     }
 
@@ -129,15 +123,17 @@ class UserController
                     $unMail = ForgetMail::forgetpwd($nom, $recup_code);
                     $unEnvoie = $envoie->sendmail('Récupération mot de passe', $unMail, $recup_email);
                     if($unEnvoie){
-                        header('Location: http://localhost/recupcode');
+                        $location = Helpers::getUrl('User','recupcode');
+                        header("Location: $location");
                     }else {
-                        echo "Error";
+                        throw new RouteException("Un problème est survenue lors de l'envoie de mail");
                     }
                 }
             }
         $myView->assign("configFormUser", $configFormUser);
     }else{
-        header('Location: /dashboard');
+        $location = Helpers::getUrl('dashboard','dashboard');
+        header("Location: $location");
     }
 
         /* $myView->assign("section", $section); */
@@ -187,7 +183,8 @@ class UserController
                                     $recup->setConfirme('1');
                                     $recupManager->save($recup);
 
-                                    header('Location: http://localhost/changemdp');
+                                    $location = Helpers::getUrl('User','changemdp');
+                                    header("Location: $location");
                                 }
                             }else {
                                     echo "Le code ne fonctionne pas";
@@ -197,7 +194,7 @@ class UserController
                 }
             }
     }else{
-        include_once "error/404.php";
+        throw new RouteException("Vous devez renseigner votre email pour accèder à cette page");
     }
     }
 
@@ -237,7 +234,8 @@ class UserController
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus($unStatut);
                         $userManager->save($user);
-                        header("Location: /");
+                        $location = Helpers::getUrl('User','login');
+                        header("Location: $location");
                         $del = $recup->delete('mail',$_SESSION['email']);
                         session_destroy();
                     }
@@ -245,7 +243,7 @@ class UserController
             }
             $myView->assign("configFormPwd", $configFormPwd);
         } else {
-            include_once "error/notConnected.php";
+            throw new RouteException("Vous devez valider votre code de confirmation");
         }
     }
 
@@ -273,19 +271,22 @@ class UserController
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus('Client');
                         $userManager->save($user);
-                        header("Location: /");
+                        $location = Helpers::getUrl('User','login');
+                        header("Location: $location");
                     }
                 }
             }
             $myView->assign("configFormUser", $configFormUser); //déclarer un nom d'une variable et mettre dedans. Envoyer des variables aux vues
         }else {
-        header('Location: /dashboard');
+            $location = Helpers::getUrl('dashboard','dashboard');
+            header("Location: $location");
         }
     }
 
     public function deconnecterAction(){
         $deconnecter = new Session();
         $deconnecter->deconnecter();
-        header("Location: /");
+        $location = Helpers::getUrl('User','login');
+        header("Location: $location");
     }
 }
