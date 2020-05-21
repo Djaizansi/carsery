@@ -26,7 +26,6 @@ class UserController
     }
 
     public function loginAction(){
-
         $function = new Session();
         if(empty($_SESSION['id'])){
             $myView = new View("login","account");
@@ -54,7 +53,8 @@ class UserController
                         if($email_user === $_POST['email'] && $pwd_verif){
                             $function->affecterInfosConnecte((int)$user_found->getId());
                             if($function){
-                                header("Location: /dashboard");
+                                $location = Helpers::getUrl('dashboard','dashboard');
+                                header("Location: $location");
                             }
                             else{
                                 echo "Vous n'êtes pas connecté !";
@@ -70,7 +70,7 @@ class UserController
             }
             $myView->assign("configFormUser", $configFormUser);
         }else {
-            $location = Helpers::getUrl('dashboard','dashboard');
+            $location = Helpers::getUrl('Dashboard','dashboard');
             header("Location: $location");
         }
     }
@@ -109,7 +109,7 @@ class UserController
                         $recup_code .= mt_rand(0,9);
                     }
                     if(!empty($_POST) && empty($id)){
-                        var_dump(isset($_POST['email']) ? $recup->setMail($_POST['email']) : "");
+                        isset($_POST['email']) ? $recup->setMail($_POST['email']) : "";
                         $recup->setCode($recup_code);
                         $recup->setConfirme('0');
                         $recupManager->save($recup);
@@ -132,7 +132,7 @@ class UserController
             }
         $myView->assign("configFormUser", $configFormUser);
     }else{
-        $location = Helpers::getUrl('dashboard','dashboard');
+        $location = Helpers::getUrl('Dashboard','dashboard');
         header("Location: $location");
     }
 
@@ -161,7 +161,7 @@ class UserController
                         if(!empty($_POST['code'])){
                             $verif_code = htmlspecialchars($_POST['code']);
                             $id_exist_code = $recupManager->findBy(['mail' => $_SESSION['email'], 'code' => $verif_code])[0];
-                            var_dump($id_exist_code);
+                            
                             $id_exist_confirme = $recupManager->findByEmail($_SESSION['email']);
 
                             $id_isset_code = $id_exist_code->getId();
@@ -278,7 +278,7 @@ class UserController
             }
             $myView->assign("configFormUser", $configFormUser); //déclarer un nom d'une variable et mettre dedans. Envoyer des variables aux vues
         }else {
-            $location = Helpers::getUrl('dashboard','dashboard');
+            $location = Helpers::getUrl('Dashboard','dashboard');
             header("Location: $location");
         }
     }
