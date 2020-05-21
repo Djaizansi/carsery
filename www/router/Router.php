@@ -2,6 +2,9 @@
 
 namespace carsery\router;
 
+use Exception;
+use carsery\core\Exceptions\RouteException;
+
 class Router {
 
     public function __construct(){
@@ -12,9 +15,7 @@ class Router {
         $uri = $_SERVER["REQUEST_URI"];
         $yaml = yaml_parse_file("router/routes.yml");
         $uri = explode("?",$uri)[0];
-        
         if (!empty($yaml[$uri])) {
-
             $c =  'carsery\\controllers\\'.$yaml[$uri]["controller"]."Controller";
             $d = $yaml[$uri]["controller"]."Controller";
             $a =  $yaml[$uri]["action"]."Action";
@@ -34,16 +35,16 @@ class Router {
                         //$a = userAction est une méthode de la class UserController
                         $controller->$a();
                     } else {
-                        include_once "error/actionNotFound.php";
+                        throw new RouteException("L'action n'a pas été trouver");
                     }
                 } else {
-                    include_once "error/classControllerNotFound.php";
+                    throw new RouteException("La classe controller n'a pas été trouver.");
                 }
             } else {
-                include_once "error/controllerNotFound.php";
+                throw new RouteException("Le fichier controlleur n'existe pas");
             }
         } else {
-            include_once "error/404.php";
+            throw new RouteException("La page n'existe pas");
         }
     }
 }
