@@ -2,6 +2,8 @@
 
 namespace carsery\core;
 
+use carsery\core\Exceptions\BDDException;
+use carsery\core\Exceptions\MyThrowable;
 use PDO;
 use Exception;
 
@@ -70,7 +72,11 @@ class DB
         $find = [];
         foreach($rows as $row){
             $object = new $this->class();
-            array_push($find, $object->hydrate($row));
+            try {
+                array_push($find, $object->hydrate($row));
+            } catch (MyThrowable $e){
+                die($e->getMessage());
+            }
         }
         
         return $find;
@@ -101,7 +107,11 @@ class DB
 
         foreach($rows as $row){
             $object = new $this->class();
-            array_push($results, $object->hydrate($row));
+            try {
+                array_push($results, $object->hydrate($row));
+            } catch (BDDException $e){
+                die($e->getMessage());
+            }
         }
 
         return $results;
@@ -140,7 +150,11 @@ class DB
 
         if ($row) {
             $object = new $this->class;
-            return $object->hydrate($row);
+            try {
+                return $object->hydrate($row);
+            } catch (BDDException $e){
+                die($e->getMessage());
+            }
         }else {
             return null;
         }
