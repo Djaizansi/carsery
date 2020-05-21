@@ -53,7 +53,7 @@ class UserController
                         if($email_user === $_POST['email'] && $pwd_verif){
                             $function->affecterInfosConnecte((int)$user_found->getId());
                             if($function){
-                                $location = Helpers::getUrl('dashboard','dashboard');
+                                $location = Helpers::getUrl('Dashboard','dashboard');
                                 header("Location: $location");
                             }
                             else{
