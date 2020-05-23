@@ -15,10 +15,11 @@ class UserManager extends DB {
     public function findByEmail($email)
     {
         $table = $this->getTable();
+        $connection = $this->getConnection();
         $sql = "SELECT * FROM $table WHERE email = :email";
-        $result = $this->sql($sql, [':email' => $email]);
+        $result = $connection->query($sql, [':email' => $email]);
         
-        $row = $result->fetch();
+        $row = $result->getOneOrNullResult();
         
         if ($row) {
 
@@ -35,10 +36,11 @@ class UserManager extends DB {
     public function findById($id)
     {
         $table = $this->getTable();
+        $connection = $this->getConnection();
         $sql = "SELECT * FROM $table WHERE id = :id";
-        $result = $this->sql($sql, [':id' => $id]);
+        $result = $connection->query($sql, [':id' => $id]);
         
-        $row = $result->fetch();
+        $row = $result->getOneOrNullResult();
         
         if ($row) {
 
@@ -63,6 +65,7 @@ class UserManager extends DB {
                             ],
                     "fields"=>[
                                 "lastname"=>[
+                                        "balise"=>"",
                                         "type"=>"text",
                                         "placeholder"=>"Votre nom",
                                         /* "class"=>"form-control form-control-user", */
@@ -73,6 +76,7 @@ class UserManager extends DB {
                                         "errorMsg"=>"Votre nom doit faire entre 2 et 100 caractères"
                                 ],
                                 "firstname"=>[
+                                        "balise"=>"",
                                         "type"=>"text",
                                         "placeholder"=>"Votre prénom",
                                         /* "class"=>"form-control form-control-user", */
@@ -83,6 +87,7 @@ class UserManager extends DB {
                                         "errorMsg"=>"Votre prenom doit faire entre 2 et 50 caractères"
                                 ],
                                 "email"=>[
+                                        "balise"=>"",
                                         "type"=>"email",
                                         "placeholder"=>"Votre email",
                                         /* "class"=>"form-control form-control-user", */
@@ -92,6 +97,7 @@ class UserManager extends DB {
                                         "errorMsg"=>"Votre email ne correspond pas"
                                 ],
                                 "pwd"=>[
+                                        "balise"=>"",
                                         "type"=>"password",
                                         "placeholder"=>"Votre mot de passe",
                                         /* "class"=>"form-control form-control-user", */
@@ -101,6 +107,7 @@ class UserManager extends DB {
                                         avec une Majuscule et Minuscule"
                                 ],
                                 "pwdConfirm"=>[
+                                        "balise"=>"",
                                         "type"=>"password",
                                         "placeholder"=>"Confirmation",
                                         /* "class"=>"form-control form-control-user", */
@@ -110,6 +117,7 @@ class UserManager extends DB {
                                         "errorMsg"=>"Votre mot de passe de confirmation ne correspond pas"
                                 ],
                                 "captcha"=>[
+                                        "balise"=>"",
                                         "type"=>"captcha",
                                         /* "class"=>"form-control form-control-user", */
                                         "id"=>"",
@@ -136,6 +144,7 @@ class UserManager extends DB {
 
                     "fields"=>[
                         "email"=>[
+                            "balise"=>"",
                             "type"=>"email",
                             "placeholder"=>"Email",
                             /* "class"=>"form-control form-control-user", */
@@ -146,6 +155,7 @@ class UserManager extends DB {
                         ],
 
                         "pwd"=>[
+                            "balise"=>"",
                             "type"=>"password",
                             "placeholder"=>"Password",
                             /* "class"=>"form-control form-control-user", */
@@ -169,6 +179,7 @@ class UserManager extends DB {
 
                     "fields"=>[
                         "email"=>[
+                            "balise"=>"",
                             "type"=>"email",
                             "placeholder"=>"Email",
                             /* "class"=>"form-control form-control-user", */

@@ -15,9 +15,10 @@ class RecuperationManager extends DB {
     public function findByEmail($email)
     {
         $table = $this->getTable();
+        $connection = $this->getConnection();
         $sql = "SELECT * FROM $table WHERE mail = :mail";
-        $results = $this->sql($sql,[":mail" => $email]);
-        $row = $results->fetch();
+        $results = $connection->query($sql,[":mail" => $email]);
+        $row = $results->getOneOrNullResult();
         
         if ($row) {
             $object = new $this->class;
@@ -30,10 +31,11 @@ class RecuperationManager extends DB {
     public function findById($id)
     {
         $table = $this->getTable();
+        $connection = $this->getConnection();
         $sql = "SELECT * FROM $table WHERE id = :id";
-        $result = $this->sql($sql, [':id' => $id]);
+        $result = $connection->query($sql, [':id' => $id]);
         
-        $row = $result->fetch();
+        $row = $result->getOneOrNullResult();
         
         if ($row) {
 
@@ -59,6 +61,7 @@ class RecuperationManager extends DB {
 
             "fields"=>[
                 "code"=>[
+                    "balise"=>"",
                     "type"=>"text",
                     "placeholder"=>"Code de vérification",
                     /* "class"=>"form-control form-control-user", */
@@ -82,6 +85,7 @@ class RecuperationManager extends DB {
 
             "fields"=>[
                 "pwd"=>[
+                    "balise"=>"",
                     "type"=>"password",
                     "placeholder"=>"Votre mot de passe",
                     /* "class"=>"form-control form-control-user", */
@@ -91,6 +95,7 @@ class RecuperationManager extends DB {
                     avec une Majuscule et Minuscule"
                 ],
                 "pwdConfirm"=>[
+                    "balise"=>"",
                     "type"=>"password",
                     "placeholder"=>"Confirmation",
                     /* "class"=>"form-control form-control-user", */
