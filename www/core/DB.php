@@ -2,42 +2,28 @@
 
 namespace carsery\core;
 
+use carsery\core\Connection\BDDInterface;
+use carsery\core\Connection\PDOConnection;
 use carsery\core\Exceptions\BDDException;
-use PDO;
-use Exception;
 
 class DB
 {
     private $table;
-    private $pdo;
+    private $connection;
     protected $class;
 
-    public function __construct(string $class, string $table)
+    public function __construct(string $class, string $table, BDDInterface $connection = NULL)
     {
-        $this->class = $class;
-        //SINGLETON
-        try {
-            $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
-        } catch (Exception $e) {
-            die("Erreur SQL : ".$e->getMessage());
-        }
+        $this->class = $class;  
         $this->table = DB_PREFIXE.$table;
+
+        $this->connection = $connection;
+        if(is_null($connection)){
+            $this->connection = new PDOConnection();
+        }
         /* $table = DB_PREFIXE.get_called_class();
         $this->table = DB_PREFIXE.substr($table,strrpos($table,'\\')+1,strlen($table)); //.get_called_class() => la classe appelé quand on se dirige vers register est USER
         var_dump($this->table); */
-    }
-
-    protected function sql($sql, $parameters = null)
-    {
-        if ($parameters) {
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($parameters);
-        return $queryPrepared;
-
-        } else {
-        $queryPrepared = $this->pdo->query($sql);
-        return $queryPrepared;
-        }
     }
 
     public function save($objectToSave)
@@ -59,15 +45,15 @@ class DB
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
         
-        $this->sql($sql, $params);
+        $this->connection->query($sql, $params);
     }
 
     
     public function findAll() : array 
     {
         $sql = "SELECT * FROM $this->table";
-        $result = $this->sql($sql);
-        $rows = $result->fetchAll();
+        $result = $this->connection->query($sql);
+        $rows = $result->getArrayResult();
         $find = [];
         foreach($rows as $row){
             $object = new $this->class();
@@ -101,8 +87,8 @@ class DB
             $sql .= "ORDER BY '". key($order). " ". $order[key($order)];
         }
 
-        $result = $this->sql($sql, $params);
-        $rows = $result->fetchAll();
+        $result = $this->connection->query($sql, $params);
+        $rows = $result->getArrayResult();
 
         foreach($rows as $row){
             $object = new $this->class();
@@ -135,8 +121,8 @@ class DB
         }
         $sql = rtrim($sql, 'AND');
 
-        $result = $this->sql($sql, $params);
-        return $result->fetchColumn();
+        $result = $this->connection->query($sql, $params);
+        return $result->getValueResult();
 
         
     }
@@ -144,8 +130,8 @@ class DB
     public function find(int $id): ?\carsery\models\Model
     {
         $sql = "SELECT * FROM $this->table WHERE id =:id";
-        $results = $this->sql($sql,[':id' => $id]);
-        $row = $results->fetch();
+        $results = $this->connection->query($sql,[':id' => $id]);
+        $row = $results->getOneOrNullResult();
 
         if ($row) {
             $object = new $this->class;
@@ -165,7 +151,7 @@ class DB
 
     public function delete($attribut, $value){
         $sql = "DELETE FROM $this->table WHERE $attribut = :$attribut";
-        $result = $this->sql($sql, [":$attribut" => $value]);
+        $result = $this->connection->query($sql, [":$attribut" => $value]);
     }
 
     /**
@@ -182,5 +168,13 @@ class DB
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * Get the value of connection
+     */ 
+    public function getConnection()
+    {
+        return $this->connection;
     }
 }
