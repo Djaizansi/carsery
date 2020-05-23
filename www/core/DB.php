@@ -8,10 +8,12 @@ class DB
 {
     private $table;
     private $pdo;
+    protected $class;
 
-    public function __construct()
+    public function __construct(string $class, string $table)
     {
         //SINGLETON
+        $this->class = $class;
         try {
 
             $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
@@ -21,33 +23,24 @@ class DB
             die("Erreur SQL : ".$e->getMessage());
         }
 
-        $this->table =  DB_PREFIXE.get_called_class();
+        $this->table =  DB_PREFIXE.$table;
 	
     }
 
 	/**
 	 * Génère dynamiquement les requetes d'insertion et de modification en fonction d'un model donné
 	 */
-    public function save()
+    public function save($objectToSave)
     {
 		
-		//echo 'Table actuelle : '.$this->table."\n";
-        $propChild = get_object_vars($this);
-		//echo('Proprietes Objet Users')."\n";
-		//print_r($propChild);
-        $propDB = get_class_vars(get_class());
-		//echo('Proprietes classe DB')."\n";
-		print_r($propDB);
+		$objectArray = $objectToSave->__toArray();
+        $columnsData = array_values($objectArray);
+        $columns = array_keys($objectArray);
 
-        $columnsData = array_diff_key($propChild, $propDB);
-		//echo('Calcule de la différence entre les deux tables')."\n";
-		//print_r($columnsData);
-        $columns = array_keys($columnsData);
-		//echo('Les clés de l\' objet')."\n";
-		//print_r($columns);
+        $params = array_combine(array_map(function($k){ return ':'.$k; }, array_keys($objectArray)),$objectArray);
 
         
-        if (!is_numeric($this->id)) {
+          if (!is_numeric($objectToSave->getId())) {
 			            
             //INSERT
             $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
@@ -77,19 +70,26 @@ class DB
      */
 	public function remove() : bool{
 
-        if(!$this->id){
-			
-            die('Aucun identifiant n\' est mentionné , la suppression ne peut pas etre effectuer');
-            
+        try{
+    
+        
+            if(!$this->id){
+    			
+                    throw new Exception('Aucun identifiant n\' est mentionné , la suppression ne peut pas etre effectuer');
+                }
+
+            else{
+
+                $sql = "DELETE FROM ".$this->table." WHERE id= :id;";
+                $result = $this->pdo->prepare($sql);
+                $result->execute([':id' => $id]);
+
+            }
         }
 
-        else{
+        catch(Exception $e){
 
-            $sql = "DELETE FROM ".$this->table." WHERE id= :id;";
-            $result = $this->pdo->prepare($sql);
-            $result->bindParam("id", $this->id, PDO::PARAM_INT);
-            $result->execute();
-
+            echo $e->getMessage();
         }
     }
 	
@@ -101,7 +101,7 @@ class DB
      * @param $class_name
      * @return array
      */
-    function retrieveData($sql,Object $object, $params = null,$class_name) : array{
+    function findBy($sql,Object $object,$params = null,$class_name) : array{
 
         if(empty($params)){
 
@@ -110,8 +110,8 @@ class DB
 
          $this->hydrate($object);
 
-        $results = $statement->fetchAll(PDO::FETCH_CLASS, $class_name);
-        //$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+         $results = $statement->fetchAll(PDO::FETCH_CLASS, $class_name);
+
 
          return $results;
 
@@ -125,7 +125,7 @@ class DB
             $this->hydrate($object);
 
             $results = $statement->fetchAll(PDO::FETCH_CLASS, $class_name);
-            //$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
     
             return $results ;
 
@@ -133,5 +133,31 @@ class DB
 
     }
 
+     public function findAll(){
+
+        $stmt = $this->pdo->query("SELECT * FROM ".$this->table) 
+        or die(print_r($this->pdo->errorInfo()));
+        
+        $objects = [];
+
+        while ($currentObject = $stmt->fetchObject(__CLASS__)) {
+            
+            $objects[] = $currentObject;
+        }
+        
+        return $objects;
+
+    }
+
+     public function find(int $id){
+
+        $result = $this->pdo->prepare("SELECT * FROM ".$this->table." WHERE id = :id");
+
+        //$result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute([':id' => $id]);
+
+        return $result->fetchObject(__CLASS__);
+    }
     
 }
+
