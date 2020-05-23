@@ -4,6 +4,8 @@ namespace Carsery\Core;
 
 use \PDO;
 
+use Carsery\Exceptions\BDDExceptions;
+
 class DB
 {
     private $table;
@@ -108,7 +110,14 @@ class DB
          $statement = $this->pdo->query($sql) or die(print_r($this->pdo->errorInfo()));
          $statement->execute();
 
-         $this->hydrate($object);
+	try{
+         	$this->hydrate($object);
+	}
+
+	catch(BDDException $e){
+
+		echo $e->getMessage();
+	}
 
          $results = $statement->fetchAll(PDO::FETCH_CLASS, $class_name);
 
@@ -122,7 +131,14 @@ class DB
             $statement = $this->pdo->prepare($sql) or die(print_r($this->pdo->errorInfo()));
             $statement->execute($params);
 
-            $this->hydrate($object);
+            try{
+         	$this->hydrate($object);
+	    }
+
+	    catch(BDDException $e){
+
+		echo $e->getMessage();
+	    }
 
             $results = $statement->fetchAll(PDO::FETCH_CLASS, $class_name);
 
