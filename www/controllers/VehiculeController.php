@@ -20,6 +20,8 @@ use Carsery\Models\Modele;
 
 use Carsery\Core\Helper;
 use Carsery\Core\View;
+use Carsery\Core\JsonObject;
+
 use Carsery\Managers\VehiculeManager;
 
 use Carsery\Forms\VehiculeForm;
@@ -34,6 +36,10 @@ use Carsery\Forms\ModeleForm;
         public function createVehiculeAction(){
 			
 			$vehicule = new VehiculeManager();
+
+			//UTILISATION DE L'INTERFACE JsonSerializable
+			$jsonObject = new JsonObject($vehicule->find(2));
+			print_r(json_encode($jsonObject,JSON_PRETTY_PRINT));
 			
 			$arrMarques = $vehicule->findBy("SELECT nomMarque FROM nfoz_marques 
 				ORDER BY nomMarque",$this,null,'marques');
