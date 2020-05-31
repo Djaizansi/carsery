@@ -36,21 +36,29 @@ class PageController {
 
     public function deletePageAction(){
         $pageManager = new PageManager();
+        $page = new Page();
         $pageFound = $pageManager->find($_GET['id']);
+
         if(!isset($pageFound)){
             throw new RouteException("La page que vous voulez supprimer n'existe pas ou plus");
         }else {
+            $token = $pageFound->getToken();
             $titre = $pageFound->getTitre();
             $titre_tiret = str_replace(' ','-',strtolower($titre));
             $notiret = str_replace(' ','',strtolower($titre));
-            unlink("views/$notiret.view.php");
-            $pageManager->delete('id',$_GET['id']);
-            return $this->pageAction();
+            if(isset($_GET['id']) && isset($_GET['token']) && $token == $_GET['token']){
+                $pageManager->delete('id',$_GET['id']);
+                unlink("views/$notiret.view.php");
+                return $this->pageAction();
+            }else {
+                throw new RouteException("Vous pouvez pas supprimer d'autre page aussi facilement");
+            }
         }
     }
 
     public function addPageAction(){
         if(Session::estConnecte()){
+            $token = Helpers::Salt(20);
             $page = new Page();
             $pageManager = new PageManager();
             $userManager = new UserManager();
@@ -65,12 +73,7 @@ class PageController {
                 if(file_exists($pageExiste)){
                     throw new RouteException("La page que vous voulez ajouter existe déjà");
                 }else {
-                    isset($_POST['titre']) ? $page->setTitre($_POST['titre']) : '';
-                    $page->setAuteur($prenom);
-                    $page->setDate(date("Y-m-d H:i"));
-                    $page->setPublie(0);
-                    isset($_POST['action']) ? $page->setAction($_POST['action']) : '';
-                    $pageManager->save($page);
+                    PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,0,$_POST['action'],$token);
                     $location = Helpers::getUrl('Page','page');
                     header("Location: $location");
                     $unePage = $pageManager->findByTitre($_POST['titre']);
