@@ -3,13 +3,25 @@ namespace carsery\Managers;
 
 use carsery\core\DB;
 use carsery\models\Page;
-use carsery\core\Helpers;
+use carsery\core\Helpers; 
 
 class PageManager extends DB {
     
     public function __construct()
     {
         parent::__construct(Page::class, 'page');
+    }
+
+    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$publie,$action,$token = NULL)
+    {
+        empty($id) ? '' : $page->setId($id);
+        isset($titre) ? $page->setTitre($titre) : '';
+        $page->setAuteur($auteur);
+        $page->setDate(date('Y-m-d H:i'));
+        $page->setPublie($publie);
+        isset($action) ? $page->setAction($action) : '';
+        $page->setToken($token);
+        $pageManager->save($page);
     }
 
     public function findByTitre($titre)
