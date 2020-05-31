@@ -54,48 +54,52 @@ class PageController {
             $page = new Page();
             $pageManager = new PageManager();
             $userManager = new UserManager();
-            $localisation = "controllers/PageController.php";
+            $localisation = "controllers/myProjectController.php";
             /* $lastLine = count($localisation);  */
             
 
             $findUser = $userManager->find($_SESSION['id']);
             $prenom = $findUser->getFirstname();
             if(!empty($_POST)){
-                isset($_POST['titre']) ? $page->setTitre($_POST['titre']) : '';
-                $page->setAuteur($prenom);
-                $page->setDate(date("Y-m-d H:i"));
-                $page->setPublie(0);
-                isset($_POST['action']) ? $page->setAction($_POST['action']) : '';
-                $pageManager->save($page);
-                $location = Helpers::getUrl('Page','page');
-                header("Location: $location");
-                $unePage = $pageManager->findByTitre($_POST['titre']);
-                if(!empty($unePage)){
-                        $titre = str_replace(' ','',strtolower($unePage->getTitre()));
-                        file_put_contents("views/$titre.view.php",'coucou');
-                        $titre_tiret = str_replace(' ','-',strtolower($unePage->getTitre()));
-                        $action = $unePage->getAction();
-                        $route = '
-/'.$titre_tiret.':
-    controller: "Page"
+                $pageExiste = "views/".$_POST['titre'].".view.php";
+                if(file_exists($pageExiste)){
+                    throw new RouteException("La page que vous voulez ajouter existe déjà");
+                }else {
+                    isset($_POST['titre']) ? $page->setTitre($_POST['titre']) : '';
+                    $page->setAuteur($prenom);
+                    $page->setDate(date("Y-m-d H:i"));
+                    $page->setPublie(0);
+                    isset($_POST['action']) ? $page->setAction($_POST['action']) : '';
+                    $pageManager->save($page);
+                    $location = Helpers::getUrl('Page','page');
+                    header("Location: $location");
+                    $unePage = $pageManager->findByTitre($_POST['titre']);
+                    if(!empty($unePage)){
+                            $titre = str_replace(' ','',strtolower($unePage->getTitre()));
+                            file_put_contents("views/$titre.view.php",'coucou');
+                            $titre_tiret = str_replace(' ','-',strtolower($unePage->getTitre()));
+                            $action = $unePage->getAction();
+                            $route = '
+/myproject/'.$titre_tiret.':
+    controller: "myProject"
     action: "'.$action.'"
 ';
-                        $function = '
+                            $function = '
     public function '.$action.'Action(){
         $myView = new View("'.$titre.'","front");
-    }
-}';
+    }';
                         file_exists("router/routes.yml") ? file_put_contents("router/routes.yml",$route,FILE_APPEND) : Null;
                         /* $fileToEdit = file_get_contents($localisation);
                         //trouver la position de fin de fichier
-                        $endOfFilePos= strpos($fileToEdit, "//End of file", -1); 
+                        $endOfFilePos= strpos($fileToEdit, "//End", -1); 
                         $myOldFileWithoutEnd = substr($fileToEdit, 0, $endOfFilePos);
                         $myNewEnd = $function . "\n }"; //les doubles guillemets sont importants pour interpréter le \n
 
                         //tout mettre dans le nouveau fichier
                         $myNewFile = file_put_contents ($localisation, $myOldFileWithoutEnd . $myNewEnd, FILE_APPEND); */
                         }
-                    } 
+                    }
+                }
         }else{
             throw new RouteException("Vous devez être connecter pour accèder à cette page");
         }
@@ -133,5 +137,4 @@ class PageController {
             throw new RouteException("La page que vous voulez modifier n'existe pas ");
         }
     }
-    //End of File
 }
