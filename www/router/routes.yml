@@ -1,88 +1,95 @@
 /:
-  controller: "User"
-  action: "login"
+  controller: User
+  action: login
 
 /deconnexion:
-  controller: "User"
-  action: "deconnecter"
+  controller: User
+  action: deconnecter
 
-/dashboard: 
-  controller: "Dashboard"
-  action: "dashboard"
+/dashboard:
+  controller: Dashboard
+  action: dashboard
 
 /mailbox:
-  controller: "Mail"
-  action: "mail"
+  controller: Mail
+  action: mail
 
 /apparence:
-  controller: "Apparence"
-  action: "apparence"
+  controller: Apparence
+  action: apparence
+  
+/forum:
+  controller: Forum
+  action: forum
 
-/forum: 
-  controller: "Forum"
-  action: "forum"
+/media:
+  controller: Media
+  action: media
 
-/media: 
-  controller: "Media"
-  action: "media"
+/page:
+  controller: Page
+  action: page
 
-/page: 
-  controller: "Page"
-  action: "page"
-
-/lien: 
-  controller: "Page"
-  action: "lien"
+/lien:
+  controller: Page
+  action: lien
 
 /parametre:
-  controller: "Parametre"
-  action: "parametre"
+  controller: Parametre
+  action: parametre
 
 /gestionuser:
-  controller: "User"
-  action: "gestionuser"
+  controller: User
+  action: gestionuser
 
 /ajout-utilisateur:
-  controller: "User"
-  action: "add"
-
+  controller: User
+  action: add
 
 /recupcode:
-  controller: "User"
-  action: "recupcode"
+  controller: User
+  action: recupcode
 
 /changemdp:
-  controller: "User"
-  action: "changemdp"
+  controller: User
+  action: changemdp
 
 /supprimer-utilisateur:
-  controller: "User"
-  action: "remove"
+  controller: User
+  action: remove
 
 /utilisateur:
-  controller: "User"
-  action: "default"
-
+  controller: User
+  action: default
+  
 /inscription:
-  controller: "User"
-  action: "register"
+  controller: User
+  action: register
 
 /mdpoublie:
-  controller: "User"
-  action: "forget"
+  controller: User
+  action: forget
 
 /ajouter-page:
-    controller: "Page"
-    action: "addPage"
+  controller: Page
+  action: addPage
 
 /supprimer-page:
-    controller: "Page"
-    action: "deletePage"
+  controller: Page
+  action: deletePage
 
 /edit-page:
-  controller: "Page"
-  action: "modifierPage"
+  controller: Page
+  action: modifierPage
 
 /json:
-  controller: "Page"
-  action: "json"
+  controller: Page
+  action: json
+
+
+/myproject/:name:
+  controller: "myproject"
+  action: "view"
+  params:
+    - name: '#^[A-Za-z0-9\-]+$#'
+
