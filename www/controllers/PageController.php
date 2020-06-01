@@ -44,10 +44,19 @@ class PageController {
         }else {
             $token = $pageFound->getToken();
             $titre = $pageFound->getTitre();
-            $titre_tiret = str_replace(' ','-',strtolower($titre));
             $notiret = str_replace(' ','',strtolower($titre));
+
             if(isset($_GET['id']) && isset($_GET['token']) && $token == $_GET['token']){
                 $pageManager->delete('id',$_GET['id']);
+                /* $yaml = \yaml_parse_file("./router/routes.yml");
+                $route = '/myproject/'.$titre_tiret; */
+                /*  foreach($yaml as $key => $value){
+                    if($key == $route){
+                        unset($yaml[$key]);
+                        $file = $yaml;
+                        $arrayToYaml = \yaml_emit_file("./router/routes.yml",$file);
+                    } */
+                /* } */
                 unlink("views/$notiret.view.php");
                 return $this->pageAction();
             }else {
@@ -61,10 +70,7 @@ class PageController {
             $token = Helpers::Salt(20);
             $page = new Page();
             $pageManager = new PageManager();
-            $userManager = new UserManager();
-            $localisation = "controllers/myProjectController.php";
-            /* $lastLine = count($localisation);  */
-            
+            $userManager = new UserManager();           
 
             $findUser = $userManager->find($_SESSION['id']);
             $prenom = $findUser->getFirstname();
@@ -73,25 +79,24 @@ class PageController {
                 if(file_exists($pageExiste)){
                     throw new RouteException("La page que vous voulez ajouter existe déjà");
                 }else {
-                    PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,0,$_POST['action'],$token);
+                    $titre_tiret = '/'.str_replace(' ','-',strtolower($_POST['titre']));
+                    PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,0,$titre_tiret,$token);
+
                     $location = Helpers::getUrl('Page','page');
                     header("Location: $location");
                     $unePage = $pageManager->findByTitre($_POST['titre']);
                     if(!empty($unePage)){
                             $titre = str_replace(' ','',strtolower($unePage->getTitre()));
                             file_put_contents("views/$titre.view.php",'coucou');
-                            $titre_tiret = str_replace(' ','-',strtolower($unePage->getTitre()));
-                            $action = $unePage->getAction();
-                            $route = '
+                            /* $titre_tiret = str_replace(' ','-',strtolower($unePage->getTitre())); */
+                            /* $action = $unePage->getAction(); */
+                            /* $route = '
 /myproject/'.$titre_tiret.':
     controller: "myProject"
     action: "'.$action.'"
-';
-                            $function = '
-    public function '.$action.'Action(){
-        $myView = new View("'.$titre.'","front");
-    }';
-                        file_exists("router/routes.yml") ? file_put_contents("router/routes.yml",$route,FILE_APPEND) : Null;
+'; */
+                        /* file_exists("router/routes.yml") ? file_put_contents("router/routes.yml",$route,FILE_APPEND) : Null;
+                        echo Helpers::getView($action,$titre); */
                         /* $fileToEdit = file_get_contents($localisation);
                         //trouver la position de fin de fichier
                         $endOfFilePos= strpos($fileToEdit, "//End", -1); 
