@@ -32,6 +32,7 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
     <table id="myTable" class="display">
         <thead>
             <tr>
+                <th>Uri</th>
                 <th>Titre</th>
                 <th>Auteur</th>
                 <th>Date</th>
@@ -42,11 +43,12 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
         <tbody>
                 <?php foreach($donnee as $unePage): ?>
                     <tr>
+
                         <?php $unTitre = $unePage->getTitre() ?>
                         <?php $titre = isset($unTitre) ? $unTitre : '' ?>
-                        <?php $url = str_replace(' ','-',strtolower($titre)) ?>
-                        
-                        <td><a href="<?=$url?>"><?=$titre?></a></td>
+                        <?php $url = "/myproject".$unePage->getUri() ?>
+                        <td><a href="<?=$url?>"><?=$url?></a</td>
+                        <td><?=$titre?></td>
                         <td><?= $unePage->getAuteur() ?></td>
                             <td>
                             <?php if($unePage->getPublie() == 0): ?>
@@ -65,7 +67,7 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
                         <?php endif ?>
                         <td>
                             <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
-                            <button data-modal-target="modal1" data-id="<?= $unePage->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
+                            <button data-modal-target="modal1" data-id="<?= $unePage->getId() ?>" data-token="<?= $unePage->getToken() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
                             <a href="/edit-page?id=<?=$unePage->getId()?>"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
