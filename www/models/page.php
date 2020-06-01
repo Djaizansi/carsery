@@ -9,7 +9,9 @@ class page extends Model
     protected $auteur;
     protected $date;
     protected $publie;
-    protected $action;
+    protected $uri;
+    protected $token;
+
 
     /**
      * Get the value of id
@@ -112,21 +114,41 @@ class page extends Model
     }
 
     /**
-     * Get the value of action
+     * Get the value of uri
      */ 
-    public function getAction()
+    public function getUri()
     {
-        return $this->action;
+        return $this->uri;
     }
 
     /**
-     * Set the value of action
+     * Set the value of uri
      *
      * @return  self
      */ 
-    public function setAction($action)
+    public function setUri($uri)
     {
-        $this->action = $action;
+        $this->uri = $uri;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of token
+     */ 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set the value of token
+     *
+     * @return  self
+     */ 
+    public function setToken($token)
+    {
+        $this->token = $token;
 
         return $this;
     }
