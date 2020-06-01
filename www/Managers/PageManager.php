@@ -12,14 +12,14 @@ class PageManager extends DB {
         parent::__construct(Page::class, 'page');
     }
 
-    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$publie,$action,$token = NULL)
+    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$publie,$uri,$token = NULL)
     {
         empty($id) ? '' : $page->setId($id);
         isset($titre) ? $page->setTitre($titre) : '';
         $page->setAuteur($auteur);
         $page->setDate(date('Y-m-d H:i'));
         $page->setPublie($publie);
-        isset($action) ? $page->setAction($action) : '';
+        $page->setUri($uri);
         $page->setToken($token);
         $pageManager->save($page);
     }
@@ -74,17 +74,7 @@ class PageManager extends DB {
                             /* "class"=>"form-control form-control-user", */
                             "id"=>"id_titre",
                             "required"=>true,
-                            "errorMsg"=>"Votre email n'est pas valide"
-                        ],
-
-                        "action"=>[
-                            "balise"=>"",
-                            "type"=>"text",
-                            "placeholder"=>"Quel est votre action",
-                            /* "class"=>"form-control form-control-user", */
-                            "id"=>"id_action",
-                            "required"=>true,
-                            "errorMsg"=>"Votre email n'est pas valide"
+                            "errorMsg"=>""
                         ],
                     ]
                 ];
