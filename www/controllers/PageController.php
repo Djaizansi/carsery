@@ -79,7 +79,7 @@ class PageController {
                 if(file_exists($pageExiste)){
                     throw new RouteException("La page que vous voulez ajouter existe déjà");
                 }else {
-                    $titre_tiret = '/'.str_replace(' ','-',strtolower($_POST['titre']));
+                    $titre_tiret = '/myproject/'.str_replace(' ','-',strtolower($_POST['titre']));
                     PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,0,$titre_tiret,$token);
 
                     $location = Helpers::getUrl('Page','page');
@@ -130,12 +130,13 @@ class PageController {
         if($find && isset($_GET['id'])){
             $unePage = $pageManager->find($_GET['id']);
             $titre = $unePage->getTitre();
+            $notiret = str_replace(' ','',strtolower($titre));
             $myView = new View("editpage");
             $myView->assign('pageManager', $pageManager);
             $myView->assign('configFormPage', $configFormPage);
             if(!empty($_POST)){
                 isset($_POST['editPage']) ? $_POST['editPage'] : '';
-                file_put_contents("Views/$titre.view.php", $_POST['editPage']);
+                file_put_contents("Views/$notiret.view.php", $_POST['editPage']);
                 $location = Helpers::getUrl('Page','page');
                 header("Location: $location");
             }
