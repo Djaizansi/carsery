@@ -3,6 +3,8 @@
 namespace carsery\router;
 
 use carsery\core\Exceptions\RouteException;
+use carsery\Managers\PageManager;
+use carsery\controllers\myProjectController;
 
 class Router {
 
@@ -12,14 +14,14 @@ class Router {
 
     public function routing(){
         $uri = $_SERVER["REQUEST_URI"];
-
         $yaml = yaml_parse_file("router/routes.yml");
         $uri = explode("?",$uri)[0];
-        echo '/myproject/'.$yaml['/myproject/:name']["params"][0]["name"];
-        if(preg_match('/myproject/'.$yaml['/myproject/:name']["params"][0]["name"],$uri)){
-            echo "bjr";
-        }
-        if (!empty($yaml[$uri])) {
+        $pageManager = new PageManager();
+        $found = $pageManager->findByUri($uri);
+        if($found){
+            $controller = new myProjectController();
+            $controller->viewAction();
+        }elseif(!empty($yaml[$uri])) {
 
             $c =  'carsery\\controllers\\'.$yaml[$uri]["controller"]."Controller";
             $d = $yaml[$uri]["controller"]."Controller";
