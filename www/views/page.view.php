@@ -46,7 +46,7 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
 
                         <?php $unTitre = $unePage->getTitre() ?>
                         <?php $titre = isset($unTitre) ? $unTitre : '' ?>
-                        <?php $url = "/myproject".$unePage->getUri() ?>
+                        <?php $url = $unePage->getUri() ?>
                         <td><a href="<?=$url?>"><?=$url?></a</td>
                         <td><?=$titre?></td>
                         <td><?= $unePage->getAuteur() ?></td>
