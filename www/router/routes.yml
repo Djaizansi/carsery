@@ -86,10 +86,3 @@
   controller: Page
   action: json
 
-
-/myproject/:name:
-  controller: "myproject"
-  action: "view"
-  params:
-    - name: '#^[A-Za-z0-9\-]+$#'
-
