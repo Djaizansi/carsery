@@ -39,4 +39,9 @@
     'controller' => 'user',
     'action' => 'forget',
   ),
+  '/contact' =>
+    array(
+      'controller' => 'contact',
+      'action' => 'contact',
+    ),
 );

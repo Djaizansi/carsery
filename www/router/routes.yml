@@ -86,6 +86,10 @@
   controller: Page
   action: json
 
+/contact:
+  controller: Contact
+  action: contact
+
 
 /myproject/:name:
   controller: "myproject"
