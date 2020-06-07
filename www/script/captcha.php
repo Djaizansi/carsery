@@ -22,7 +22,7 @@ for($i=0;$i<$lengthCaptcha;$i++){
 
 	$colors[] = imagecolorallocate($image, rand(150,250), rand(150,250), rand(150,250));
 
-	imagettftext($image, rand(20,40), rand(-45,45), $x, rand(35,45), $colors[$i], $listOfFonts[array_rand($listOfFonts)], $captcha[$i]);
+	imagettftext($image, rand(20,40), rand(-45,45), $x, rand(60,70), $colors[$i], $listOfFonts[array_rand($listOfFonts)], $captcha[$i]);
 
 	$x += rand(40,50);
 }
