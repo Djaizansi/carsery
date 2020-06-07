@@ -20,6 +20,10 @@ class="<?= $data["config"]["class"]?>">
                 <img src="script/captcha.php" width="300px">
             <?php endif;?>
 
+            <?php if($configField["type"] == "checkbox"): ?>
+                <p>Voulez-vous ajouter cette page au menu ? </p>
+            <?php endif ?>
+
             <?php if($configField["balise"] === "textarea"): ?>
               <textarea
                 value="<?= (isset($inputData[$name])) ? $inputData[$name] : '' ?>"
@@ -32,7 +36,8 @@ class="<?= $data["config"]["class"]?>">
                   <?php $pageManager = new PageManager() ?>
                   <?php $pageFound = $pageManager->find($_GET['id']) ?>
                   <?php $titre = $pageFound->getTitre() ?>
-                  <?= file_get_contents("Views/$titre.view.php") ?>
+                  <?php $notiret = str_replace(' ','',strtolower($titre)) ?>
+                  <?= file_get_contents("Views/$notiret.view.php") ?>
               <?php else: ?>
               <?php endif ?>
 
@@ -48,6 +53,7 @@ class="<?= $data["config"]["class"]?>">
                   placeholder="<?= $configField["placeholder"]??'' ?>"
                   class="<?= $configField["class"]??'' ?>"
                   id="<?= $configField["id"]??'' ?>"
+                  value="<?= $configField["value"]??'' ?>"
                   <?= (!empty($configField["required"])) ? "required='required'" : "" ?> >
             <?php endif ?>
         <!--  </div>
@@ -56,7 +62,7 @@ class="<?= $data["config"]["class"]?>">
     
 
 
-
+  <br><br>
   <button class="btn btn--primary" id="btnAdd"><?= $data["config"]["submit"];?></button>
 </form>
 
