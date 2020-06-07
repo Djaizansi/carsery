@@ -48,15 +48,6 @@ class PageController {
 
             if(isset($_GET['id']) && isset($_GET['token']) && $token == $_GET['token']){
                 $pageManager->delete('id',$_GET['id']);
-                /* $yaml = \yaml_parse_file("./router/routes.yml");
-                $route = '/myproject/'.$titre_tiret; */
-                /*  foreach($yaml as $key => $value){
-                    if($key == $route){
-                        unset($yaml[$key]);
-                        $file = $yaml;
-                        $arrayToYaml = \yaml_emit_file("./router/routes.yml",$file);
-                    } */
-                /* } */
                 unlink("views/$notiret.view.php");
                 return $this->pageAction();
             }else {
@@ -80,7 +71,8 @@ class PageController {
                     throw new RouteException("La page que vous voulez ajouter existe déjà");
                 }else {
                     $titre_tiret = '/myproject/'.str_replace(' ','-',strtolower($_POST['titre']));
-                    PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,0,$titre_tiret,$token);
+                    $menu = isset($_POST['checkbox']) ? 1 : 0;
+                    PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,0,$titre_tiret,$menu,$token);
 
                     $location = Helpers::getUrl('Page','page');
                     header("Location: $location");
