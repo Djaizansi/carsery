@@ -10,6 +10,7 @@ class page extends Model
     protected $date;
     protected $publie;
     protected $uri;
+    protected $menu;
     protected $token;
 
 
@@ -149,6 +150,26 @@ class page extends Model
     public function setToken($token)
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of menu
+     */ 
+    public function getMenu()
+    {
+        return $this->menu;
+    }
+
+    /**
+     * Set the value of menu
+     *
+     * @return  self
+     */ 
+    public function setMenu($menu)
+    {
+        $this->menu = $menu;
 
         return $this;
     }
