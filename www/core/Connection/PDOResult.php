@@ -28,6 +28,7 @@ class PDOResult implements ResultInterface
         return $this->statement->fetchAll();
     }
 
+    //Fonction double pour tester le fonctionnement pour ne pas détruire au cas ou le projet entier (précaution)
     public function getArrayResultTp(string $model): array
     {
         $resultat = [];
