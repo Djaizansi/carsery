@@ -5,6 +5,8 @@ namespace carsery\core\Exceptions;
 use Exception;
 use Throwable;
 
+//throw
+
 interface MyThrowable extends Throwable
 {}
 
