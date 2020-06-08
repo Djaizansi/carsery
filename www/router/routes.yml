@@ -86,3 +86,6 @@
   controller: Page
   action: json
 
+/testQuery:
+  controller: myProject
+  action: testQueryBuilder
