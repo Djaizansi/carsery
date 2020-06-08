@@ -5,6 +5,8 @@ namespace carsery\core\Connection;
 use PDO;
 use Exception;
 
+//PDOConnection
+
 class PDOConnection implements BDDInterface
 {
     protected $pdo;

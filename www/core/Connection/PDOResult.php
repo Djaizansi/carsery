@@ -4,6 +4,8 @@ namespace carsery\core\Connection;
 
 use Throwable;
 
+//PDOResult
+
 class PDOResult implements ResultInterface
 {
     protected $statement;
