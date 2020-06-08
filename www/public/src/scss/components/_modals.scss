@@ -11,13 +11,16 @@
     overflow: auto; /* enable scrolling if needed - although this is not really necessary since we are going take care of overflow in modal-content */
     background-color: rgba(0,0,0,0.8);
   }
-  .modal.modal-show {
+
+.modal.modal-show {
     animation: fadeIn 0.1s ease-in-out forwards;
-  }
-  .modal.modal-hide {
+}
+  
+.modal.modal-hide {
     animation: fadeOut 0.1s ease-in-out 0.1s forwards;
-  }
-  .modal-content {
+}
+  
+.modal-content {
     position: relative;
     background-color: #fff;
     margin: 2rem;
@@ -27,22 +30,27 @@
     max-height: 75%;
     overflow: auto;
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  }
-  .modal.modal-show .modal-content {
+}
+  
+.modal.modal-show .modal-content {
     animation: fadeInDown 0.3s ease-in-out forwards;
-  }
-  .modal.modal-hide .modal-content {
+}
+  
+.modal.modal-hide .modal-content {
     animation: fadeOutUp 0.2s ease-in-out forwards;
-  }
-  .modal-content h1 {
+}
+  
+.modal-content h1 {
     text-align: center;
     margin-bottom: 2rem;
-  }
-  .modal-content p {
+}
+  
+.modal-content p {
     margin: 1rem 0;
     line-height: 1.5rem;
-  }
-  .modal-close {
+}
+  
+.modal-close {
     position: absolute;
     top: 0;
     right: 0;
@@ -57,29 +65,32 @@
     color: rgba(0,0,0,0.2);
     cursor: pointer;
     user-select: none;
-  }
-  .modal-close:hover, .modal-close:focus {
-    color: rgba(0,0,0,0.5);
-  }
+}
   
-  /* Animations */
-  @keyframes fadeIn {
+.modal-close:hover, .modal-close:focus {
+    color: rgba(0,0,0,0.5);
+}
+  
+/* Animations */
+@keyframes fadeIn {
     0% {
       opacity: 0;
     }
     100% {
       opacity: 1;
     }
-  }
-  @keyframes fadeOut {
+}
+  
+@keyframes fadeOut {
     0% {
       opacity: 1;
     }
     100% {
       opacity: 0;
     }
-  }
-  @keyframes fadeInDown {
+}
+  
+@keyframes fadeInDown {
     0% {
       opacity: 0;
       transform: translateY(-3rem);
@@ -88,8 +99,9 @@
       opacity: 1;
       transform: translateY(0); 
     }
-  }
-  @keyframes fadeOutUp {
+}
+  
+@keyframes fadeOutUp {
     0% { 
       opacity: 1;
       transform: translateY(0);
@@ -98,14 +110,15 @@
       opacity: 0;
       transform: translateY(-3rem);
     }
-  }
+}
   
-  @media(max-width: 992px) {
+@media(max-width: 992px) {
     html { font-size: 14px; }
     .modal-content { width: 80%; }
-  }
-  @media(max-width:767px) {
+}
+ 
+@media(max-width:767px) {
     html { font-size: 12px; }
     .modal-content { padding: 2rem 1rem 1rem 1rem; width: 90%; }
     .modal-content h1 { margin-bottom: 1.5rem; }
-  }
+}

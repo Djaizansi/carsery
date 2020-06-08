@@ -21,7 +21,7 @@ class DashboardController {
                 <?php
             endif;
             $myView = new View("dashboard");
-        }else {
+        } else {
             include_once "./error/notConnected.php";
         }
     }

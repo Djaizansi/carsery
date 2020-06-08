@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../public/dist/mains.css">
     <!-- Dashboard CSS -->
     <link rel="stylesheet" href="../public/css/dashboards.css">
+    <!-- Thème 2 -->
+    <!-- <link rel="stylesheet" href="../public/css/joyeux.css"> -->
     <!-- Loader CSS -->
     <link rel="stylesheet" href="../public/css/loader.css">
     <!-- FontAwesome -->

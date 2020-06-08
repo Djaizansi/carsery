@@ -15,9 +15,18 @@ function myAutoloader($class)
 spl_autoload_register("myAutoloader");
 
 use carsery\core\ConstantLoader;
+use carsery\core\Exceptions\RouteException;
 use carsery\router\Router;
+use carsery\core\View;
 
 
 
 new ConstantLoader();
-new Router();
+
+try {
+    $router = new Router();
+}catch (RouteException $e) {
+    $myView = new View('testerror','erreur');
+    $error = $e->getMessage();
+    $myView->assign('error',$error);
+}

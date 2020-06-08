@@ -1,0 +1,87 @@
+/* Entête */
+.header {
+  color: #fff;
+  background-color: red;
+}
+
+.sidenav {
+  background-color: white;
+}
+
+.sidenav__close-icon {
+  color: #000;
+}
+
+
+.sidenav__list-item {
+  color: black;
+}
+
+.sidenav__list-item a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.overviewcard:first-child {
+  background-color: #EAFAF1;
+}
+
+.overviewcard:nth-child(2){
+  background-color: #F4ECF7;
+}
+
+.overviewcard:nth-child(3){
+  background-color: #FEF9E7 ;
+}
+
+
+.card {
+  background-color: #F3F3F3;
+}
+
+.card:first-child {
+  background-color: #FBFCFC;
+}
+
+.card:nth-child(3) {
+  background-color: #EBF5FB ;
+}
+
+.footer {
+  background-color: #648ca6;
+  color: #FFF
+}
+
+.user {
+  background-color: white;
+  height: 12rem;
+}
+
+.user h1 {
+  text-transform: uppercase;
+  text-align: center;
+  font-style: italic;
+  color: black;
+  margin-top: 0;
+}
+
+
+.user p {
+  font-style: italic;
+  color: black;
+  text-align: center;
+}
+
+
+
+.info {
+  font-style: italic; 
+  font-size: 53px;
+}
+
+
+hr {
+  opacity: 0.33;
+  width: 12em;
+  color: #FFF;
+}

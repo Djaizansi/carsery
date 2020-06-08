@@ -1,4 +1,5 @@
 <?php
+
 namespace carsery\Managers;
 
 use carsery\core\DB;

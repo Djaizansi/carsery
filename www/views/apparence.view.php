@@ -20,6 +20,7 @@
         </p>
     </div>
 
+    
     <div class="row">
         <div class="col-12">
 
@@ -40,7 +41,7 @@
 
         <form action="" method="post">
             <input type="hidden" name="themeTwo" value="<?php echo $theme; ?>">
-            <input type="submit" class="btn" value="Séléctionner le thème 2">
+            <input type="submit" class="btn btn--primary" value="Séléctionner le thème 2">
         </form>
 
         <?php } ?>
@@ -50,7 +51,7 @@
         ?>
             <form action="" method="post">
                 <input type="hidden" name="themeThree" value="<?php echo $theme; ?>">
-                <input type="submit" class="btn" value="Séléctionner le thème 3">
+                <input type="submit" class="btn btn--success" value="Séléctionner le thème 3">
             </form>
         <?php 
             }
@@ -102,3 +103,5 @@
 
     </div>
 </div>
+
+<script src="../public/js/modal_newv.js"></script>

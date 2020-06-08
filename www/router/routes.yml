@@ -83,7 +83,10 @@
   controller: "User"
   action: "get"
 
-
 /azerty:
     controller: "Page"
     action: "azertyuiop"
+
+/testQuery:
+  controller: QueryBuilder
+  action: testQuery
