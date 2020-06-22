@@ -1,4 +1,7 @@
-<?php use carsery\core\Helpers; ?>
+
+<?php 
+use carsery\core\Helpers;
+?>
 
 <div class="container">
 
@@ -11,6 +14,15 @@
 					<?php endforeach ?>
 				</div>
         <?php endif ?>
+
+        
+        <?php if(!empty($_SESSION['success']) && $_SESSION['success'] === 1): ?>
+            <div class="alert alert--success">
+                <p>Un email de confirmation vous a été envoyé !</p>
+            </div>
+        <?php endif ?>
+        <?php $_SESSION['success'] = '' ?>
+        
         
         <h1>Connexion</h1>
         <?php $this->addModal("form", $configFormUser );?>
