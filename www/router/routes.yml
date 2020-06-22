@@ -89,3 +89,11 @@
 /testQuery:
   controller: myProject
   action: testQueryBuilder
+
+/add-widget:
+  controller: Page
+  action: widgetPage
+
+/confirmAccount:
+  controller: User
+  action: confirmAccount
