@@ -69,6 +69,7 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
                             <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
                             <button data-modal-target="modal1" data-id="<?= $unePage->getId() ?>" data-token="<?= $unePage->getToken() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
                             <a href="/edit-page?id=<?=$unePage->getId()?>"><i class="fas fa-edit"></i></a>
+                            <a href="/add-widget?id=<?=$unePage->getId()?>"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>
