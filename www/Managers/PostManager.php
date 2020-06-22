@@ -3,7 +3,7 @@
 namespace carsery\Managers;
 
 use carsery\core\DB;
-use carsery\core\QueryBuilder;
+use carsery\core\Builder\QueryBuilder;
 use carsery\models\Post;
 
 class PostManager extends DB
@@ -23,7 +23,7 @@ class PostManager extends DB
             ->where('p.author = :iduser')
             ->setParameter('iduser',$id)
             ->getQuery()
-            ->getArrayResultTp(Post::class)
+            ->getArrayResult(Post::class)
             ;
     }
 }
