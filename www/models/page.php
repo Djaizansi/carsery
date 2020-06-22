@@ -14,6 +14,12 @@ class page extends Model
     protected $token;
 
 
+    public function initRelation(): array {
+        return [
+        
+        ];
+    }
+
     /**
      * Get the value of id
      */ 
