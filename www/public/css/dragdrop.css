@@ -43,3 +43,10 @@
 .file-input:focus {
 	outline: none;
 }
+
+.on {
+    display: block;
+}
+.off {
+    display: none;
+}

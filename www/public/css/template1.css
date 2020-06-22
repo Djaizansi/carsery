@@ -4,8 +4,11 @@
     avec content : les paddings et border se rajoutent. Au lieu d'avoir 100px, on aura 162. Donc le border-box permet de ne pas 
     compter le padding dans la largeur*/
 }
-body {
-    margin: 0;
+
+
+html, body
+{
+    height: 99%
 }
 
 .logo {
@@ -21,6 +24,14 @@ header nav {
     color: #000000;
 }
 
+header {
+    background-color: #fff;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    transition: 0.5s;
+}
 /* style de la nav */
 
 nav a {
@@ -41,15 +52,6 @@ nav ul {
     padding: 0;
 }
 
-header {
-    background-color: #fff;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    transition: 0.5s;
-}
 
 .sticky {
     background-color:rgba(170, 170, 170, 0.6);
