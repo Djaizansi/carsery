@@ -3,6 +3,7 @@
 namespace carsery\core\Connection;
 
 use Throwable;
+use PDO;
 
 class PDOResult implements ResultInterface
 {
@@ -23,26 +24,19 @@ class PDOResult implements ResultInterface
 
     }
 
-    public function getArrayResult()
+    public function getArrayResult(string $class= null): array
     {
-        return $this->statement->fetchAll();
-    }
-
-    //Fonction double pour tester le fonctionnement pour ne pas détruire au cas ou le projet entier (précaution)
-    public function getArrayResultTp(string $model): array
-    {
-        $resultat = [];
-        $results = $this->statement->fetchAll();
-        if (gettype($results) != "array") //On verifie le type, si c'est different d'un tableau, on crée un tableau pour ensuite mettre ces données dedans
+        $result = $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        if($class)
         {
             $results = [];
+            foreach($result as $key => $value)
+            {
+                array_push($results, (new $class())->hydrate($value));
+            }
+            return $results;
         }
-        foreach ($results as $unResultat) {
-            $model = new $model(); //On récupere le model
-            $model->hydrate($unResultat); //On hydrate les données
-            $resultat[] = $model; // On ajoute dans un tableau
-        }
-        return $resultat; // On retourne le tableau 
+        return $result;
     }
 
     public function getValueResult()
