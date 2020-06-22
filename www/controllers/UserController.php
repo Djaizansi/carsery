@@ -10,6 +10,7 @@ use carsery\core\Validator;
 use carsery\Managers\RecuperationManager;
 use carsery\mail\template\ForgetMail;
 use carsery\core\Mail;
+use carsery\mail\template\ConfirmAccount;
 use carsery\Managers\UserManager;
 use carsery\models\Recuperation;
 use carsery\models\User;
@@ -45,12 +46,13 @@ class UserController
                         !is_null($user_found) ? $pwd = $user_found->getPwd() : '';
                         !is_null($user_found) ? $email = $user_found->getEmail() : '';
 
+                        $token = $user_found->getToken();
                         $pwd_user = isset($pwd) ? $pwd : '';
                         $email_user = isset($email) ? $email : '';
 
                         $pwd_verif = password_verify($_POST['pwd'],$pwd_user);
 
-                        if($email_user === $_POST['email'] && $pwd_verif){
+                        if($email_user === $_POST['email'] && $pwd_verif && $token == null){
                             $function->affecterInfosConnecte((int)$user_found->getId());
                             if($function){
                                 $location = Helpers::getUrl('Dashboard','dashboard');
@@ -59,8 +61,11 @@ class UserController
                             else{
                                 echo "Vous n'êtes pas connecté !";
                             }
-                        }else {
+                        }elseif(!$pwd_verif) {
                             $errors[] = "Votre mot de passe est incorrect";
+                            $myView->assign('errors',$errors);
+                        }elseif($token !== null){
+                            $errors[] = "Veuillez activer votre compte";
                             $myView->assign('errors',$errors);
                         }
                     }
@@ -233,6 +238,7 @@ class UserController
                         $user->setEmail($_SESSION['email']);
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus($unStatut);
+                        $user->setToken(null);
                         $userManager->save($user);
                         $location = Helpers::getUrl('User','login');
                         header("Location: $location");
@@ -250,9 +256,11 @@ class UserController
     public function registerAction()
     {
         $configFormUser = UserManager::getRegisterForm();
+        $token = Helpers::Salt(20);
         $userManager = new UserManager();
         $user = new User();
         $Session_Start = new Session();
+        $envoie = new Mail();
         $myView = new View("register", "account");
         
         if(empty($_SESSION['id'])){
@@ -270,9 +278,18 @@ class UserController
                         isset($_POST['email']) ? $user->setEmail($_POST['email']) : "";
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus('Client');
+                        $user->setToken($token);
                         $userManager->save($user);
-                        $location = Helpers::getUrl('User','login');
-                        header("Location: $location");
+                        $unMail = ConfirmAccount::mailConfirm($_POST['lastname'],$_POST['email']);
+                        $unEnvoie = $envoie->sendmail('Confirmation de compte', $unMail, $_POST['email']);
+                        if($unEnvoie){
+                            $success = 1;
+                            $_SESSION['success'] = $success;
+                            $location = Helpers::getUrl('User','login');
+                            header("Location: $location");
+                        }else {
+                            throw new RouteException("Un problème est survenue lors de l'envoie de mail");
+                        }
                     }
                 }
             }
@@ -280,6 +297,35 @@ class UserController
         }else {
             $location = Helpers::getUrl('Dashboard','dashboard');
             header("Location: $location");
+        }
+    }
+
+    public function confirmAccountAction(){
+        $userManager = new UserManager();
+        $user = new User();
+        if(isset($_GET['id']) && isset($_GET['token'])){
+            $found = $userManager->find($_GET['id']);
+            $token = isset($found) ? $found->getToken() : '';
+            $id = isset($found) ? $found->getId() : '';
+            if($id === $_GET['id'] && $token === $_GET['token']){
+                $myView = new View('confirmAccount','account');
+                $myView->assign('found',$found);
+                $user->setId((int)$id);
+                $user->setLastname($found->getLastname());
+                $user->setFirstname($found->getFirstname());
+                $user->setEmail($found->getEmail());
+                $user->setPwd($found->getPwd());
+                $user->setStatus($found->getStatus());
+                $user->setToken(null);
+                $userManager->save($user);
+            }elseif($token === null){
+                $location = Helpers::getUrl('User','login');
+                header("Location: $location");
+            }elseif($id !== $_GET['id'] && $token !== $_GET['token']){
+                throw new RouteException("Le lien n'est pas valide");
+            }
+        }else{
+            throw new RouteException("Vous n'avez pas accès à cette page");
         }
     }
 
