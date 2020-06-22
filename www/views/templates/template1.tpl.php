@@ -4,8 +4,12 @@ use carsery\Managers\PageManager;
 
 $pageManager = new PageManager();
 $foundPage = $pageManager->findAll();
+$foundMyPage = $pageManager->findByUri($_SERVER['REQUEST_URI']);
+$files = glob("./public/images_upload/*.*");
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +18,8 @@ $foundPage = $pageManager->findAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../public/dist/mains.css">
-    <link rel="stylesheet" href="../public/css/templates1.css">
-    <link rel="stylesheet" href="../public/css/sliders.css">
+    <link rel="stylesheet" href="../public/css/template1.css">
+    <link rel="stylesheet" href="../public/css/slider.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../public/js/template1.js"></script>
     <script src="../public/js/slider.js"></script>
@@ -23,6 +27,11 @@ $foundPage = $pageManager->findAll();
 </head>
 <body>
     <header>
+            <?php if($foundMyPage): ?>
+                <?php if($foundMyPage->getPublie() == 0): ?>
+                    <a style="float: left;"href="/page">Retour Accueil</a>
+                <?php endif ?>
+            <?php endif ?>
         <div class="container clearfix">
             <a href="#" class="logo" style="text-decoration: none;">
                 <p style="color: #000000;">MyProject</p>
@@ -41,36 +50,8 @@ $foundPage = $pageManager->findAll();
             </nav>
         </div>
     </header>
-    <main>
-        <section id="section1">
-            <?php
-                $data = [
-                    "listOfPictures" => [
-                        "../public/img/imag1.jpg",
-                        "../public/img/images2.jpg",
-                        "../public/img/images3.jpg",
-                        "../public/img/images4.jpg"
-                    ]
-                ];
-                $this->addModal("carousel", $data);
-            ?>
-        </section>
             
-        <section>
-            <div>
-                <p>Coucou</p>
-            </div>
-        </section>
-
-        <section>
-            <div>
-                <br>
-                <br>
-                <br>
-                <p>coucou</p>
-            </div>
-        </section>
-    </main>
+        <?php include "views/".$this->view.".view.php"; ?>
     <footer>
         <div class="container clearfix">
             <section>
