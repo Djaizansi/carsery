@@ -1,12 +1,9 @@
 <?php
-
-use carsery\core\Helpers;
-
 $pageFound = $pageManager->find($_GET['id']);
 $titre = $pageFound->getTitre();
 $notiret = str_replace(' ','',strtolower($titre));
+//Recuperer les données du fichier pour pouvoir modifier correctement ce dernier
 $file = file_get_contents("Views/$notiret.view.php");
-$files = glob("./public/images_upload/*.*");
 ?>
 
     <div class="container">
