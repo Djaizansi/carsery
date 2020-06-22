@@ -10,6 +10,13 @@ class User extends Model
     protected $email;
     protected $pwd;
     protected $status;
+    protected $token;
+
+    public function initRelation(): array {
+        return [
+        
+        ];
+    }
 
 
     public function setId($id)
@@ -61,4 +68,24 @@ class User extends Model
         return $this->status;
     }
 
+
+    /**
+     * Get the value of token
+     */ 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set the value of token
+     *
+     * @return  self
+     */ 
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
 }
