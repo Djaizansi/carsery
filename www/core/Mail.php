@@ -75,11 +75,7 @@ class Mail {
 
             /* $mail->addAttachment($piece);   */       // Add attachments
             /* $mail->addAttachment('/tmp/image.jpg', 'new.jpg'); */    // Optional name
-            /* $mail->AddEmbeddedImage("public/images/logomark_relax_white.png", "logo-white", "logomark_relax_white.png");
-            $mail->AddEmbeddedImage("public/images/logo_relax_white_text.png", "logo-white-text", "logo_relax_white_text.png");
-            $mail->AddEmbeddedImage("public/images/linkedin2x.png", "linkedin", "linkedin2x.png");
-            $mail->AddEmbeddedImage("public/images/instagram2x.png", "instagram", "instagram2x.png");
-            $mail->AddEmbeddedImage("public/images/facebook2x.png", "facebook", "facebook2x.png"); */
+            /* $mail->AddEmbeddedImage("public/images/logomark_relax_white.png", "logo-white", "logomark_relax_white.png"); */
             
             
             // Content
