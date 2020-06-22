@@ -80,23 +80,6 @@ class PageController {
                     if(!empty($unePage)){
                             $titre = str_replace(' ','',strtolower($unePage->getTitre()));
                             file_put_contents("views/$titre.view.php",'coucou');
-                            /* $titre_tiret = str_replace(' ','-',strtolower($unePage->getTitre())); */
-                            /* $action = $unePage->getAction(); */
-                            /* $route = '
-/myproject/'.$titre_tiret.':
-    controller: "myProject"
-    action: "'.$action.'"
-'; */
-                        /* file_exists("router/routes.yml") ? file_put_contents("router/routes.yml",$route,FILE_APPEND) : Null;
-                        echo Helpers::getView($action,$titre); */
-                        /* $fileToEdit = file_get_contents($localisation);
-                        //trouver la position de fin de fichier
-                        $endOfFilePos= strpos($fileToEdit, "//End", -1); 
-                        $myOldFileWithoutEnd = substr($fileToEdit, 0, $endOfFilePos);
-                        $myNewEnd = $function . "\n }"; //les doubles guillemets sont importants pour interpréter le \n
-
-                        //tout mettre dans le nouveau fichier
-                        $myNewFile = file_put_contents ($localisation, $myOldFileWithoutEnd . $myNewEnd, FILE_APPEND); */
                         }
                     }
                 }
@@ -116,26 +99,61 @@ class PageController {
 
     public function modifierPageAction()
     {
-        $pageManager = new PageManager();
-        $configFormPage = PageManager::getWYSIWYGForm();
-        $find = $pageManager->findAll();
-        if($find && isset($_GET['id'])){
-            $unePage = $pageManager->find($_GET['id']);
-            $titre = $unePage->getTitre();
-            $notiret = str_replace(' ','',strtolower($titre));
-            $myView = new View("editpage");
-            $myView->assign('pageManager', $pageManager);
-            $myView->assign('configFormPage', $configFormPage);
-            if(!empty($_POST)){
-                isset($_POST['editPage']) ? $_POST['editPage'] : '';
-                file_put_contents("Views/$notiret.view.php", $_POST['editPage']);
-                $location = Helpers::getUrl('Page','page');
-                header("Location: $location");
+        if(Session::estConnecte()){
+            $pageManager = new PageManager();
+            $configFormPage = PageManager::getWYSIWYGForm();
+            $find = $pageManager->findAll();
+            if($find && isset($_GET['id'])){
+                $unePage = $pageManager->find($_GET['id']);
+                $titre = $unePage->getTitre();
+                $notiret = str_replace(' ','',strtolower($titre));
+                $myView = new View("editpage");
+                $myView->assign('pageManager', $pageManager);
+                $myView->assign('configFormPage', $configFormPage);
+                if(!empty($_POST)){
+                    isset($_POST['editPage']) ? $_POST['editPage'] : '';
+                    file_put_contents("Views/$notiret.view.php", $_POST['editPage']);
+                    $location = Helpers::getUrl('Page','page');
+                    header("Location: $location");
+                }
+            }elseif(!$find && !isset($_GET['id'])){
+                throw new RouteException("La modification n'est pas disponible ");
+            }else {
+                throw new RouteException("La page que vous voulez modifier n'existe pas ");
             }
-        }elseif(!$find && !isset($_GET['id'])){
-            throw new RouteException("La modification n'est pas disponible ");
         }else {
-            throw new RouteException("La page que vous voulez modifier n'existe pas ");
+            throw new RouteException("Vous devez être connecter pour accèder à cette page");
+        }
+    }
+
+    public function widgetPageAction()
+    {
+        if(Session::estConnecte()){
+            $pageManager = new PageManager();
+            $find = $pageManager->findAll();
+            if($find && isset($_GET['id'])){
+                $unePage = $pageManager->find($_GET['id']);
+                $titre = $unePage->getTitre();
+                $notiret = str_replace(' ','',strtolower($titre));
+                $myView = new View("widget");
+                $myView->assign('pageManager', $pageManager);
+                if(!empty($_POST)){
+                    isset($_POST['caroussel']) ? $_POST['caroussel'] : '';
+                    isset($_POST['forum']) ? $_POST['forum'] : '';
+                    isset($_POST['contact']) ? $_POST['contact'] : '';
+                    isset($_POST['vehicule']) ? $_POST['vehicule'] : '';
+                    isset($_POST['piece']) ? $_POST['piece'] : '';
+                    /* file_put_contents("Views/$notiret.view.php", $_POST['editPage']); */
+                    /* $location = Helpers::getUrl('Page','page');
+                    header("Location: $location"); */
+                }
+            }elseif(!$find && !isset($_GET['id'])){
+                throw new RouteException("La modification n'est pas disponible ");
+            }else {
+                throw new RouteException("La page que vous voulez modifier n'existe pas ");
+            }
+        }else {
+            throw new RouteException("Vous devez être connecter pour accèder à cette page");
         }
     }
 }
