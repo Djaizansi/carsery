@@ -5,8 +5,6 @@ use carsery\Managers\PageManager;
 $pageManager = new PageManager();
 $foundPage = $pageManager->findAll();
 $foundMyPage = $pageManager->findByUri($_SERVER['REQUEST_URI']);
-$files = glob("./public/images_upload/*.*");
-
 ?>
 
 
@@ -52,7 +50,7 @@ $files = glob("./public/images_upload/*.*");
     </header>
             
         <?php include "views/".$this->view.".view.php"; ?>
-    <footer>
+    <footer style="position: fixed; bottom: 0;width:100%;">
         <div class="container clearfix">
             <section>
                 <nav>

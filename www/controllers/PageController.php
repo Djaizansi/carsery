@@ -43,7 +43,7 @@ class PageController {
             throw new RouteException("La page que vous voulez supprimer n'existe pas ou plus");
         }else {
             $token = $pageFound->getToken();
-            $titre = $pageFound->getTitre();
+            $titre = htmlspecialchars($pageFound->getTitre());
             $notiret = str_replace(' ','',strtolower($titre));
 
             if(isset($_GET['id']) && isset($_GET['token']) && $token == $_GET['token']){
@@ -78,7 +78,7 @@ class PageController {
                     header("Location: $location");
                     $unePage = $pageManager->findByTitre($_POST['titre']);
                     if(!empty($unePage)){
-                            $titre = str_replace(' ','',strtolower($unePage->getTitre()));
+                            $titre = str_replace(' ','',strtolower(htmlspecialchars($unePage->getTitre())));
                             file_put_contents("views/$titre.view.php",'coucou');
                         }
                     }
@@ -105,7 +105,7 @@ class PageController {
             $find = $pageManager->findAll();
             if($find && isset($_GET['id'])){
                 $unePage = $pageManager->find($_GET['id']);
-                $titre = $unePage->getTitre();
+                $titre = htmlspecialchars($unePage->getTitre());
                 $notiret = str_replace(' ','',strtolower($titre));
                 $myView = new View("editpage");
                 $myView->assign('pageManager', $pageManager);
@@ -133,7 +133,7 @@ class PageController {
             $find = $pageManager->findAll();
             if($find && isset($_GET['id'])){
                 $unePage = $pageManager->find($_GET['id']);
-                $titre = $unePage->getTitre();
+                $titre = htmlspecialchars($unePage->getTitre());
                 $notiret = str_replace(' ','',strtolower($titre));
                 $myView = new View("widget");
                 $myView->assign('pageManager', $pageManager);

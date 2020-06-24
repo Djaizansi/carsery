@@ -49,10 +49,15 @@ function toggleModal(modalId) {
 
 var id_utilisateur_supprimer;
 var token;
+var file;
 
 $(document).on("click", ".myBtn", function () {
   id_utilisateur_supprimer = $(this).data('id');
   token = $(this).data('token');
+});
+
+$(document).on("click", ".file", function () {
+  file = $(this).data('file');
 });
 
 $('#btnYes').click(function() {

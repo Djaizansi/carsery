@@ -50,4 +50,23 @@ class Helpers
     public static function Salt($length){
         return substr(strtr(base64_encode(hex2bin(self::RandomToken($length))), '+', '.'), 0, 44);
     }
+
+    public static function alert($type,$variable='',$message='')
+    {
+        if(!empty($variable)){
+            $content = '<div class="alert alert--'.$type.'>';
+            foreach($variable as $uneVariable){
+                $alert = '<p>'.$uneVariable.'</p>';
+                $content.=$alert;
+            }
+            $content.= '</div>';
+            return $content;
+        }elseif(!empty($message)){
+            $content = '<div class="alert alert--'.$type.'">';
+            $alert = '<p>'.$message.'</p>';
+            $content.=$alert;
+            $content.='</div>';
+            return $content;
+        }
+    }
 }

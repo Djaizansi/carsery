@@ -1,8 +1,20 @@
 <?php
+
+use carsery\core\Helpers;
+
 $files = glob("./public/images_upload/*.*");
+$alert = isset($alert) ? $alert : '';
 ?>
 
 <div class="container">
+	<?php if($alert == 1): ?>
+		<?= Helpers::alert('success','',"L'image a bien été uploadé") ?>
+		<?php $alert = 0 ?>
+	<?php elseif($alert == "image"): ?>
+		<?= Helpers::alert('danger','',"L'image uploadé n'est pas valide : JPG, PNG, JPEG autorisé") ?>
+		<?php $alert = 0 ?>
+	<?php endif ?>
+
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="row">
             <h2>Ajout d'image dans la bibliothèque</h2>
@@ -26,14 +38,33 @@ $files = glob("./public/images_upload/*.*");
             <?php foreach($files as $file): ?>
             <tr>
                 <td><img src="<?=$file?>" style="width:100px !important; height:100px !important;" alt="Image" /></td>
-                <td><?= pathinfo($file, PATHINFO_FILENAME) ?></td>
-                <td>Test</td>
+				<td><?= pathinfo($file, PATHINFO_FILENAME) ?></td>
+				<td>
+					<button data-modal-target="modal1" data-file="<?=$file?>" class="file" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
+					<a href="/edit-page?id="><i class="fas fa-edit"></i></a>
+				</td>
             </tr>
             <?php endforeach ?>
         </tbody>
     </table>
-
 </div>
+
+<div class="modal" id="modal1"> <!-- This is the background overlay -->
+        <div class="modal-content"> <!-- This is the actual modal/popup box -->
+            <span class="modal-close">&times;</span>
+            <p>Souhaitez-vous vraiment supprimer cette Image?</p>
+			<a id="btnYes" class="btn btn--success">Oui</a>
+			<a id="btnNo" class="btn btn--danger">Non</a>
+        </div>
+    </div>
+
+    <div class="modal" id="modal2"> <!-- This is the background overlay -->
+        <div class="modal-content"> <!-- This is the actual modal/popup box -->
+            <span class="modal-close">&times;</span>
+            <h2 class="txt-center">Création de page</h2>
+            <?php $this->addModal("form", $configFormPage );?>
+        </div>
+    </div>
 
 <script>
 		var $fileInput = $('.file-input');
@@ -60,7 +91,7 @@ $files = glob("./public/images_upload/*.*");
 				$textContainer.text(fileName);
 			} else {
 				// otherwise show number of files
-				$textContainer.text(filesCount + ' files selected');
+				$textContainer.text(filesCount + ' Fichiers selectionnés');
 			}
 		});
 </script>

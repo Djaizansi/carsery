@@ -44,12 +44,12 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
                 <?php foreach($donnee as $unePage): ?>
                     <tr>
 
-                        <?php $unTitre = $unePage->getTitre() ?>
+                        <?php $unTitre = htmlspecialchars($unePage->getTitre()) ?>
                         <?php $titre = isset($unTitre) ? $unTitre : '' ?>
-                        <?php $url = $unePage->getUri() ?>
+                        <?php $url = htmlspecialchars($unePage->getUri()) ?>
                         <td><a href="<?=$url?>"><?=$url?></a</td>
                         <td><?=$titre?></td>
-                        <td><?= $unePage->getAuteur() ?></td>
+                        <td><?= htmlspecialchars($unePage->getAuteur()) ?></td>
                             <td>
                             <?php if($unePage->getPublie() == 0): ?>
                                 Créé le 

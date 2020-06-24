@@ -2,6 +2,7 @@
 
 namespace carsery\core;
 
+use carsery\core\Exceptions\RouteException;
 use carsery\core\Session;
 use carsery\Managers\UserManager;
 
@@ -16,12 +17,15 @@ class View
     {
         $this->setTemplate($template);
         $this->setView($view);
-        if($this->template === "back"){
-            $connecter = new Session();
+        if($this->template === "back" && Session::estConnecte()){
             $userManager = new UserManager();
             $utilisateur = $userManager->find($_SESSION['id']);
-            $prenom = $utilisateur->getFirstname();
-            self::assign("firstname",$prenom);
+            if(!is_null($utilisateur)){
+                $prenom = htmlspecialchars($utilisateur->getFirstname());
+                self::assign("firstname",$prenom);
+            }else {
+                session_destroy();
+            }
         }
     }
 
