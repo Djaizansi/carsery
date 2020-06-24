@@ -1,7 +1,8 @@
 <?php
 $pageFound = $pageManager->find($_GET['id']);
 $titre = $pageFound->getTitre();
-$file = file_get_contents("Views/$titre.view.php");
+$notiret = str_replace(' ','',strtolower($titre));
+$file = file_get_contents("Views/$notiret.view.php");
 ?>
 
     <div class="container">

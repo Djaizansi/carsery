@@ -48,8 +48,9 @@ class View
 
     public function setView($v)
     {
-        $this->view = strtolower(trim($v));
-        if (!file_exists("views/".$this->view.".view.php")) {
+        $titre = $this->view = strtolower(trim($v));
+        $unTitre = explode('?',$titre)[0];
+        if (!file_exists("views/".$unTitre.".view.php")) {
             die("La vue n'existe pas");
         }
     }

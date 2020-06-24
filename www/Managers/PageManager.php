@@ -40,6 +40,23 @@ class PageManager extends DB {
         }
     }
 
+    public function findByUri($uri)
+    {
+        $table = $this->getTable();
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM $table WHERE uri =:uri";
+        $results = $connection->query($sql,[':uri' => $uri]);
+        $row = $results->getOneOrNullResult();
+
+        if ($row) {
+            $object = new $this->class;
+            return $object->hydrate($row);
+        }else {
+            return null;
+        }
+    }
+
+
     public function findByPublic(bool $public)
     {
         $table = $this->getTable();
