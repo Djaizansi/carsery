@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="file:///Users/nesrine/Downloads/fontawesome-free-5.13.0-web/css/all.css">
     <link rel="stylesheet" href="../public/css/template2.css">
      <!-- Navbar déroulante pour mobile et tablette -->
-   <script src="js/menu.js"></script>
-   <script src="js/dropdown-btn.js"></script>
+   <!-- <script src="js/menu.js"></script> -->
+   <script src="../public/js/dropdown-btn.js"></script>
    
    
   
@@ -21,7 +21,7 @@
     <div class="nav" >
         
         <div class = "logo"> 
-           <img src="../home-grid/images/logo.png" alt="">
+           <img src="../public/img/logo.png" alt="">
         </div>
         <div class ="search"> 
             <input label = "car-search" placeholder="Rechercher un produit... " class="fas fa-search" style="width: 20em" type = "text" class = "search-input">
