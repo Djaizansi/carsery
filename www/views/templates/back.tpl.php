@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <!-- Framework CSS -->
-    <link rel="stylesheet" href="../public/dist/main.css">
+    <link rel="stylesheet" href="../public/dist/mains.css">
     <!-- Dashboard CSS -->
-    <link rel="stylesheet" href="../public/css/dashboard.css">
+    <link rel="stylesheet" href="../public/css/dashboards.css">
     <!-- Loader CSS -->
     <link rel="stylesheet" href="../public/css/loader.css">
+    <link rel="stylesheet" href="../public/css/dragdrop.css">
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/42ce300797.js" crossorigin="anonymous"></script>
     <!-- JQuery -->
@@ -25,8 +26,10 @@
     <!-- Favicon -->
     <link rel="icon" href="../public/img/carsery.png">
     <!-- SCRIPTJS -->
-    <script src="../public/js/script.js"></script>
     <script src="../public/js/user.js"></script>
+    <!-- WYSIWYG -->
+    <script src="https://cdn.tiny.cloud/1/vavj4oxk7dimm3sd4lw8lfnr7nk56akfvv84yc0jxo0m0cgz/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    
 </head>
 <body>
 
@@ -79,5 +82,6 @@
 
     </div>
     <script src="../public/js/menu.js"></script>
+    <script src="../public/js/script.js"></script>
 </body>
 </html>

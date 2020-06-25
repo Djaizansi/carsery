@@ -12,6 +12,15 @@ p {
   line-height: 1.8;
 }
 
+.border {
+  border: 1px solid #babbbd;
+}
+
+.inline {
+  display: inline-block;
+  margin: 0.5rem 1rem;
+}
+
 /* Grille pour chaque élément */
 .grid-container {
   display: grid;

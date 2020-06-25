@@ -2,9 +2,9 @@
 
 namespace carsery\core;
 
-use carsery\models\users;
-use carsery\models\recuperation;
-
+use carsery\Managers\UserManager;
+use carsery\Managers\RecuperationManager;
+use carsery\models\Recuperation;
 
 class Validator{
 	//$data = $_POST ou $_GET 
@@ -26,11 +26,13 @@ class Validator{
 				
 				//Vérifier l'email
 				if($config["type"]=="email"){
-					$user = new users();
-					$email = $user->find("email","email",$data[$name]);
+					$user = new UserManager();
+					$email = $user->findByEmail($data[$name]);
+					!is_null($email) ? $unEmail = $email->getEmail() : '';
+					$mail = isset($unEmail) ? $unEmail : '';
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
-					}elseif($email){
+					}elseif($mail){
 						$listOfErrors[]="Votre email existe déjà";
 					}
 				}
@@ -91,34 +93,33 @@ class Validator{
 				
 				//Vérifie que l'on a bien les champs attendus
 				//Vérifier les required
-
 				if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
 					return ["Tentative de hack !!!"];
 				}
 				
 				//Vérifier l'email
 				if($config["type"]=="email"){
-					$user = new users();
-					$email = $user->find("email","email",$data[$name]);
+					$user = new UserManager();
+					$email = $user->findByEmail($data[$name]);
+					!is_null($email) ? $unEmail = $email->getEmail() : '';
+					$mail = isset($unEmail) ? $unEmail : '';
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
-					}elseif(!$email){
+					}elseif(!$mail){
 						$listOfErrors[]="Votre email n'existe pas";
 					}
 				}
 
 				if($config['type']=="text" && $name = 'code'){
-					$recup = new recuperation();
-					$code = $recup->find('code','mail',$_SESSION['email']);
-					$recup_code = $code->getCode();
-
-					if($recup_code !== $data[$name]){
+					$recupManager = new RecuperationManager();
+					$code = $recupManager->findByEmail($_SESSION['email']);
+					isset($code) ? $recup_code = $code->getCode() : '';
+					if(empty($recup_code) || $recup_code !== $data[$name]){
 						$listOfErrors[]=$config["errorMsg"];
 					}elseif(empty($data[$name])){
 						$listOfErrors[]= "Veuillez entrer votre code de confirmation";
 					}
 				}
-
 			}
 		}else{
 			return ["Tentative de hack !!!"];

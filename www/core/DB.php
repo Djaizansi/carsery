@@ -2,39 +2,39 @@
 
 namespace carsery\core;
 
-use PDO;
-use Exception;
-use carsery\models\users;
+use carsery\core\Connection\BDDInterface;
+use carsery\core\Connection\PDOConnection;
+use carsery\core\Exceptions\BDDException;
 
 class DB
 {
     private $table;
-    private $pdo;
+    private $connection;
+    protected $class;
 
-    public function __construct()
+    public function __construct(string $class, string $table, BDDInterface $connection = NULL)
     {
-        //SINGLETON
-        try {
-            $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
-        } catch (Exception $e) {
-            die("Erreur SQL : ".$e->getMessage());
+        $this->class = $class;  
+        $this->table = DB_PREFIXE.$table;
+
+        $this->connection = $connection;
+        if(is_null($connection)){
+            $this->connection = new PDOConnection();
         }
-        $table = DB_PREFIXE.get_called_class();
+        /* $table = DB_PREFIXE.get_called_class();
         $this->table = DB_PREFIXE.substr($table,strrpos($table,'\\')+1,strlen($table)); //.get_called_class() => la classe appelé quand on se dirige vers register est USER
-        
+        var_dump($this->table); */
     }
 
-    public function save()
+    public function save($objectToSave)
     {
-        $propChild = get_object_vars($this);
-        $propDB = get_class_vars(get_class());
-        $columnsData = array_diff_key($propChild, $propDB);
-        // faire la différence entre propChild et propDB
-        // si y'a des éléments de propChild qui sont pas dans propDB, on les stock dans la
-        // variable columnsData
-        $columns = array_keys($columnsData);
+        $objectArray = $objectToSave->__toArray();
+        $columnsData = array_values($objectArray);
+        $columns = array_keys($objectArray);
 
-        if (!is_numeric($this->id)) {
+        $params = array_combine(array_map(function($k){ return ':'.$k; }, array_keys($objectArray)),$objectArray);
+
+        if (!is_numeric($objectToSave->getId())) {
             $sql = "INSERT INTO ".$this->table. "(".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
         } else {
             //"UPDATE users SET id=:id, firstname=:firstname, .... WHERE id = :id;"
@@ -45,122 +45,136 @@ class DB
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
         
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($columnsData);
+        $this->connection->query($sql, $params);
     }
 
-    protected function sql($sql, $parameters = null)
+    
+    public function findAll() : array 
     {
-        if ($parameters) {
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($parameters);
-        return $queryPrepared;
-
-        } else {
-        $queryPrepared = $this->pdo->prepare($sql);
-
-        return $queryPrepared;
-        }
-    }
-
-    public function login($email,$pwd){
-        $sql = "SELECT * FROM $this->table WHERE email = :email AND pwd = :pwd";
-        $result = $this->sql($sql, [':email' => $email, ':pwd'=> $pwd]);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        if($row){
-            echo "CONNEXION RÉUSSI !";
-        }else {
-            echo "CONNEXION ÉCHOUÉE !";
-        }
-        $result->closeCursor();
-        return $row;
-
-        /* $sql = "SELECT * FROM $this->table WHERE email='" .$email. "' AND pwd ='" .$pwd. "';";
-        $queryPrepared = $this->pdo->query($sql);
-        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
-        $donnee= $queryPrepared->fetch();
-        if($donnee){
-            echo "CONNEXION RÉUSSI !";
-        }else {
-            echo "CONNEXION ÉCHOUÉE !";
-        }
-        $queryPrepared->closeCursor();
-        return $donnee; */
-
-    }
-
-    public function find(string $recherche ,string $attribut = NULL, $value = NULL){
-        $attribut_exist = isset($attribut) ? " WHERE $attribut = :$attribut" : ';';
-        $donnee_exist = isset($attribut) ? [":$attribut" => $value] : '';
-        $sql = "SELECT $recherche FROM $this->table".$attribut_exist;
-        $result = $this->sql($sql,$donnee_exist);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        $class = get_called_class();
-
-        if(isset($attribut)){
-            if ($row) {
-                $object = new $class();
-                return $object->hydrate($row);
-            } else {
-                return null;
+        $sql = "SELECT * FROM $this->table";
+        $result = $this->connection->query($sql);
+        $rows = $result->getArrayResult();
+        $find = [];
+        foreach($rows as $row){
+            $object = new $this->class();
+            try {
+                array_push($find, $object->hydrate($row));
+            } catch (BDDException $e){
+                die($e->getMessage());
             }
-        }else {
-            while($row){
-                $object = new $class();
-                $users[] = $object->hydrate($row);
-                $row = $result->fetch();
-            }
-            $result->closeCursor();
-            return $users;
         }
-    }
-
-    public function getByAttribut($elementAttribute, $valueAttribute, $value) {
-        $sql = "SELECT $elementAttribute FROM $this->table WHERE $valueAttribute = :$valueAttribute";
-        $result = $this->sql($sql, [":$valueAttribute" => $value]);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
-        return $row;
-    }
-
-    public function getByAttrubutMultiple($elementAttribute, $valueAttribute, $value, $addparameterAttribute, $addvalue){
-        $sql = "SELECT $elementAttribute FROM $this->table WHERE $valueAttribute = :$valueAttribute AND $addparameterAttribute = :$addparameterAttribute";
-        $result = $this->sql($sql, [":$valueAttribute" => $value, ":$addparameterAttribute" => $addvalue]);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
         
-        $class = get_called_class();
+        return $find;
+    }
+
+    public function findBy(array $params, array $order = null): array{
+        $results = array();
+        $sql = "SELECT * FROM $this->table WHERE ";
+        foreach($params as $key => $value){
+            if(is_string($value)){
+                $comparator = 'LIKE';
+            }else{
+                $comparator = '=';
+            }
+            $sql .= "$key $comparator :$key AND ";
+
+            $params[":$key"] = $value;
+            unset($params[$key]);
+        }
+        $sql = rtrim($sql,'AND ');
+
+        if($order){
+            $sql .= "ORDER BY '". key($order). " ". $order[key($order)];
+        }
+
+        $result = $this->connection->query($sql, $params);
+        $rows = $result->getArrayResult();
+
+        foreach($rows as $row){
+            $object = new $this->class();
+            try {
+                array_push($results, $object->hydrate($row));
+            } catch (BDDException $e){
+                die($e->getMessage());
+            }
+        }
+
+        return $results;
+    }
+
+    public function count(array $params): int
+    {
+        $results = array();
+
+        $sql = "SELECT COUNT(*) FROM $this->table WHERE";
+
+        foreach($params as $key => $value){
+            if(is_string($value)){
+                $comparator = 'LIKE';
+            }else{
+                $comparator = '=';
+            }
+            $sql .= "$key $comparator :$key AND";
+
+            $params[":$key"] = $value;
+            unset($params[$key]);
+        }
+        $sql = rtrim($sql, 'AND');
+
+        $result = $this->connection->query($sql, $params);
+        return $result->getValueResult();
+
+        
+    }
+
+    public function find(int $id): ?\carsery\models\Model
+    {
+        $sql = "SELECT * FROM $this->table WHERE id =:id";
+        $results = $this->connection->query($sql,[':id' => $id]);
+        $row = $results->getOneOrNullResult();
+
         if ($row) {
-            $object = new $class();
-            return $object->hydrate($row);
-        } else {
+            $object = new $this->class;
+            try {
+                return $object->hydrate($row);
+            } catch (BDDException $e){
+                die($e->getMessage());
+            }
+        }else {
             return null;
         }
+
     }
+
+
     
 
     public function delete($attribut, $value){
         $sql = "DELETE FROM $this->table WHERE $attribut = :$attribut";
-        $result = $this->sql($sql, [":$attribut" => $value]);
+        $result = $this->connection->query($sql, [":$attribut" => $value]);
     }
 
-    /* public function getById($id,$model,$tab){
-        $sql = "SELECT * FROM " .$this->table. " WHERE id=".$id.";";
-        $queryPrepared = $this->pdo->query($sql);
-        $queryPrepared->setFetchMode(PDO::FETCH_OBJ);
-        $donnee= $queryPrepared->fetch();
-        if($donnee){
-            $uneDonnee = new $model();
-            foreach($tab as $untab){
-                $set = "set".ucfirst($untab);
-                $uneDonnee->$set($donnee->$untab);
-            }
-            return $uneDonnee;
-            //return $user;
-        }
-        $queryPrepared->closeCursor();
-        return NULL; 
-    } */
+    /**
+     * Get the value of table
+     */ 
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * Get the value of class
+     */ 
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Get the value of connection
+     */ 
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 }

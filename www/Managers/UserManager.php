@@ -1,113 +1,71 @@
 <?php
-
-namespace carsery\models;
+namespace carsery\Managers;
 
 use carsery\core\DB;
+use carsery\models\User;
 use carsery\core\Helpers;
 
-
-class users extends DB
-{
-    protected $id;
-    protected $lastname;
-    protected $firstname;
-    protected $email;
-    protected $pwd;
-    protected $status;
-
-    /* public function hydrate(array $columnTable)
-    {
-        foreach ($columnTable as $key => $value)
-        {
-        // On récupère le nom du setter correspondant à l'attribut.
-            $method = 'set'.ucfirst($key);
-        
-        // Si le setter correspondant existe.
-            if (method_exists($this, $method))
-            {
-        // On appelle le setter.
-                $this->$method($value);
-            }
-        }
-    } */
-
-    public function hydrate(array $donnees){
-        foreach ($donnees as $key => $value){
-        // On récupère le nom du setter correspondant à l'attribut.
-            $method = 'set'.ucfirst($key);
-        // Si le setter correspondant existe bien.
-            if (method_exists($this, $method)){
-            // On appelle le setter.
-            $this->$method($value);
-            }
-        }
-        return $this;
-    }
+class UserManager extends DB {
     
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct(User::class, 'users');
     }
 
-    public function setId($id)
+    public function findByEmail($email)
     {
-        $this->id=$id;
+        $table = $this->getTable();
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM $table WHERE email = :email";
+        $result = $connection->query($sql, [':email' => $email]);
+        
+        $row = $result->getOneOrNullResult();
+        
+        if ($row) {
+
+            $object = new $this->class();
+            return $object->hydrate($row);
+
+        } else {
+
+            return null;
+
+        }
     }
-    public function setFirstname($firstname)
+
+    public function findById($id)
     {
-        $this->firstname=ucwords(strtolower(trim($firstname)));
+        $table = $this->getTable();
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM $table WHERE id = :id";
+        $result = $connection->query($sql, [':id' => $id]);
+        
+        $row = $result->getOneOrNullResult();
+        
+        if ($row) {
+
+            $object = new $this->class();
+            return $object->hydrate($row);
+
+        } else {
+
+            return null;
+
+        }
     }
-    public function setLastname($lastname)
-    {
-        $this->lastname=strtoupper(trim($lastname));
-    }
-    public function setEmail($email)
-    {
-        $this->email=strtolower(trim($email));
-    }
-    public function setPwd($pwd)
-    {
-        $this->pwd=$pwd;
-    }
-    public function setStatus($status)
-    {
-        $this->status=$status;
-    }
-    public function getId()
-    {
-        return $this->id;
-    }
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    public function getPwd()
-    {
-        return $this->pwd;
-    }
-    public function getStatus()
-    {
-        return $this->status;
-    }
+
     public static function getRegisterForm(){
         return [
                     "config"=>[
                                 "method"=>"POST",
-                                "action"=>helpers::getUrl("user", "register"),
+                                "action"=>Helpers::getUrl("user", "register"),
                                 "class"=>"box",
                                 "id"=>"formRegisterUser",
                                 "submit"=>"S'inscrire"
                             ],
                     "fields"=>[
                                 "lastname"=>[
+                                        "balise"=>"",
                                         "type"=>"text",
                                         "placeholder"=>"Votre nom",
                                         /* "class"=>"form-control form-control-user", */
@@ -118,6 +76,7 @@ class users extends DB
                                         "errorMsg"=>"Votre nom doit faire entre 2 et 100 caractères"
                                 ],
                                 "firstname"=>[
+                                        "balise"=>"",
                                         "type"=>"text",
                                         "placeholder"=>"Votre prénom",
                                         /* "class"=>"form-control form-control-user", */
@@ -128,6 +87,7 @@ class users extends DB
                                         "errorMsg"=>"Votre prenom doit faire entre 2 et 50 caractères"
                                 ],
                                 "email"=>[
+                                        "balise"=>"",
                                         "type"=>"email",
                                         "placeholder"=>"Votre email",
                                         /* "class"=>"form-control form-control-user", */
@@ -137,6 +97,7 @@ class users extends DB
                                         "errorMsg"=>"Votre email ne correspond pas"
                                 ],
                                 "pwd"=>[
+                                        "balise"=>"",
                                         "type"=>"password",
                                         "placeholder"=>"Votre mot de passe",
                                         /* "class"=>"form-control form-control-user", */
@@ -146,6 +107,7 @@ class users extends DB
                                         avec une Majuscule et Minuscule"
                                 ],
                                 "pwdConfirm"=>[
+                                        "balise"=>"",
                                         "type"=>"password",
                                         "placeholder"=>"Confirmation",
                                         /* "class"=>"form-control form-control-user", */
@@ -155,6 +117,7 @@ class users extends DB
                                         "errorMsg"=>"Votre mot de passe de confirmation ne correspond pas"
                                 ],
                                 "captcha"=>[
+                                        "balise"=>"",
                                         "type"=>"captcha",
                                         /* "class"=>"form-control form-control-user", */
                                         "id"=>"",
@@ -173,7 +136,7 @@ class users extends DB
         return [
                     "config"=>[
                             "method"=>"POST",
-                            "action"=>helpers::getUrl("User", "login"),
+                            "action"=>Helpers::getUrl("User", "login"),
                             "class"=>"box",
                             "id"=>"formLoginUser",
                             "submit"=>"Se connecter"
@@ -181,6 +144,7 @@ class users extends DB
 
                     "fields"=>[
                         "email"=>[
+                            "balise"=>"",
                             "type"=>"email",
                             "placeholder"=>"Email",
                             /* "class"=>"form-control form-control-user", */
@@ -191,6 +155,7 @@ class users extends DB
                         ],
 
                         "pwd"=>[
+                            "balise"=>"",
                             "type"=>"password",
                             "placeholder"=>"Password",
                             /* "class"=>"form-control form-control-user", */
@@ -206,7 +171,7 @@ class users extends DB
         return [
                     "config"=>[
                             "method"=>"POST",
-                            "action"=>helpers::getUrl("User", "forget"),
+                            "action"=>Helpers::getUrl("User", "forget"),
                             "class"=>"box",
                             "id"=>"formLoginUser",
                             "submit"=>"Envoyer"
@@ -214,6 +179,7 @@ class users extends DB
 
                     "fields"=>[
                         "email"=>[
+                            "balise"=>"",
                             "type"=>"email",
                             "placeholder"=>"Email",
                             /* "class"=>"form-control form-control-user", */
@@ -225,5 +191,4 @@ class users extends DB
                     ]
                 ];
     }
-
 }
