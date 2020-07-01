@@ -96,5 +96,5 @@ function geocodeLatLng(geocoder, map, infowindow) {
 }
 </script>
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGHlyjkB4wVVYENmf3cUNCskgSSjMOC2k&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap">
     </script>
