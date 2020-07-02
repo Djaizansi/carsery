@@ -20,13 +20,16 @@
         </thead>
         <tbody>
                 <?php foreach($articles as $article): ?>
-                    <tr>
+                    <tr id="article-<?=$article->getId()?>">
                         <td><a href="<?php echo Helpers::getUrl("Forum", "readarticle") ?>"><?=$article->getTitle()?></a></td>
                         <td><?=$article->getDescription()?></td>
                         <?php $dateC = new DateTime($article->getCreationDate())?>
                         <td><?=$dateC->format('d/m/Y')?></td>
                         <td>
-                            <button data-modal-target="modal1" data-id="<?= $article->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
+                            <form method="POST" action="<?php echo Helpers::getUrl("Forum", "removearticle") ?>">
+                                <input type="hidden" name="id" value="<?= $article->getId() ?>">
+                                <button data-modal-target="modal1" name="delete" data-id="<?= $article->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach ?>
@@ -38,7 +41,7 @@
         <div class="modal-content"> <!-- This is the actual modal/popup box -->
             <span class="modal-close">&times;</span>
             <p>Souhaitez-vous vraiment supprimer cette article?</p>
-			<a id="btnYes" class="btn btn--success">Oui</a>
+			<a id="btnYes" data-id class="btn btn--success">Oui</a>
 			<a id="btnNo" class="btn btn--danger">Non</a>
         </div>
     </div>
@@ -53,3 +56,10 @@
     </div>
 
 </div>
+
+<script>
+    var yesButton = document.getElementById("btnYes");
+    yesButton.addEventListener('click', function () {
+        
+    });
+</script>

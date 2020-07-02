@@ -44,7 +44,7 @@ class DB
 
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
-        
+
         $this->connection->query($sql, $params);
     }
 
