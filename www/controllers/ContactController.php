@@ -11,7 +11,7 @@ class ContactController {
          if(Session::estConnecte()){
             $myView = new View("contact");
          }else {
-            $myView = new View("contact");
+            include_once "./error/notConnected.php";
         }
     }
 }
