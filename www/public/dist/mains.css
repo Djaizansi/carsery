@@ -303,6 +303,8 @@ a {
 .box input[type=password],
 .box input[type=email],
 .box input[type=number],
+.box textarea,
+.box select,
 .box input[type=captcha] {
   border: 0;
   background: none;
