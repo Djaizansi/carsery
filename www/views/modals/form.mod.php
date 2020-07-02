@@ -24,7 +24,24 @@ class="<?= $data["config"]["class"]?>">
                 <p>Voulez-vous ajouter cette page au menu ? </p>
             <?php endif ?>
 
-            <?php if($configField["balise"] === "textarea"): ?>
+            <?php if($configField["type"] == "relation"): ?>
+                <select 
+                id="<?= $configField["id"]??'' ?>"
+                required="required"
+                name="<?= $name??'' ?>"
+                >
+                <option value="" selected><?=$configField["placeholder"]??''?></option>
+                <?php foreach($configField["value"] as $val) {
+                 ?>
+                 <option value="<?=$val->getId()?>"><?=$val->getName()?></option> 
+                 <?php 
+                }
+                  ?>
+
+                </select>
+            <?php endif ?>
+
+            <?php if(isset($configField["balise"]) && $configField["balise"] === "textarea"): ?>
               <textarea
                 value="<?= (isset($inputData[$name])) ? $inputData[$name] : '' ?>"
                 name="<?= $name??'' ?>"
@@ -42,7 +59,7 @@ class="<?= $data["config"]["class"]?>">
               <?php endif ?>
 
               </textarea>
-            <?php else: ?>
+            <?php elseif($configField["type"] != 'relation'): ?>
               <input 
                   value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
                     <?php  /* $inputData -> $_POST | $name => les champs : firstname, lastname, email ... | $inputdData[$name]

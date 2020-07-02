@@ -3,6 +3,7 @@
 namespace carsery\core;
 
 use carsery\Managers\UserManager;
+use carsery\Managers\CategoryManager;
 use carsery\Managers\RecuperationManager;
 use carsery\models\Recuperation;
 
@@ -167,5 +168,49 @@ class Validator{
 	public static function checkEmail($email){
 		$email = htmlspecialchars(trim($email));
 		return filter_var($email, FILTER_VALIDATE_EMAIL);
+	}
+
+
+	public static function checkArticleForm($configForm, $data){
+		$listOfErrors = [];
+		//Vérifications
+
+		//Vérifier le nb de input
+		if( count($configForm["fields"]) == count($data) ) {
+			
+			foreach ($configForm["fields"] as $name => $config) {
+				
+				//Vérifie que l'on a bien les champs attendus
+				//Vérifier les required
+
+				if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+					return ["Tentative de hack !!!"];
+				}
+
+				if($config["type"] == "text" && $name == "titre"){
+					if(strlen($data[$name]) < $config["min-lenght"] || strlen($data[$name]) > $config["max-lenght"]) {
+						$listOfErrors[]=$config["errorMsg"];
+					}
+				}
+
+				if($config["type"] == "text" && $name == "description"){
+					if(strlen($data[$name]) < $config["min-lenght"]) {
+						$listOfErrors[]=$config["errorMsg"];
+					}
+				}
+
+				if($config["type"] == "relation" && $name == "categorie"){
+					$categoryManager = new CategoryManager();
+					if(!isset($data[$name]) || !is_numeric($data[$name])) {
+						if($categoryManager->find($data[$name]) == null){
+							$listOfErrors[]=$config["errorMsg"];
+						}
+					}
+				}
+			}
+		}else{
+			return ["Tentative de hack !!!"];
+		}
+		return $listOfErrors;
 	}
 }
