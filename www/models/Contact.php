@@ -1,20 +1,70 @@
 <?php
-class Contact extends Model{
-  
-    var $validate = array(
-        'nom' => array(
-            'rule' => 'notEmpty',
-            'message' => 'Veuillez écrire votre nom'
-        ),
-        'email' => array(
-            'rule' => '([_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9]+)*)',
-            'message' => 'Saisissez une adresse mail valide'
-        ),
-        'content' => array(
-            'rule' => 'notEmpty',
-            'message' => 'Saisissez un message'
-        )
-    );
- 
-  
+
+namespace carsery\models;
+
+class Contact extends Model
+{
+    protected $id;
+    protected $adresse;
+    protected $nom;
+
+ /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Adresse
+     */ 
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set the value of Adresse
+     *
+     * @return  self
+     */ 
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Nom
+     */ 
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set the value of Nom
+     *
+     * @return  self
+     */ 
+    public function setNom($nom)
+    {
+        $this->$nom = $nom;
+
+        return $this;
+    }
 }
