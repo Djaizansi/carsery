@@ -1,9 +1,21 @@
 <?php
 
 use carsery\Managers\PageManager;
+use carsery\Managers\UserManager;
 
-$inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
+$inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; 
+$pageManager = new PageManager();
+$userManager = new UserManager();
 
+
+if(isset($_GET['id'])){
+  $pageFound = $pageManager->find($_GET['id']);
+  $menu = $pageFound->getMenu();
+  $public = $pageFound->getPublie();
+}
+
+$arrayRole = ['Admin','Client'];
+?>
 <form 
 method="<?= $data["config"]["method"]?>" 
 action="<?= $data["config"]["action"]?>"
@@ -20,7 +32,12 @@ class="<?= $data["config"]["class"]?>">
                 <img src="script/captcha.php" width="300px">
             <?php endif;?>
 
-            <?php if($configField["type"] == "checkbox"): ?>
+            <?php if($configField["id"] == "id_checkbox_public"): ?>
+                <p>Voulez-vous publier cette page ? </p>
+                
+            <?php endif ?>
+
+            <?php if($configField["id"] == "id_checkbox"): ?>
                 <p>Voulez-vous ajouter cette page au menu ? </p>
             <?php endif ?>
 
@@ -33,28 +50,38 @@ class="<?= $data["config"]["class"]?>">
                 placeholder="<?= $configField["placeholder"]??'' ?>"
               >
               <?php if(empty($configField["placeholder"])): ?>
-                  <?php $pageManager = new PageManager() ?>
-                  <?php $pageFound = $pageManager->find($_GET['id']) ?>
-                  <?php $titre = $pageFound->getTitre() ?>
-                  <?php $notiret = str_replace(' ','',strtolower($titre)) ?>
-                  <?= file_get_contents("Views/$notiret.view.php") ?>
+                  <?= $content = $pageFound->getContent() ?>
               <?php else: ?>
               <?php endif ?>
-
               </textarea>
+
+            <?php elseif($configField['balise'] === "select"): ?>
+              <select
+                name="<?= $name??'' ?>"
+                id="<?= $configField["id"]??'' ?>"
+                type="<?= $configField["type"]??'' ?>"
+                placeholder="<?= $configField["placeholder"]??'' ?>"
+              >
+                <?php foreach($arrayRole as $unRole): ?>
+                      <option value="<?= $unRole ?>"><?= $unRole ?></option>
+                <?php endforeach ?>
+              </select>
             <?php else: ?>
               <input 
                   value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
-                    <?php  /* $inputData -> $_POST | $name => les champs : firstname, lastname, email ... | $inputdData[$name]
-                    => $_POST[$name]=> ex: $_POST["firstname"] 
-                    value ici permet de stocker la valeur et de la laisser dans le champs */ ?>
                   type="<?= $configField["type"]??'' ?>"
                   name="<?= $name??'' ?>"
                   placeholder="<?= $configField["placeholder"]??'' ?>"
                   class="<?= $configField["class"]??'' ?>"
                   id="<?= $configField["id"]??'' ?>"
                   value="<?= $configField["value"]??'' ?>"
-                  <?= (!empty($configField["required"])) ? "required='required'" : "" ?> >
+                  <?= (!empty($configField["required"])) ? "required='required'" : "" ?>
+                  <?= (!empty($configField["hidden"])) ? "hidden" : "" ?>
+                  <?php if(isset($_GET['id'])): ?>
+                    <?= $configField["id"] == "id_checkbox_public" && $public == 1 ? 'checked' : '' ?>
+                    <?= $configField["id"] == "id_checkbox" && $menu == 1  ? 'checked' : '' ?>
+                  <?php endif ?>
+                  >
             <?php endif ?>
         <!--  </div>
       </div> -->
