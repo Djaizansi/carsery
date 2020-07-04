@@ -54,7 +54,7 @@ class Helpers
     public static function alert($type,$variable='',$message='')
     {
         if(!empty($variable)){
-            $content = '<div class="alert alert--'.$type.'>';
+            $content = '<div class="alert alert--'.$type.'">';
             foreach($variable as $uneVariable){
                 $alert = '<p>'.$uneVariable.'</p>';
                 $content.=$alert;
