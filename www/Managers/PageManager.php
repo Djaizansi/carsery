@@ -12,11 +12,12 @@ class PageManager extends DB {
         parent::__construct(Page::class, 'page');
     }
 
-    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$publie,$uri,$menu,$token = NULL)
+    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$content,$publie,$uri,$menu,$token = NULL)
     {
         empty($id) ? '' : $page->setId($id);
         isset($titre) ? $page->setTitre($titre) : '';
         $page->setAuteur($auteur);
+        $page->setContent($content);
         $page->setDate(date('Y-m-d H:i'));
         $page->setPublie($publie);
         $page->setUri($uri);
@@ -100,6 +101,13 @@ class PageManager extends DB {
                             "id"=>"id_checkbox",
                             "value"=>"yes"
                         ],
+
+                        "public"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox_public",
+                            "value"=>"yes"
+                        ]
                     ]
                 ];
     }
@@ -120,6 +128,19 @@ class PageManager extends DB {
                             "type" => "text",
                             "id"=>"myTextarea",
                             "placeholder"=>""
+                        ],
+                        "checkbox"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox",
+                            "value"=>"yes"
+                        ],
+
+                        "public"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox_public",
+                            "value"=>"yes"
                         ]
                     ]
                 ];
