@@ -2,7 +2,7 @@
 
 <div class="col-4 intro box-center">
     <?php if(!empty($errors)): ?>
-        <?= Helpers::alert($errors) ?>
+        <?= Helpers::alert('danger', $errors) ?>
     <?php endif ?>
 
     <h1>Inscription</h1>
