@@ -147,7 +147,6 @@ class UserManager extends DB {
                             "balise"=>"",
                             "type"=>"email",
                             "placeholder"=>"Email",
-                            /* "class"=>"form-control form-control-user", */
                             "id"=>"",
                             "required"=>true,
                             "uniq"=>["table"=>"users", "column"=>"email"],
@@ -158,13 +157,68 @@ class UserManager extends DB {
                             "balise"=>"",
                             "type"=>"password",
                             "placeholder"=>"Password",
-                            /* "class"=>"form-control form-control-user", */
                             "id"=>"",
                             "required"=>true,
                             "errorMsg"=>"Votre mot de passe n'est pas correcte"
                         ]
                     ]
                 ];
+    }
+
+    public static function getUpdateForm(){
+        return [
+                "config"=>[
+                            "method"=>"POST",
+                            "action"=>Helpers::getUrl("User", "updateUser"),
+                            "class"=>"box",
+                            "id"=>"jqueryForm",
+                            "submit"=>"Modifier"
+                ],
+                "fields"=>[
+                            "id"=>[
+                                "balise"=>"",
+                                "type"=>"hidden",
+                                "id"=>"id",
+                                "required"=>true,
+                            ],
+                            "lastname"=>[
+                                    "balise"=>"",
+                                    "type"=>"text",
+                                    "placeholder"=>"Votre nom",
+                                    "id"=>"id_lastname",
+                                    "required"=>true,
+                                    "min-lenght"=>2,
+                                    "max-lenght"=>100,
+                                    "errorMsg"=>"Votre nom doit faire entre 2 et 100 caractères"
+                            ],
+                            "firstname"=>[
+                                    "balise"=>"",
+                                    "type"=>"text",
+                                    "placeholder"=>"Votre prénom",
+                                    "id"=>"id_firstname",
+                                    "required"=>true,
+                                    "min-lenght"=>2,
+                                    "max-lenght"=>50,
+                                    "errorMsg"=>"Votre prenom doit faire entre 2 et 50 caractères"
+                            ],
+                            "email"=>[
+                                    "balise"=>"",
+                                    "type"=>"email",
+                                    "placeholder"=>"Votre email",
+                                    "id"=>"id_email",
+                                    "required"=>true,
+                                    "uniq"=>["table"=>"users", "column"=>"email"],
+                                    "errorMsg"=>"Votre email ne correspond pas"
+                            ],
+                            "status"=>[
+                                "balise"=>"select",
+                                "type"=>"text",
+                                "placeholder"=>"Votre rôle",
+                                "id"=>"id_role",
+                                "required"=>true
+                            ]
+                    ]
+            ];
     }
 
     public static function getMdpForm(){
