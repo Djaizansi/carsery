@@ -64,6 +64,20 @@ class View
         $this->data[$key] = $value; //permet d'envoyer une variable à la vue.
     }
 
+    public static function checkShortcode($content)
+    {
+        $regex = '/\[[^]]*\]/i';
+        if(preg_match_all($regex, $content, $matches)){
+            foreach ($matches[0] as $match) {
+                preg_match_all("/\[([^ ]*) ([^]]*)\]/", $match, $result);
+                $tab[] = $result[0][0];
+            }
+            return $tab;
+        }else{
+            echo "Aucun résultat trouver";
+        }
+    }
+
     public function __destruct()
     {
         //$this->data = ["firstname"=>"yves"];
@@ -71,8 +85,4 @@ class View
         include "views/templates/".$this->template.".tpl.php";
         //$firstname = "yves";
     }
-
-    /**
-     * Get the value of template
-     */ 
 }
