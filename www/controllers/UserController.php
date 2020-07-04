@@ -15,14 +15,61 @@ use carsery\Managers\UserManager;
 use carsery\models\Recuperation;
 use carsery\models\User;
 
+define('CONFIGUPDATE', UserManager::getUpdateForm());
+
+
 class UserController
 {
     public function gestionUserAction() 
     {
         if(Session::estConnecte()){
-            $myView = new View("gestionuser");
-        }else {
+            if(Session::estAdmin()){
+                $myView = new View("gestionuser");
+                $userManager = new UserManager();
+
+                $foundUser = $userManager->find($_SESSION['id']);
+                $roleUserConnect = $foundUser->getStatus();
+                $foundAll = $userManager->findAll();
+                $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
+                $myView->assign('errors',$errors);
+                $myView->assign('foundAll',$foundAll);
+                $myView->assign('userManager',$userManager);
+                $myView->assign('configFormUpdate',CONFIGUPDATE);
+                $myView->assign('roleUserConnect',$roleUserConnect);
+            }elseif(!(Session::estAdmin())) {
+                throw new RouteException("Vous n'avez pas accès à cette page");
+            }
+        }else{
             throw new RouteException("Vous n'êtes pas connecté");
+        }
+    }
+
+    public function updateUserAction()
+    {
+        if(Session::estConnecte() && Session::estAdmin()){
+            $userManager = new UserManager();
+            $user = new User();
+            $findUser = $userManager->find($_POST['id']);
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
+                if(!empty($errors)){
+                    return $this->gestionUserAction();
+                }else{
+                    if(!empty($_POST)){
+                        $user->setId($_POST['id']);
+                        $user->setLastname($_POST['lastname']);
+                        $user->setFirstname($_POST['firstname']);
+                        $user->setEmail($_POST['email']);
+                        $user->setPwd($findUser->getPwd());
+                        $user->setStatus($_POST['status']);
+                        $userManager->save($user);
+                        $_SESSION['success'] = "updateUser";
+                        header("Location: /gestionuser");
+                    }
+                }
+            }
+        }else{
+            throw new RouteException("Vous n'avez pas le droit à cette action");
         }
     }
 
@@ -218,7 +265,7 @@ class UserController
         if($confirmation == 1) {
             $id_exist_user = $userManager->findByEmail($_SESSION['email']);/* 'id','email',$_SESSION['email']); */
             $id = $id_exist_user->getId();
-            
+
             $unUser = $userManager->findById($id);
             $unPrenom = $unUser->getFirstname();
             $unNom = $unUser->getLastname();
@@ -232,7 +279,7 @@ class UserController
                     $myView->assign('errors',$errors);
                 }else {
                     if(!empty($_POST)){
-                        $user->setId((int)$id_exist_user);
+                        $user->setId((int)$id);
                         $user->setLastname($unNom);
                         $user->setFirstname($unPrenom);
                         $user->setEmail($_SESSION['email']);
@@ -242,7 +289,7 @@ class UserController
                         $userManager->save($user);
                         $location = Helpers::getUrl('User','login');
                         header("Location: $location");
-                        $del = $recup->delete('mail',$_SESSION['email']);
+                        $recup->delete('mail',$_SESSION['email']);
                         session_destroy();
                     }
                 }
@@ -326,6 +373,25 @@ class UserController
             }
         }else{
             throw new RouteException("Vous n'avez pas accès à cette page");
+        }
+    }
+    
+
+    public function deleteUserAction()
+    {
+        if(Session::estConnecte() && Session::estAdmin()){
+            $userManager = new UserManager();
+            $id = isset($_GET['id']) ? $_GET['id'] : '';
+            
+            if($id){
+                $userManager->delete('id',$id);
+                $location= Helpers::getUrl('User','gestionuser');
+                var_dump($location);
+                $_SESSION['success'] = 'suppUser';
+                header("Location: $location");
+            }
+        }else{
+            throw new RouteException("Vous n'avez pas le droit à cette action");
         }
     }
 
