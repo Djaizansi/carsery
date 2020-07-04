@@ -2,18 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>home-grid</title>
+    <title>Template 2 -home page</title>
     <link rel="stylesheet" type="text/css" href="file:///Users/nesrine/Downloads/fontawesome-free-5.13.0-web/css/all.css">
     <link rel="stylesheet" href="../public/css/template2.css">
      <!-- Navbar déroulante pour mobile et tablette -->
    <!-- <script src="js/menu.js"></script> -->
    <script src="../public/js/dropdown-btn.js"></script>
-   
-   
-  
-   
     
 </head>
+
 
 <body >
     <header class="header">
@@ -103,14 +100,14 @@
           <ul class="carousel-items">
               <li class="carousel-item">
                   <div class="card">
-                      <img src="../home-grid/images/offresmercedeskroely-.jpg"/>
+                      <img src="../public/img/offresmercedeskroely-.jpg"/>
                       <div class="card-content">
                       </div>
                   </div>
               </li>
                    <li class="carousel-item">
                   <div class="card">
-                      <img src="../home-grid/images/voiture.jpg" />
+                      <img src="../public/img/voiture.jpg" />
                       <div class="card-content">
                       </div> 
                   </div>
@@ -118,7 +115,7 @@
             </li>
             <li class="carousel-item">
            <div class="card">
-               <img src="../home-grid/images/agencement-concession.jpg" />
+               <img src="../public/img/agencement-concession.jpg" />
                <div class="card-content">
                </div>
            </div>
@@ -126,21 +123,21 @@
       </li>
       <li class="carousel-item">
      <div class="card">
-         <img src="../home-grid/images/car.png" />
+         <img src="../public/img/car-bmw.png" />
          <div class="card-content">
          </div>
      </div>
       </li>
       <li class="carousel-item">
             <div class="card">
-                <img src="https://placeimg.com/572/322/animals" />
+                <img src="../public/img/agencement-concession.jpg" />
                 <div class="card-content">
                 </div>
             </div>
              </li>
              <li class="carousel-item">
                   <div class="card">
-                      <img src="https://placeimg.com/572/322/animals" />
+                      <img src="../public/img/agencement-concession.jpg" />
                       <div class="card-content">
                       </div>
                   </div>
@@ -159,14 +156,14 @@
                         <ul class="carousel2-items">
                             <li class="carousel2-item">
                                 <div class="card">
-                                    <img src="../home-grid/images/citroen.jpg" />
+                                    <img src="../public/img/citroen.jpg" />
                                     <div class="card-content">
                                     </div>
                                 </div>
                             </li>
                                  <li class="carousel2-item">
                                 <div class="card">
-                                    <img src="../home-grid/images/audi.jpg" />
+                                    <img src="../public/img/audi.jpg" />
                                     <div class="card-content">
                                     </div>
                                 </div>
@@ -174,7 +171,7 @@
                           </li>
                           <li class="carousel2-item">
                          <div class="card">
-                             <img src="../home-grid/images/Toyota.jpg" />
+                             <img src="../public/img/Toyota.jpg" />
                              <div class="card-content">
                              </div>
                          </div>
@@ -182,21 +179,21 @@
                     </li>
                     <li class="carousel2-item">
                    <div class="card">
-                       <img src="../home-grid/images/ford.jpg" />
+                       <img src="../public/img/ford.jpg" />
                        <div class="card-content">
                        </div>
                    </div> 
                     </li>
                     <li class="carousel2-item">
                           <div class="card">
-                              <img src="../home-grid/images/mercedes.jpg" />
+                              <img src="../public/img/mercedes.jpg" />
                               <div class="card-content">
                               </div>
                           </div>
                            </li>
                            <li class="carousel2-item">
                                 <div class="card">
-                                    <img src="../home-grid/images/Alfa-Romeo.png" />
+                                    <img src="../public/img/Alfa-Romeo.png" />
                                     <div class="card-content">
                                     </div>
                                 </div>
@@ -211,7 +208,7 @@
         
         <section class="article">
 
-           <div class="box box1"> <div classe="omar"> <img src="../home-grid/images/frein.jpg" > <p>FRAINAGE</p>   </div>
+           <div class="box box1"> <div classe="omar"> <img src="../public/img/frein.jpg" > <p>FRAINAGE</p>   </div>
                 <div> <hr size="5" color="orange"></div>
                 <div><a href="#">Pieces auto</a></div>
                 <div><a href="#">Voitures</a></div>
@@ -319,7 +316,7 @@
                             <div id="myDropdown" class="dropdown-content">
                               <a href="#home">pneu</a>
                               <a href="#about">volant</a>
-                              <a href="#contact">cuisse</a>
+                              <a href="#contact">jantes</a>
                             </div>
                           </div>
             </div>

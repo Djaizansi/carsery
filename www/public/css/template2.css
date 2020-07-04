@@ -1,4 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Montserrat:400,400i,700,700i&display=swap);* {
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Montserrat:400,400i,700,700i&display=swap);
+
+
+/* Media queries mobile first */
+
+* {
     box-sizing: border-box;
   }
   
@@ -14,20 +19,13 @@
   }
   
   .nav {
-    /*
-  grid-template-rows: repeat(2,minmax(50px,auto));
-  grid-gap: 0%;
-  grid-area: nav;
-  display: grid;
-  grid-template-columns: 1fr;
-  width: 100%;
-  */
+
     background-color: #FFF;
     display: -webkit-box;
     display: flex;
     justify-content: space-around;
     -webkit-box-align: center;
-            align-items: center;
+    align-items: center;
   }
   
   .navbar {
@@ -453,6 +451,9 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+
+  /* Version tablette */
   
   @media only screen and (min-width: 768px) {
     body {
@@ -547,6 +548,8 @@
   #ok {
     margin-right: 10%;
   }
+
+    /* Version desktop */
   
   @media only screen and (min-width: 1280px) {
     body {
