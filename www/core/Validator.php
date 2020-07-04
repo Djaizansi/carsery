@@ -4,19 +4,17 @@ namespace carsery\core;
 
 use carsery\Managers\UserManager;
 use carsery\Managers\RecuperationManager;
-use carsery\models\Recuperation;
 
 class Validator{
 	//$data = $_POST ou $_GET 
 	public static function checkForm($configForm, $data){
 		$listOfErrors = [];
 		//Vérifications
-
 		//Vérifier le nb de input
 		if( count($configForm["fields"]) == count($data) ) {
 			
 			foreach ($configForm["fields"] as $name => $config) {
-				
+
 				//Vérifie que l'on a bien les champs attendus
 				//Vérifier les required
 
@@ -25,15 +23,23 @@ class Validator{
 				}
 				
 				//Vérifier l'email
+
+
 				if($config["type"]=="email"){
 					$user = new UserManager();
-					$email = $user->findByEmail($data[$name]);
-					!is_null($email) ? $unEmail = $email->getEmail() : '';
-					$mail = isset($unEmail) ? $unEmail : '';
-					if(!(self::checkEmail($data[$name]))){
-						$listOfErrors[]=$config["errorMsg"];
-					}elseif($mail){
-						$listOfErrors[]="Votre email existe déjà";
+					if(isset($data['id']) && !empty($data['id'])){
+						$findUser = $user->find($data['id']);
+						if($findUser->getEmail() === $data[$name]){
+						}else{
+							$email = $user->findByEmail($data[$name]);
+							!is_null($email) ? $unEmail = $email->getEmail() : '';
+							$mail = isset($unEmail) ? $unEmail : '';
+							if(!(self::checkEmail($data[$name]))){
+								$listOfErrors[]=$config["errorMsg"];
+							}elseif($mail){
+								$listOfErrors[]="Votre email existe déjà";
+							}
+						}
 					}
 				}
 
@@ -76,6 +82,8 @@ class Validator{
 					}
 				}
 			}
+		}elseif($configForm['config']['id'] == 'jqueryForm'){
+			return $listOfErrors;
 		}else{
 			return ["Tentative de hack !!!"];
 		}
