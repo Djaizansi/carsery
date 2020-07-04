@@ -13,19 +13,20 @@ class myProjectController {
     public function viewAction()
     {
         $uri = $_SERVER['REQUEST_URI'];
-        new Session();
-        $data = explode('/',$uri)[2];
-        $notiret = str_replace('-','',strtolower($data));
         $pageManager = new PageManager();
         $found = $pageManager->findByUri($uri);
         $public = $found->getPublie();
-        if($public == 0 && Session::estConnecte()){
-            $myView = new View($notiret,'template1');
-            $myView->assign('found',$found);
-        }elseif($public == 1) {
-            $myView = new View($notiret,'template1');
-        }else {
-            throw new RouteException("Il faut être connecter pour modifier la page");
+        if(isset($found))
+        {
+            if($public == 0 && Session::estConnecte() || $public == 1){
+                //TODO : Verifier shortcode avant render
+                $myView = new View('showPage','template1');
+                $myView->assign('found',$found);
+            }elseif($public == 0 && !Session::estConnecte()) {
+                throw new RouteException("Il faut être connecter pour accéder et modifier la page");
+            }
+        }else{
+            throw new RouteException("La page n'existe pas");
         }
     }
 
