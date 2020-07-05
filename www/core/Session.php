@@ -18,8 +18,27 @@ class Session {
     public static function estAdmin() {
         $userManager = new UserManager();
         $foundUser = $userManager->find($_SESSION['id']);
-        $role = $foundUser->getStatus();
-        if($role === "Admin") return true;
+        if($foundUser){
+            $role = $foundUser->getStatus();
+            if($role === "Admin") return true;
+        }else{
+            unset($_SESSION['id']);
+            $location = Helpers::getUrl('myProject','view');
+            header("Location: $location");
+        }
+    }
+
+    public static function estClient() {
+        $userManager = new UserManager();
+        $foundUser = $userManager->find($_SESSION['id']);
+        if($foundUser){
+            $role = $foundUser->getStatus();
+            if($role === "Client") return true;
+        }else{
+            unset($_SESSION['id']);
+            $location = Helpers::getUrl('myProject','view');
+            header("Location: $location");
+        }
     }
 
     public function deconnecter() 
