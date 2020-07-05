@@ -2,6 +2,7 @@
 
 namespace carsery\mail\template;
 
+use carsery\core\Helpers;
 use carsery\Managers\UserManager;
 
 class ConfirmAccount {
@@ -9,6 +10,8 @@ class ConfirmAccount {
         $userManager = new UserManager();
         $found = $userManager->findByEmail($email);
         $id = $found->getId();
+        $accueil = Helpers::getUrl('myProject','view');
+        $confirmation = Helpers::getUrl('User','confirmAccount');
         $token = $found->getToken();
         return '<!DOCTYPE html>
                 <html lang="en">
@@ -24,11 +27,10 @@ class ConfirmAccount {
                         <table width="600px">
                             <tr>
                                 <td>
-
                                     <div align="center">
                                         Bonjour <b>'.$pseudo.'</b>,<br>
                                         Voici votre lien d\'activation de compte: <a href="http://localhost/confirmAccount?id='.$id.'&token='.$token.'">Activer mon compte</a> <br>
-                                        A bientôt sur <a href="localhost">Votre site</a> !
+                                        A bientôt sur <a href="http://localhost">Votre site</a> !
                                     </div>
                                 </td>
                             </tr>
