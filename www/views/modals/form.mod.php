@@ -12,6 +12,7 @@ if(isset($_GET['id'])){
   $pageFound = $pageManager->find($_GET['id']);
   $menu = $pageFound->getMenu();
   $public = $pageFound->getPublie();
+  $home = $pageFound->getHome();
 }
 
 $arrayRole = ['Admin','Client'];
@@ -39,6 +40,10 @@ class="<?= $data["config"]["class"]?>">
 
             <?php if($configField["id"] == "id_checkbox"): ?>
                 <p>Voulez-vous ajouter cette page au menu ? </p>
+            <?php endif ?>
+
+            <?php if($configField["id"] == "id_checkbox_home"): ?>
+                <p>Doit-elle être la page d'accueil ? </p>
             <?php endif ?>
 
             <?php if($configField["balise"] === "textarea"): ?>
@@ -80,6 +85,7 @@ class="<?= $data["config"]["class"]?>">
                   <?php if(isset($_GET['id'])): ?>
                     <?= $configField["id"] == "id_checkbox_public" && $public == 1 ? 'checked' : '' ?>
                     <?= $configField["id"] == "id_checkbox" && $menu == 1  ? 'checked' : '' ?>
+                    <?= $configField["id"] == "id_checkbox_home" && $home == 1  ? 'checked' : '' ?>
                   <?php endif ?>
                   >
             <?php endif ?>
