@@ -1,10 +1,11 @@
 
 <?= $content = $found->getContent();?>
 <script>
-    var image = $('img').attr("src");
-    console.log(image);
-    var myTab;
-    var newimage = $('img').attr("src",'/'+image);
+    $(".addslash").each(function(){
+        var image = $(this).attr("src");
+        var final = $(this).attr("src",'/'+image);
+        console.log(final);
+    });
 </script>
 <?php  
 //Tab Shortcode content 
