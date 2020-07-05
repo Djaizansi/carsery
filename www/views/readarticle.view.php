@@ -21,18 +21,22 @@
                 <div class="message">
                     <?php $b = new DateTime($message->getCreationDate()) ?>
                     <p class="text-right"><?= $b->format('d/m/Y H:i:s')?></p>
-                    <p><b>Utilisateur:</b> <?=$message->getAuthor()->getLastname()?></p>
+                    <p>
+                        <b>Utilisateur:</b> <?=$message->getAuthor()->getLastname()?>
+                        <?php if($user->getStatus() == 'Admin' && $message->getAuthor()->getStatus() != 'Admin'): ?>
+                            <a href="#" title="Bannir l'utilisateur" data-modal-target="modal3" data-id="<?= $message->getId() ?>" class="cursor btnResolve" ><i class="fas fa-ban"></i></a>
+                        <?php endif; ?>
+                    </p>
                     <div>
                         <p><?=$message->getMessage()?></p>
                         <p class="text-right">
-                            <?php if($user->getStatus() == 'Admin'): ?>
-                                <a href="#" title="Bannir l'utilisateur" data-modal-target="modal3" data-id="<?= $message->getId() ?>" class="cursor btnResolve" ><i class="fas fa-ban"></i></a>
-                            <?php endif; ?>
-                            <?php if($message->getAuthor()->getId() == $user->getId()): ?>
-                                <a title="Modification" href="<?php echo Helpers::getUrl("Forum", "updatemessagearticleview") ?>?id=<?= $message->getId() ?>"><i class="fas fa-edit"></i></a>
-                            <?php endif; ?>
-                            <?php if(($message->getAuthor()->getId() == $user->getId()) || $user->getStatus() == 'Admin'): ?>
-                                <a title="Suppression" href="#" data-modal-target="modal1" data-id="<?= $message->getId() ?>" class="cursor btnDelete"><i class="fas fa-trash-alt"></i></a>
+                            <?php if(!$user->isBan()): ?>
+                                <?php if($message->getAuthor()->getId() == $user->getId()): ?>
+                                    <a title="Modification" href="<?php echo Helpers::getUrl("Forum", "updatemessagearticleview") ?>?id=<?= $message->getId() ?>"><i class="fas fa-edit"></i></a>
+                                <?php endif; ?>
+                                <?php if(($message->getAuthor()->getId() == $user->getId()) || $user->getStatus() == 'Admin'): ?>
+                                    <a title="Suppression" href="#" data-modal-target="modal1" data-id="<?= $message->getId() ?>" class="cursor btnDelete"><i class="fas fa-trash-alt"></i></a>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </p>
                     </div>
