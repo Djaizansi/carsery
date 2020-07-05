@@ -1,4 +1,7 @@
 <?php
+
+use carsery\core\Helpers;
+
 $listPage = $pageManager->findAll();
 $listPageCree = $pageManager->findBy(['publie' => 0]);
 $listPagePubliee = $pageManager->findBy(['publie' => 1]);
@@ -17,6 +20,10 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
 ?>
 <div class="container">
     <div class="row">
+        <?php if(isset($_SESSION['menu']) && !empty($_SESSION['menu']) && $_SESSION['menu'] == 'erreurmenu'): ?>
+            <?= Helpers::alert('danger','','Ajout dans le menu impossible ou une page home a déjà été défini'); ?>
+            <?php $_SESSION['menu'] = '' ?>
+        <?php endif ?>
         <h2 class="inline">Pages</h2>
 <!--         <a class="btn btn--primary" style="font-size: 0.7rem !important;" href="/ajouter-page">Ajouter</a> -->
         <button data-modal-target="modal2" class="btn btn--primary" id="myBtn" href="#myBtn">Ajouter</button>
@@ -67,9 +74,8 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
                         <?php endif ?>
                         <td>
                             <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
-                            <button data-modal-target="modal1" data-id="<?= $unePage->getId() ?>" data-token="<?= $unePage->getToken() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
-                            <a href="/edit-page?id=<?=$unePage->getId()?>"><i class="fas fa-edit"></i></a>
-                            <a href="/add-widget?id=<?=$unePage->getId()?>"><i class="fas fa-edit"></i></a>
+                            <button data-modal-target="modal1" data-id="<?= $unePage->getId() ?>" data-token="<?= $unePage->getToken() ?>" class="myBtn" id="myBtn" href="#myBtn" style="border: none;background-color:inherit;color:red;"><i class="fas fa-trash-alt"></i></button>
+                            <a href="/edit-page?id=<?=$unePage->getId()?>" style="color: #394263;"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>
