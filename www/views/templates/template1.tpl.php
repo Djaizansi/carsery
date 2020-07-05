@@ -1,5 +1,7 @@
 <?php
 
+use carsery\core\Helpers;
+use carsery\core\Session;
 use carsery\Managers\PageManager;
 
 $pageManager = new PageManager();
@@ -31,9 +33,25 @@ $foundMyPage = $pageManager->findByUri($_SERVER['REQUEST_URI']);
                 <?php endif ?>
             <?php endif ?>
         <div class="container clearfix">
-            <a href="#" class="logo" style="text-decoration: none;">
-                <p style="color: #000000;">MyProject</p>
-            </a>
+            <?php foreach($foundPage as $unePage): ?>
+                <?php if($unePage->getHome() == 1): ?>
+                    <?php $myPage = 1 ?>
+                    <a href="<?= Helpers::getUrl("myProject","view")?>" class="logo" style="text-decoration: none;">
+                        <p style="color: #000000;">MyProject</p>
+                    </a>
+                    <?php break; ?>
+                <?php elseif($unePage->getHome() == 0): ?>
+                    <?php $myPage = 0 ?>
+                <?php endif ?>
+            <?php endforeach ?>
+
+            <?php if($myPage == 0):?>
+                <a href="#" class="logo" style="text-decoration: none;">
+                    <p style="color: #000000;">MyProject</p>
+                </a>
+            <?php else: ?>
+                
+            <?php endif ?>
             <nav>
                 <ul>
                     <?php foreach($foundPage as $unePage): ?>
@@ -41,16 +59,23 @@ $foundMyPage = $pageManager->findByUri($_SERVER['REQUEST_URI']);
                             <li><a href="<?= $unePage->getUri() ?>"> <?= ucfirst($unePage->getTitre()) ?> </a></li>
                         <?php endif ?>
                     <?php endforeach ?>
-
-                    <li><a href="#connecter">S'Inscrire</a></li>
-                    <li><a href="#connecter">Se connecter</a></li>
+                    <?php if(!Session::estConnecte()): ?>
+                        <li style="margin-top: 23px;">|</li>
+                        <li><a href="<?= Helpers::getUrl("User","login")?>">Connexion</a></li>
+                        <li><a href="<?= Helpers::getUrl("User","register")?>">Inscription</a></li>
+                    <?php elseif(Session::estClient()): ?>
+                        <li><a href="#">Panier</a></li>
+                        <li style="margin-top: 23px;">|</li>
+                        <li><a href="<?= Helpers::getUrl("User","deconnecter")?>">Deconnexion</i></a></li>
+                    <?php endif ?>
                 </ul>
             </nav>
         </div>
     </header>
-            
+
         <?php include "views/".$this->view.".view.php"; ?>
-    <footer style="position: fixed; bottom: 0;width:100%;">
+
+    <footer style="bottom: 0;width:100%;">
         <div class="container clearfix">
             <section>
                 <nav>
