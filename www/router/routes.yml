@@ -50,13 +50,13 @@
   controller: "Forum"
   action: "addmessagearticle"
 
-/ajout-message:
-  controller: "Forum"
-  action: "addmessagearticle"
-
 /message:
   controller: "Forum"
   action: "updatemessagearticleview"
+
+/modification-message:
+  controller: "Forum"
+  action: "updatemessagearticle"
 
 /suppression-message:
   controller: "Forum"
@@ -66,9 +66,21 @@
   controller: "Forum"
   action: "banuser"
 
-/article-resolu:
+/ajout-categorie:
   controller: "Forum"
-  action: "resolvearticle"
+  action: "addcategory"
+
+/categorie:
+  controller: "Forum"
+  action: "updatecategoryview"
+
+/modification-categorie:
+  controller: "Forum"
+  action: "updatecategory"
+
+/suppression-categorie:
+  controller: "Forum"
+  action: "removecategory"
 
 /media: 
   controller: "Media"
