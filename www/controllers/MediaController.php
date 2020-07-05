@@ -10,7 +10,7 @@ use carsery\core\Session;
 class MediaController {
     public function mediaAction() 
     {
-        if(Session::estConnecte()){
+        if(Session::estConnecte() && Session::estAdmin()){
             $myView = new View("media");
             if(isset($_POST['upload'])){
                 foreach($_FILES['file']['name'] as $file){
@@ -51,19 +51,8 @@ class MediaController {
 
     public function suppMediaAction()
     {
-        if(Session::estConnecte()){
+        if(Session::estConnecte() && Session::estAdmin()){
             unlink('./public/images_upload/'.$_GET['file']);
-            $_SESSION['success'] = 1;
-            $location = Helpers::getUrl('Media','media');
-            header("Location: $location");
-        }else{
-        }
-    }
-
-    public function renameFileAction()
-    {
-        if(Session::estConnecte()){
-            rename($_GET['file'],'./public/images_upload/'.$_POST['file']);
             $_SESSION['success'] = 1;
             $location = Helpers::getUrl('Media','media');
             header("Location: $location");
