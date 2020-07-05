@@ -3,7 +3,6 @@ use carsery\core\Helpers;
 use carsery\Managers\PageManager;
 $i = 1;
 $files = glob("./public/images_upload/*.*");
-$pageFound = $pageManager->find($_GET['id']);
 $choix = [];
 ?>
 
@@ -64,21 +63,18 @@ $choix = [];
                 <button type="submit" class="btn btn--primary">Ajout Widget</button>
             </form>
             <?php if(isset($_POST['caroussel']) && $_POST['caroussel'] == "caroussel"): ?>
+                <?php $content = ''; ?>
                 <?php $data = array_fill_keys(array('listOfPictures'),$choix) ?>
                 <?php $newData = '$data = ' . var_export($data, true) . '; ' ?>
                 <?php $caroussel = ' $this->addModal("carousel", $data); ' ?>
 
-                <?php if(isset($content)): ?>
-                    <?php $content.= $newData ?>
-                    <?php $content.= $caroussel ?> 
-                <?php endif ?>
+                <?php $content.= $newData ?>
+                <?php $content.= $caroussel ?> 
 
 
                 <?php $shortCode->setShortCode('['.$_POST['namecarousel'].']'); ?>
                 <?php $shortCode->setContent($content); ?>
                 <?php $shortCodeManager->save($shortCode); ?>
-                
-                <?php $location = Helpers::getUrl('page','page') ?>
             <?php endif ?>
     </div>
 
