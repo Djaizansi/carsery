@@ -101,8 +101,11 @@ class UserController
 
                         if($email_user === $_POST['email'] && $pwd_verif && $token == null){
                             $function->affecterInfosConnecte((int)$user_found->getId());
-                            if($function){
+                            if($function && Session::estAdmin()){
                                 $location = Helpers::getUrl('Dashboard','dashboard');
+                                header("Location: $location");
+                            }elseif(Session::estClient()){
+                                $location = Helpers::getUrl('myProject','view');
                                 header("Location: $location");
                             }
                             else{
@@ -184,7 +187,7 @@ class UserController
             }
         $myView->assign("configFormUser", $configFormUser);
     }else{
-        $location = Helpers::getUrl('Dashboard','dashboard');
+        $location = Helpers::getUrl('myProject','view');
         header("Location: $location");
     }
 
@@ -342,7 +345,7 @@ class UserController
             }
             $myView->assign("configFormUser", $configFormUser); //déclarer un nom d'une variable et mettre dedans. Envoyer des variables aux vues
         }else {
-            $location = Helpers::getUrl('Dashboard','dashboard');
+            $location = Helpers::getUrl('myProject','view');
             header("Location: $location");
         }
     }
@@ -398,7 +401,7 @@ class UserController
     public function deconnecterAction(){
         $deconnecter = new Session();
         $deconnecter->deconnecter();
-        $location = Helpers::getUrl('User','login');
+        $location = Helpers::getUrl('myProject','view');
         header("Location: $location");
     }
 }
