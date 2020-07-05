@@ -14,15 +14,25 @@ class myProjectController {
     {
         $uri = $_SERVER['REQUEST_URI'];
         $pageManager = new PageManager();
+        $findAll = $pageManager->findAll();
+        foreach($findAll as $myPage){
+            if($myPage->getHome() == 1 && $uri == '/'){
+                $uri = $myPage->getUri();
+            }
+        }
         $found = $pageManager->findByUri($uri);
         $public = $found->getPublie();
         if(isset($found))
         {
-            if($public == 0 && Session::estConnecte() || $public == 1){
+            if($public == 0 && Session::estConnecte() && Session::estAdmin() || $public == 1){
                 //TODO : Verifier shortcode avant render
                 $myView = new View('showPage','template1');
                 $myView->assign('found',$found);
-            }elseif($public == 0 && !Session::estConnecte()) {
+            }elseif($found->getHome() === 1){
+                $myView = new View('showPage','template1');
+                $myView->assign('found',$found);
+            }
+            elseif($public == 0 && !Session::estConnecte()) {
                 throw new RouteException("Il faut être connecter pour accéder et modifier la page");
             }
         }else{
