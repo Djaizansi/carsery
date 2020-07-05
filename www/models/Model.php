@@ -20,8 +20,8 @@ class Model implements iModel
         $className = get_class($this);// $className = static::class
         $articleObj = new $className();
         foreach ($row as $key => $value) {
-        
-            $method = 'set'.ucFirst($key);
+
+            $method = 'set'.str_replace('_', '', ucwords($key, '_'));
             if (method_exists($articleObj, $method)) {
                 // Author = 4
                 if($relation = $articleObj->getRelation($key)) {
