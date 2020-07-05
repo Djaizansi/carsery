@@ -11,6 +11,7 @@ class User extends Model
     protected $pwd;
     protected $status;
     protected $token;
+    protected $ban = 0;
 
     public function initRelation(): array {
         return [
@@ -88,4 +89,21 @@ class User extends Model
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isBan()
+    {
+        return $this->ban;
+    }
+
+    /**
+     * @param bool $ban
+     */
+    public function setBan($ban)
+    {
+        $this->ban = intval($ban);
+    }
+
 }
