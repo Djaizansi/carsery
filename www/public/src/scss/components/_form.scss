@@ -3,7 +3,7 @@
     text-align: center;
 }
 
-.box input[type = "text"], .box input[type = "password"], .box input[type = "email"] , .box input[type = "number"], .box input[type = "captcha"] {
+.box input[type = "text"], .box input[type = "password"], .box input[type = "email"] , .box input[type = "number"], .box textarea, .box select, .box input[type = "captcha"] {
     border: 0;
     background: none;
     display: block;
@@ -29,4 +29,23 @@
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.message{
+    width: 600px;
+    border: 1px solid black;
+    padding: 15px;
+    border-radius: 5px;
 }

@@ -102,12 +102,14 @@ tinymce.init({
   });
 
 
-// Ecoute les boutons suppression
+// Ecoute les boutons pour la suppression et marqué comme résolu
 var deleteButtons = document.querySelectorAll('.btnDelete');
 var resolveButtons = document.querySelectorAll('.btnResolve');
 var idToDelete = document.getElementById("idToDelete");
+var idToDeleteC = document.getElementById("idToDeleteC");
 var idToResolve = document.getElementById("idToResolve");
 var yesButtonDelete = document.getElementById("yesBtnD");
+var yesButtonDeleteC = document.getElementById("yesBtnC");
 var yesButtonResolve = document.getElementById("yesBtnR");
 if (deleteButtons) {
     // Ajout d'un evenement pour tous les bouttons suppression 'Oui'
@@ -115,9 +117,16 @@ if (deleteButtons) {
         e => {
         e.addEventListener('click', function () {
         console.log('idToSent', e.getAttribute('data-id'));
-        if (idToDelete && yesButtonDelete) {
-            idToDelete.setAttribute('value', e.getAttribute('data-id'));
+        if(e.getAttribute('data-model') == "article"){
+            if (idToDelete && yesButtonDelete) {
+                idToDelete.setAttribute('value', e.getAttribute('data-id'));
+            }
+        } else {
+            if (idToDeleteC && yesButtonDeleteC) {
+                idToDeleteC.setAttribute('value', e.getAttribute('data-id'));
+            }
         }
+
     })
 });
 };

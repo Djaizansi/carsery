@@ -340,6 +340,25 @@ a {
   text-align: center;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.message {
+  width: 600px;
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 5px;
+}
+
 .alert {
   position: relative;
   margin-bottom: 1rem;
@@ -566,24 +585,5 @@ a {
   .modal-content h1 {
     margin-bottom: 1.5rem;
   }
-}
-
-.cursor{
-  cursor: pointer;
-}
-
-.text-center{
-  text-align: center;
-}
-
-.text-right{
-  text-align: right;
-}
-
-.message{
-  width: 600px;
-  border: 1px solid black;
-  padding: 15px;
-  border-radius: 5px;
 }
 

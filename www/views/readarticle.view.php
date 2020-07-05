@@ -26,13 +26,13 @@
                         <p><?=$message->getMessage()?></p>
                         <p class="text-right">
                             <?php if($user->getStatus() == 'Admin'): ?>
-                                <a href="#" title="Bannir l'utilisateur" data-modal-target="modal3" data-id="<?= $article->getAuthor()->getId() ?>" class="cursor btnResolve" ><i class="fas fa-ban"></i></a>
+                                <a href="#" title="Bannir l'utilisateur" data-modal-target="modal3" data-id="<?= $message->getId() ?>" class="cursor btnResolve" ><i class="fas fa-ban"></i></a>
                             <?php endif; ?>
-                            <?php if($message->getAuthor()->getId() == $article->getAuthor()->getId()): ?>
+                            <?php if($message->getAuthor()->getId() == $user->getId()): ?>
                                 <a title="Modification" href="<?php echo Helpers::getUrl("Forum", "updatemessagearticleview") ?>?id=<?= $message->getId() ?>"><i class="fas fa-edit"></i></a>
                             <?php endif; ?>
-                            <?php if($message->getAuthor()->getId() == $article->getAuthor()->getId() || $user->getStatus() == 'Admin'): ?>
-                                <a title="Suppression" href="#" data-modal-target="modal1" data-id="<?= $article->getId() ?>" class="cursor btnDelete"><i class="fas fa-trash-alt"></i></a>
+                            <?php if(($message->getAuthor()->getId() == $user->getId()) || $user->getStatus() == 'Admin'): ?>
+                                <a title="Suppression" href="#" data-modal-target="modal1" data-id="<?= $message->getId() ?>" class="cursor btnDelete"><i class="fas fa-trash-alt"></i></a>
                             <?php endif; ?>
                         </p>
                     </div>
@@ -46,12 +46,19 @@
     </div>
 
     <div class="row">
-        <span>Ajouter un nouveau message</span>
-        <form method="POST"  action="<?php echo Helpers::getUrl("Forum", "addmessagearticle") ?>">
-            <textarea name="message">
+        <?php if(!$user->isBan()): ?>
+            <span>Ajouter un nouveau message:</span>
+            <form method="POST"  action="<?php echo Helpers::getUrl("Forum", "addmessagearticle") ?>">
+                <input type="hidden" name="article" value="<?=$article->getId()?>">
+                <textarea name="message" rows="20" cols="100">
 
-            </textarea>
-        </form>
+                </textarea>
+                <button class="btn btn--primary" type="submit">Envoyer</button>
+            </form>
+        <?php else: ?>
+            <span>Vous avez été banni pour des messages précédent, pour pouvoir envoyer de nouveau message vous devez contacter l'admin</span>
+        <?php endif; ?>
+
     </div>
 
     <div class="modal" id="modal1"> <!-- This is the background overlay -->
