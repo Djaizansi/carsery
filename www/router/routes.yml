@@ -1,4 +1,8 @@
 /:
+  controller: myProject
+  action: view
+
+/connexion:
   controller: User
   action: login
 
@@ -30,10 +34,6 @@
   controller: Page
   action: page
 
-/lien:
-  controller: Page
-  action: lien
-
 /parametre:
   controller: Parametre
   action: parametre
@@ -41,6 +41,14 @@
 /gestionuser:
   controller: User
   action: gestionuser
+
+/supprimer-user:
+  controller: User
+  action: deleteUser
+
+/update-user:
+  controller: User
+  action: updateUser
 
 /ajout-utilisateur:
   controller: User
@@ -54,14 +62,6 @@
   controller: User
   action: changemdp
 
-/supprimer-utilisateur:
-  controller: User
-  action: remove
-
-/utilisateur:
-  controller: User
-  action: default
-  
 /inscription:
   controller: User
   action: register
@@ -90,10 +90,22 @@
   controller: myProject
   action: testQueryBuilder
 
-/add-widget:
+/widget:
   controller: Page
   action: widgetPage
 
 /confirmAccount:
   controller: User
   action: confirmAccount
+
+/supprimer-media:
+  controller: Media
+  action: suppMedia
+
+/modifier-media:
+  controller: Media
+  action: renameFile
+
+/test:
+  controller: Media
+  action: test
