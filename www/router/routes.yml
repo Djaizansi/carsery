@@ -26,6 +26,22 @@
   controller: "Forum"
   action: "addarticle"
 
+/article:
+  controller: "Forum"
+  action: "updatearticleview"
+
+/modificaton-article:
+  controller: "Forum"
+  action: "updatearticle"
+
+/resolution-article:
+  controller: "Forum"
+  action: "resolvearticle"
+
+/suppression-article:
+  controller: "Forum"
+  action: "removearticle"
+
 /lire-article:
   controller: "Forum"
   action: "readarticle"
@@ -33,6 +49,22 @@
 /ajout-message:
   controller: "Forum"
   action: "addmessagearticle"
+
+/ajout-message:
+  controller: "Forum"
+  action: "addmessagearticle"
+
+/message:
+  controller: "Forum"
+  action: "updatemessagearticleview"
+
+/suppression-message:
+  controller: "Forum"
+  action: "removemessagearticle"
+
+/bannir-utilisateur:
+  controller: "Forum"
+  action: "banuser"
 
 /article-resolu:
   controller: "Forum"
