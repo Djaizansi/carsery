@@ -17,9 +17,7 @@ use carsery\core\Helpers;
 
         
         <?php if(!empty($_SESSION['success']) && $_SESSION['success'] === 1): ?>
-            <div class="alert alert--success">
-                <p>Un email de confirmation vous a été envoyé !</p>
-            </div>
+            <?= Helpers::alert('success','', 'Un email de confirmation vous a été envoyé !') ?>
         <?php endif ?>
         <?php $_SESSION['success'] = '' ?>
         
@@ -31,6 +29,8 @@ use carsery\core\Helpers;
             <a href="<?php echo Helpers::getUrl("User", "register") ?>">Sign up</a>
             <br>
             <a href="<?php echo Helpers::getUrl("User", "forget") ?>">Mot de passe oublié ?</a>
+            <br>
+            <a href="<?php echo Helpers::getUrl("myProject", "view") ?>">Retour à l'accueil</a>
         </div>
         
     </div>
