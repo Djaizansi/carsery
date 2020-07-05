@@ -4,6 +4,7 @@ namespace carsery\Managers;
 
 
 use carsery\core\DB;
+use carsery\core\Helpers;
 use carsery\models\Message;
 
 class MessageManager extends DB
@@ -31,7 +32,7 @@ class MessageManager extends DB
                 "method" => "POST",
                 "action" => $action,
                 "class" => "box",
-                "id" => "formAddArticle",
+                "id" => "formAddMessage",
                 "submit" => $submit
             ],
 

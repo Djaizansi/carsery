@@ -32,29 +32,34 @@ class CategoryManager extends DB{
         }
     }
 
-    public static function getCategoryForm(){
+    public static function getCategoryForm($category=null){
+
+        $action = (isset($category)) ? helpers::getUrl("Forum", "updatecategory") : helpers::getUrl("Forum", "addcategory");
+        $submit = (isset($category)) ? 'Modifier' : 'Ajouter';
+        $nameValue = (isset($category)) ? ["value" => $category->getName()] : [];
+        $idValue = (isset($category)) ? ["id" => ["value" => $category->getId(), "type" => "hidden"]] : [];
+
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>helpers::getUrl("Category", "ajout-category"),
+                "action"=>$action,
                 "class"=>"box",
                 "id"=>"formAddCategory",
-                "submit"=>"Ajouter"
+                "submit"=>$submit
             ],
 
-            "fields"=>[
-                "name"=>[
+            "fields"=>array_merge([
+                "name"=> array_merge([
                     "type"=>"text",
                     "placeholder"=>"Nom",
-                    /* "class"=>"form-control form-control-user", */
+                    "min-lenght" => 2,
+                    "max-lenght" => 50,
                     "id"=>"",
                     "required"=>true,
                     "uniq"=>["table"=>"category", "column"=>"name"],
                     "errorMsg"=>"Veuillez renseigner un nom de catégorie"
-                ]
-
-                
-            ]
+                ], $nameValue)
+            ], $idValue)
         ];
     }
 }
