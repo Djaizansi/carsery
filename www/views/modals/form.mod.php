@@ -24,6 +24,10 @@ class="<?= $data["config"]["class"]?>">
                 <p>Voulez-vous ajouter cette page au menu ? </p>
             <?php endif ?>
 
+          <?php if($configField["type"] == "hidden"): ?>
+              <input type="hidden" name="id" value="<?=$configField["value"]?>">
+          <?php endif ?>
+
             <?php if($configField["type"] == "relation"): ?>
                 <select 
                 id="<?= $configField["id"]??'' ?>"
@@ -31,9 +35,12 @@ class="<?= $data["config"]["class"]?>">
                 name="<?= $name??'' ?>"
                 >
                 <option value="" selected><?=$configField["placeholder"]??''?></option>
-                <?php foreach($configField["value"] as $val) {
-                 ?>
-                 <option value="<?=$val->getId()?>"><?=$val->getName()?></option> 
+                <?php foreach($configField["values"] as $val) {
+                    if($val->getId() == $configField["value"]): ?>
+                        <option selected value="<?=$val->getId()?>"><?=$val->getName()?></option>
+                    <?php else: ?>
+                        <option value="<?=$val->getId()?>"><?=$val->getName()?></option>
+                    <?php endif ?>
                  <?php 
                 }
                   ?>
@@ -43,7 +50,6 @@ class="<?= $data["config"]["class"]?>">
 
             <?php if(isset($configField["balise"]) && $configField["balise"] === "textarea"): ?>
               <textarea
-                value="<?= (isset($inputData[$name])) ? $inputData[$name] : '' ?>"
                 name="<?= $name??'' ?>"
                 id="<?= $configField["id"]??'' ?>"
                 type="<?= $configField["type"]??'' ?>"
@@ -56,10 +62,11 @@ class="<?= $data["config"]["class"]?>">
                   <?php $notiret = str_replace(' ','',strtolower($titre)) ?>
                   <?= file_get_contents("Views/$notiret.view.php") ?>
               <?php else: ?>
+                  <?= (isset($inputData[$name])) ? trim($inputData[$name]) : '' ?>
               <?php endif ?>
 
               </textarea>
-            <?php elseif($configField["type"] != 'relation'): ?>
+            <?php elseif(!in_array($configField["type"], ["relation", "hidden"])): ?>
               <input 
                   value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
                     <?php  /* $inputData -> $_POST | $name => les champs : firstname, lastname, email ... | $inputdData[$name]

@@ -100,3 +100,47 @@ tinymce.init({
       input.click();
   }
   });
+
+
+// Ecoute les boutons suppression
+var deleteButtons = document.querySelectorAll('.btnDelete');
+var resolveButtons = document.querySelectorAll('.btnResolve');
+var idToDelete = document.getElementById("idToDelete");
+var idToResolve = document.getElementById("idToResolve");
+var yesButtonDelete = document.getElementById("yesBtnD");
+var yesButtonResolve = document.getElementById("yesBtnR");
+if (deleteButtons) {
+    // Ajout d'un evenement pour tous les bouttons suppression 'Oui'
+    deleteButtons.forEach(
+        e => {
+        e.addEventListener('click', function () {
+        console.log('idToSent', e.getAttribute('data-id'));
+        if (idToDelete && yesButtonDelete) {
+            idToDelete.setAttribute('value', e.getAttribute('data-id'));
+        }
+    })
+});
+};
+
+if(resolveButtons){
+    resolveButtons.forEach(
+        e => {
+        e.addEventListener('click', function () {
+        console.log('idToSentResolve', e.getAttribute('data-id'));
+        if (idToResolve && yesButtonResolve) {
+            idToResolve.setAttribute('value', e.getAttribute('data-id'));
+        }
+    })
+});
+}
+
+// Faire disparaitre la modal
+var noButtons = document.querySelectorAll('.btnNo');
+if(noButtons){
+    noButtons.forEach(
+        e => {
+        e.addEventListener('click', function () {
+        e.parentNode.parentNode.parentNode.classList.toggle('modal-hide');
+    })
+});
+}

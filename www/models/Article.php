@@ -27,43 +27,6 @@ class Article extends Model{
             'category' => Category::class,
         ];
     }
-    
-    public function hydrate(array $row){
-        $className = get_class($this);// $className = static::class
-        $articleObj = new $className();
-        foreach ($row as $key => $value) {
-        
-            $method = 'set'.str_replace('_', '', ucwords($key, '_'));
-            if (method_exists($articleObj, $method)) {
-                // Author = 4
-                if($relation = $articleObj->getRelation($key)) {
-                    // relation = User::class (App\Model\User)
-                    $tmp = new $relation();
-                    $tmp = $tmp->hydrate($row);
-                    // Maintenant on récupère notre id qui est ... la valeur actuelle de notre objet
-                    $tmp->setId($value);
-                    $articleObj->$method($tmp);
-                } else {
-                    $articleObj->$method($value);
-                }
-            } /*else {
-                switch ($method){
-                    case 'setMessages':
-                        $message = new \Message();
-                        $this->$method($message->find('*', 'forum_id', $this->getId()));
-                        break;
-                    case 'setNbMessages' :
-                        $this->$method(count($this->getMessages()));
-                        break;
-                    default:
-                        break;
-                }
-
-            }*/
-        }
-
-        return $articleObj;
-    }
 
     public function setId($id)
     {
@@ -147,7 +110,7 @@ class Article extends Model{
 
     public function setResolve($resolve)
     {
-        $this->resolve = $resolve;
+        $this->resolve = intval($resolve);
     }
 
     public function setCreationDate($creation_date)

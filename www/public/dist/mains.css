@@ -568,3 +568,22 @@ a {
   }
 }
 
+.cursor{
+  cursor: pointer;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-right{
+  text-align: right;
+}
+
+.message{
+  width: 600px;
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 5px;
+}
+
