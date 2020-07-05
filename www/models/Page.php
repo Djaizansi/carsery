@@ -2,15 +2,17 @@
 
 namespace carsery\models;
 
-class page extends Model
+class Page extends Model
 {
     protected $id;
     protected $titre;
     protected $auteur;
+    protected $content;
     protected $date;
     protected $publie;
     protected $uri;
     protected $menu;
+    protected $home;
     protected $token;
 
 
@@ -176,6 +178,46 @@ class page extends Model
     public function setMenu($menu)
     {
         $this->menu = $menu;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of content
+     */ 
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set the value of content
+     *
+     * @return  self
+     */ 
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of home
+     */ 
+    public function getHome()
+    {
+        return $this->home;
+    }
+
+    /**
+     * Set the value of home
+     *
+     * @return  self
+     */ 
+    public function setHome($home)
+    {
+        $this->home = $home;
 
         return $this;
     }
