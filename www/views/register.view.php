@@ -11,6 +11,8 @@
 
     <div class="txt-center">
         <a href="<?php echo Helpers::getUrl("User", "login") ?>">Sign in</a>
+        <br>
+        <a href="<?php echo Helpers::getUrl("myProject", "view") ?>">Retour accueil</a>
     </div>
     
 </div>
