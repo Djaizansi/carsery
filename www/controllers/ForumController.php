@@ -439,16 +439,16 @@ class ForumController
     public function removecategoryAction()
     {
         if (Session::estConnecte()) {
-            $categoryManager = new CategoryManager();
+            $catego = new MessageManager();
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $category = $categoryManager->find(intval($_POST['id']));
-                if (!isset($category)) {
+                $message = $messageManager->find(intval($_POST['id']));
+                if (!isset($message)) {
                     throw new RouteException("Le message que vous voulez supprimer n'existe pas ou plus");
                 } else {
-                    $categoryManager->delete('id', intval($_POST['id']));
+                    $messageManager->delete('id', intval($_POST['id']));
                 }
             }
-            $location = Helpers::getUrl('Forum', 'forum');
+            $location = Helpers::getUrl('Forum', 'readarticle') . "?id=" . $message->getArticle()->getId();
             header("Location: $location");
         } else {
             include_once "./error/notConnected.php";

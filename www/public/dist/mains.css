@@ -359,6 +359,13 @@ a {
   border-radius: 5px;
 }
 
+.article {
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 5px;
+  width: 600px;
+}
+
 .alert {
   position: relative;
   margin-bottom: 1rem;

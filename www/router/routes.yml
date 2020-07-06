@@ -18,67 +18,111 @@
   controller: "Apparence"
   action: "apparence"
 
+/front:
+  controller: "Front"
+  action: "frontforum"
+
+/front/ajout-article:
+  controller: "Front"
+  action: "addarticle"
+
+/front/article:
+  controller: "Front"
+  action: "updatearticleview"
+
+/front/modificaton-article:
+  controller: "Front"
+  action: "updatearticle"
+
+/front/resolution-article:
+  controller: "Front"
+  action: "resolvearticle"
+
+/front/suppression-article:
+  controller: "Front"
+  action: "removearticle"
+
+/front/lire-article:
+  controller: "Front"
+  action: "readarticle"
+
+/front/ajout-message:
+  controller: "Front"
+  action: "addmessage"
+
+/front/message:
+  controller: "Front"
+  action: "updatemessageview"
+
+/front/modification-message:
+  controller: "Front"
+  action: "updatemessage"
+
+/front/suppression-message:
+  controller: "Front"
+  action: "removemessage"
+
 /forum: 
   controller: "Forum"
   action: "forum"
 
-/ajout-article:
+/forum/ajout-article:
   controller: "Forum"
   action: "addarticle"
 
-/article:
+/forum/article:
   controller: "Forum"
   action: "updatearticleview"
 
-/modificaton-article:
+/forum/modificaton-article:
   controller: "Forum"
   action: "updatearticle"
 
-/resolution-article:
+/forum/resolution-article:
   controller: "Forum"
   action: "resolvearticle"
 
-/suppression-article:
+/forum/suppression-article:
   controller: "Forum"
   action: "removearticle"
 
-/lire-article:
+/forum/lire-article:
   controller: "Forum"
   action: "readarticle"
 
-/ajout-message:
+/forum/ajout-message:
   controller: "Forum"
   action: "addmessagearticle"
 
-/message:
+/forum/message:
   controller: "Forum"
   action: "updatemessagearticleview"
 
-/modification-message:
+/forum/modification-message:
   controller: "Forum"
   action: "updatemessagearticle"
 
-/suppression-message:
+/forum/suppression-message:
   controller: "Forum"
   action: "removemessagearticle"
 
-/bannir-utilisateur:
+/forum/bannir-utilisateur:
   controller: "Forum"
   action: "banuser"
 
-/ajout-categorie:
+/forum/ajout-categorie:
   controller: "Forum"
   action: "addcategory"
 
-/categorie:
+/forum/categorie:
   controller: "Forum"
   action: "updatecategoryview"
 
-/modification-categorie:
+/forum/modification-categorie:
   controller: "Forum"
   action: "updatecategory"
 
-/suppression-categorie:
+/forum/suppression-categorie:
   controller: "Forum"
   action: "removecategory"
 

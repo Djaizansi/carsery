@@ -19,10 +19,11 @@ $files = glob("./public/images_upload/*.*");
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../public/dist/mains.css">
     <link rel="stylesheet" href="../public/css/template1.css">
-    <link rel="stylesheet" href="../public/css/slider.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/42ce300797.js" crossorigin="anonymous"></script>
     <script src="../public/js/template1.js"></script>
     <script src="../public/js/slider.js"></script>
+    <script src="https://cdn.tiny.cloud/1/vavj4oxk7dimm3sd4lw8lfnr7nk56akfvv84yc0jxo0m0cgz/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <title>MyProject</title>
 </head>
 <body>
@@ -50,8 +51,9 @@ $files = glob("./public/images_upload/*.*");
             </nav>
         </div>
     </header>
-            
-        <?php include "views/".$this->view.".view.php"; ?>
+          <main>
+              <?php include "views/".$this->view.".view.php"; ?>
+          </main>
     <footer>
         <div class="container clearfix">
             <section>
@@ -65,6 +67,7 @@ $files = glob("./public/images_upload/*.*");
             </section>
         </div>   
     </footer>
+    <script src="../public/js/script.js"></script>
     </body>
 </html>
     

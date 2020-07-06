@@ -119,4 +119,63 @@ class ArticleManager extends DB
             ], $idValue)
         ];
     }
+
+    public static function getAddArticleFront($article=null){
+
+        $action = (isset($article)) ? helpers::getUrl("Front", "updatearticle") : helpers::getUrl("Front", "addarticle");
+        $submit = (isset($article)) ? 'Modifier' : 'Ajouter';
+        $titleValue = (isset($article)) ? ["value" => $article->getTitle()] : [];
+        $descValue = (isset($article)) ? ["value" => $article->getDescription()] : [];
+        $catValue = (isset($article)) ? ["value" => $article->getCategory()->getId()] : [];
+        $idValue = (isset($article)) ? ["id" => ["value" => $article->getId(), "type" => "hidden"]] : [];
+
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => $action,
+                "class" => "box",
+                "id" => "formAddArticle",
+                "submit" => $submit
+            ],
+
+            "fields" => array_merge([
+                // Si formulaire de modification ajout de la valeur du titre
+                "titre" => array_merge([
+                    "type" => "text",
+                    "placeholder" => "Titre",
+                    /* "class"=>"form-control form-control-user", */
+                    "id" => "",
+                    "required" => true,
+                    "uniq" => ["table" => "article", "column" => "title"],
+                    "min-lenght" => 2,
+                    "max-lenght" => 100,
+                    "value" => "",
+                    "errorMsg" => "Veuillez renseigner un titre"
+                ], $titleValue),
+
+                "description" => array_merge([
+                    "balise" => "textarea",
+                    "type" => "text",
+                    "placeholder" => "Description",
+                    "id" => "",
+                    "class" => "box",
+                    "required" => true,
+                    "min-lenght" => 2,
+                    "value" => "",
+                    "errorMsg" => "Veuillez renseigner une description"
+                ], $descValue),
+
+                "categorie" => array_merge([
+                    "type" => "relation",
+                    "placeholder" => "Choisir une Categorie",
+                    "id" => "",
+                    "class" => "box",
+                    "required" => true,
+                    "values" => "",
+                    "value" => "",
+                    "errorMsg" => "Veuillez renseigner une catégorie"
+                ], $catValue)
+            ], $idValue)
+        ];
+    }
 }
