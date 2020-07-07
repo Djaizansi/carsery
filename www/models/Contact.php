@@ -63,7 +63,7 @@ class Contact extends Model
      */ 
     public function setNom($nom)
     {
-        $this->$nom = $nom;
+        $this->nom = $nom;
 
         return $this;
     }
