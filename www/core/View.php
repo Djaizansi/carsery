@@ -70,12 +70,9 @@ class View
         if(preg_match_all($regex, $content, $matches)){
             foreach ($matches[0] as $match) {
                 preg_match_all("/\[([^ ]*) ([^]]*)\]/", $match, $result);
-                $tab[] = $result[0][0];
             }
-            return $tab;
-        }else{
-            echo "Aucun résultat trouver";
         }
+        return $matches[0];
     }
 
     public function __destruct()
