@@ -28,8 +28,6 @@
     <!-- SCRIPTJS -->
     <script src="../public/js/user.js"></script>
     <!-- WYSIWYG -->
-    <script type="text/javascript" src="https://studio-42.github.io/elFinder/demo/js/elfinder.min.js"></script>
-    <script type="text/javascript" src="https://nao-pon.github.io/tinymceElfinder/tinymceElfinder.js"></script>
     <script src="https://cdn.tiny.cloud/1/vavj4oxk7dimm3sd4lw8lfnr7nk56akfvv84yc0jxo0m0cgz/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     
 </head>
@@ -84,6 +82,6 @@
 
     </div>
     <script src="../public/js/menu.js"></script>
-    <script src="../public/js/scripts.js"></script>
+    <script src="../public/js/script.js"></script>
 </body>
 </html>
