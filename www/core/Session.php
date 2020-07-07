@@ -17,11 +17,13 @@ class Session {
 
     public static function estAdmin() {
         $userManager = new UserManager();
-        $foundUser = $userManager->find($_SESSION['id']);
+        $foundUser = isset($_SESSION['id']) ? $userManager->find($_SESSION['id']) : '';
         if($foundUser){
             $role = $foundUser->getStatus();
             if($role === "Admin") return true;
-        }else{
+        }elseif(empty($foundUser)){
+        }
+        else{
             unset($_SESSION['id']);
             $location = Helpers::getUrl('myProject','view');
             header("Location: $location");
@@ -30,10 +32,12 @@ class Session {
 
     public static function estClient() {
         $userManager = new UserManager();
-        $foundUser = $userManager->find($_SESSION['id']);
+        $foundUser = isset($_SESSION['id']) ? $userManager->find($_SESSION['id']) : '';
         if($foundUser){
             $role = $foundUser->getStatus();
             if($role === "Client") return true;
+        }elseif(empty($foundUser)){
+
         }else{
             unset($_SESSION['id']);
             $location = Helpers::getUrl('myProject','view');
