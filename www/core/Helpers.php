@@ -69,4 +69,10 @@ class Helpers
             return $content;
         }
     }
+
+    public static function dd($data){
+        echo "<pre>";
+        var_dump($data);
+        die();
+    }
 }
