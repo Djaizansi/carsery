@@ -11,6 +11,8 @@ class User extends Model
     protected $pwd;
     protected $status;
     protected $token;
+    protected $theme;
+    protected $ban;
 
     public function initRelation(): array {
         return [
@@ -85,6 +87,46 @@ class User extends Model
     public function setToken($token)
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of theme
+     */ 
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * Set the value of theme
+     *
+     * @return  self
+     */ 
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ban
+     */ 
+    public function getBan()
+    {
+        return $this->ban;
+    }
+
+    /**
+     * Set the value of ban
+     *
+     * @return  self
+     */ 
+    public function setBan($ban)
+    {
+        $this->ban = $ban;
 
         return $this;
     }
