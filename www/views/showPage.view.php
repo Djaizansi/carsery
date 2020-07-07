@@ -1,5 +1,56 @@
 
-<?= $content = $found->getContent();?>
+<?php 
+    use carsery\core\View;
+    use carsery\Managers\ShortCodeManager;
+
+    $content = $found->getContent();
+
+    $findAll = $shortCodeManager->findAll();
+    $shortCodeWrited =false;
+    foreach($findAll as $key => $unShort){
+        $images = $unShort->getImages();
+        /* $type = $Unshort->getType(); */
+        $internalTab = explode(',',$images);
+        $shortcode = $unShort->getShortcode();
+        $sizeShortCode = strlen($shortcode);
+        $verifCode = View::checkShortcode($content);
+
+        $found = false;
+        foreach($verifCode as $unCode){
+            if($unCode == $shortcode){
+                $found = true;
+            }
+        }
+        
+        if($found){
+            $shortCodeWrited = true;
+            $index = stripos($content,$shortcode, 0);
+            $pre = substr($content,0,$index);
+            $post = substr($content,$index+$sizeShortCode);
+            //if ($key < count($findAll) - 1){
+                echo $pre;
+            //}
+            
+            $data = [
+                'listOfPictures' => $internalTab 
+            ];
+
+            $this->addModal('carousel',$data);
+            //if ($key == count($findAll) - 1){
+                echo $post;
+            //}
+        }
+    }
+
+    if($shortCodeWrited == false){
+        echo $content;
+    }
+    
+
+
+
+
+?>
 <script>
     $(".addslash").each(function(){
         var image = $(this).attr("src");
@@ -12,8 +63,7 @@
 //Parcourir ce tableau
 //Search tableau page if [carousel] ou [carousel2]....
 //Replace
-use carsery\core\View;
-use carsery\Managers\ShortCodeManager;
+
 
 /* $shortCodeManager = new ShortCodeManager();
 $findAllShort = $shortCodeManager->findAll();
