@@ -62,6 +62,8 @@ class UserController
                         $user->setEmail($_POST['email']);
                         $user->setPwd($findUser->getPwd());
                         $user->setStatus($_POST['status']);
+                        $user->setTheme($findUser->getTheme());
+                        $user->setBan($findUser->getBan());
                         $userManager->save($user);
                         $_SESSION['success'] = "updateUser";
                         header("Location: /gestionuser");
@@ -273,6 +275,8 @@ class UserController
             $unPrenom = $unUser->getFirstname();
             $unNom = $unUser->getLastname();
             $unStatut = $unUser->getStatus();
+            $unTheme = $unUser->getTheme();
+            $unBan = $unUser->getBan();
             $myView = new View("changemdp", "account");
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -289,6 +293,8 @@ class UserController
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus($unStatut);
                         $user->setToken(null);
+                        $user->setTheme($unTheme);
+                        $user->setBan($unBan);
                         $userManager->save($user);
                         $location = Helpers::getUrl('User','login');
                         header("Location: $location");
@@ -329,6 +335,8 @@ class UserController
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus('Client');
                         $user->setToken($token);
+                        /* $user->setTheme(1);
+                        $user->setBan(0); */
                         $userManager->save($user);
                         $unMail = ConfirmAccount::mailConfirm($_POST['lastname'],$_POST['email']);
                         $unEnvoie = $envoie->sendmail('Confirmation de compte', $unMail, $_POST['email']);
@@ -367,6 +375,8 @@ class UserController
                 $user->setPwd($found->getPwd());
                 $user->setStatus($found->getStatus());
                 $user->setToken(null);
+                $user->setTheme($found->getTheme());
+                $user->setBan($found->getBan());
                 $userManager->save($user);
             }elseif($token === null){
                 $location = Helpers::getUrl('User','login');
