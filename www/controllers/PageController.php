@@ -98,7 +98,7 @@ class PageController {
                         $unPublic = isset($_POST['public']) ? 1 : 0;
                         $unMenu = isset($_POST['checkbox']) ? 1 : 0;
                         if(empty($_SESSION['menu'])){
-                            PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,'Hello','',$unPublic,$titre_tiret,$unMenu,$home,$$token);
+                            PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,'Hello','',$unPublic,$titre_tiret,$unMenu,$home,$token);
                             $location = Helpers::getUrl('Page','page');
                             header("Location: $location");
                         }
