@@ -93,19 +93,6 @@ $(function(){
   })
 })
 
-
-
-
-const mceElf = new tinymceElfinder({
-  // connector URL (Set your connector)
-  url: 'php/connector.minimal.php',
-  // upload target folder hash for this tinyMCE
-  uploadTargetHash: 'l1_lw', // Hash value on elFinder of writable folder
-  // elFinder dialog node id
-  nodeId: 'elfinder' // Any ID you decide
-});
-
-
 tinymce.init({
   selector: "#myTextarea",
   height: 300,
@@ -131,47 +118,3 @@ tinymce.init({
   },
 });
 
-  /* file_picker_callback: function (cb, value, meta) {
-    tinymce.activeEditor.windowManager.openUrl({
-      title: 'Bibliothéque',
-      url: "/media"
-    });
-    var FileBrowserDialogue = {
-      init : function () {
-          // Here goes your code for setting your custom things onLoad.
-      },
-      sendURL : function (URL) {
-          var win = tinyMCEPopup.getWindowArg("window");
-  
-          // insert information now
-          win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
-  
-          // are we an image browser
-          if (typeof(win.ImageDialog) != "undefined")
-          {
-              // we are, so update image dimensions and preview if necessary
-              if (win.ImageDialog.getImageData) win.ImageDialog.getImageData();
-              if (win.ImageDialog.showPreviewImage) win.ImageDialog.showPreviewImage(URL);
-          }
-  
-          // close popup window
-          tinyMCEPopup.close();
-      }
-  } */
-
- /*  }); */
-/* 
-tinymce.init({
-  selector: '#myTextarea',
-  height: 300,
-  plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker image',
-  toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table image',
-  images_upload_url: '/test',
-  toolbar_mode: 'floating',
-  tinycomments_mode: 'embedded',
-  tinycomments_author: 'Author name',
-  image_title: true,
-  automatic_uploads: true,
-  }); */
-
-  
