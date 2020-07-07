@@ -1,16 +1,31 @@
+<?php
+$listContact = $contactManager->findAll();
+$data = $listContact;
+?>
 <div class="container">
+<table id="userTable">
+    <thead>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+    </thead>
+    <tbody>
+        <?php foreach($data as $unContact): ?>
+            <tr>
+                <td><?= $unContact->getId() ?></td>
+                <td><?= var_dump($unContact->getNom()) ?></td>
+                <td><?= $unContact->getAdresse() ?></td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
 <form>
   <fieldset>
     <p>Souhaitez vous activer la page contact sur le front</p>
 
     <input type="radio" id="active" name="front" value="active" checked>
     <label for="active">Activer</label>
-
     <input type="radio" id="inactive" name="front" value="inactive">
-    <label for="inactive">Désactiver</label>
-    <p>Combien de magasins avez vous ? (maximum 10)</p>
-    <input type="number" id="magasin" name="magasin" min="1" max="10"></input>
-    <div>
       <button type="submit">Valider</button>
     </div>
   </fieldset>
