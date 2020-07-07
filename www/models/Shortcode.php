@@ -6,7 +6,8 @@ class Shortcode extends Model{
 
     protected $id;
     protected $shortcode;
-    protected $content;
+    protected $images;
+    protected $type;
 
     public function initRelation(): array {
         return [
@@ -53,25 +54,43 @@ class Shortcode extends Model{
 
         return $this;
     }
-
+    
     /**
-     * Get the value of content
+     * Get the value of images
      */ 
-    public function getContent()
+    public function getImages()
     {
-        return $this->content;
+        return $this->images;
     }
-
     /**
-     * Set the value of content
+     * Set the value of images
      *
      * @return  self
      */ 
-    public function setContent($content)
+    public function setImages($images)
     {
-        $this->content = $content;
+        $this->images = $images;
 
         return $this;
     }
-    
+
+    /**
+     * Get the value of type
+     */ 
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @return  self
+     */ 
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
 }
