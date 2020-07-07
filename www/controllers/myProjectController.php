@@ -7,12 +7,14 @@ use carsery\core\Session;
 use carsery\core\View;
 use carsery\Managers\PageManager;
 use carsery\Managers\PostManager;
+use carsery\Managers\ShortCodeManager;
 
 class myProjectController {
 
     public function viewAction()
     {
         $uri = $_SERVER['REQUEST_URI'];
+        $shortCodeManager = new ShortCodeManager();
         $pageManager = new PageManager();
         $findAll = $pageManager->findAll();
         foreach($findAll as $myPage){
@@ -25,7 +27,6 @@ class myProjectController {
         if(isset($found))
         {
             if($public == 0 && Session::estConnecte() && Session::estAdmin() || $public == 1){
-                //TODO : Verifier shortcode avant render
                 $myView = new View('showPage','template1');
                 $myView->assign('found',$found);
             }elseif($found->getHome() === 1){
@@ -35,6 +36,7 @@ class myProjectController {
             elseif($public == 0 && !Session::estConnecte()) {
                 throw new RouteException("Il faut être connecter pour accéder et modifier la page");
             }
+            $myView->assign('shortCodeManager',$shortCodeManager);
         }else{
             throw new RouteException("La page n'existe pas");
         }
