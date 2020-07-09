@@ -135,7 +135,6 @@ class PageManager extends DB {
                             "balise"=>"textarea",
                             "type" => "text",
                             "id"=>"myTextarea",
-                            "placeholder"=>""
                         ],
                         "checkbox"=>[
                             "balise"=>"",
