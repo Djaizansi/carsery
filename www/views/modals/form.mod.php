@@ -1,5 +1,6 @@
 <?php
 
+use carsery\core\Helpers;
 use carsery\Managers\PageManager;
 use carsery\Managers\UserManager;
 
@@ -48,15 +49,15 @@ class="<?= $data["config"]["class"]?>">
 
             <?php if($configField["balise"] === "textarea"): ?>
               <textarea
-                value="<?= (isset($inputData[$name])) ? $inputData[$name] : '' ?>"
+                value="<?php $inputData[$name]??'' ?>"
                 name="<?= $name??'' ?>"
                 id="<?= $configField["id"]??'' ?>"
                 type="<?= $configField["type"]??'' ?>"
-                placeholder="<?= $configField["placeholder"]??'' ?>"
               >
-              <?php if(empty($configField["placeholder"])): ?>
-                  <?= $content = $pageFound->getContent() ?>
+              <?php if(isset($inputData[$name])): ?>
+                  <?= $inputData[$name] ?>
               <?php else: ?>
+                <?= $pageFound->getContent()?>
               <?php endif ?>
               </textarea>
 
