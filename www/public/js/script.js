@@ -36,7 +36,7 @@ function toggleModal(modalId) {
     setTimeout(() => {
       document.body.style.overflow = "initial"; // Optional: in order to enable/disable page scrolling while modal is hidden/shown - in this case: "initial" <=> "visible"
       modal.classList.remove("modal-show", "modal-hide");
-      modal.style.display = "none";      
+      modal.style.display = "none";
     }, 200);
   }
   else {
@@ -84,7 +84,7 @@ tinymce.init({
       input.onchange = function() {
       var file = this.files[0];
       var reader = new FileReader();
-      
+
       reader.onload = function () {
           var id = 'blobid' + (new Date()).getTime();
           var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
@@ -152,4 +152,57 @@ if(noButtons){
         e.parentNode.parentNode.parentNode.classList.toggle('modal-hide');
     })
 });
+}
+
+// Affichage message et réponse mailbox
+var messsageMailbox = document.querySelectorAll('.openMessageMailbox');
+if(messsageMailbox){
+    messsageMailbox.forEach(
+        e => {
+            e.addEventListener('click', function () {
+                removeAllColoredDiv();
+                e.firstElementChild.classList.add('messageOverviewColor');
+                var allReadMessages = document.querySelectorAll('.messageToHide');
+                if(allReadMessages){
+                    hideAllReadMessage(allReadMessages);
+                }
+                var id = e.getAttribute('data-id');
+                var messageDiv = document.querySelector('#message-' + id);
+                if(messageDiv){
+                    if(messageDiv.classList.contains('hide')){
+                        messageDiv.classList.remove('hide');
+                        messageDiv.classList.add('show');
+                    } else {
+                        messageDiv.classList.remove('show');
+                        messageDiv.classList.add('hide');
+                    }
+                }
+        })
+    });
+}
+
+function hideAllReadMessage(readMessages) {
+    if(readMessages){
+        readMessages.forEach( e => {
+            e.classList.remove('show');
+            e.classList.add('hide');
+        });
+    }
+}
+
+function removeAllColoredDiv(){
+    var divs = document.querySelectorAll('.removeColor');
+    if(divs){
+        divs.forEach(e => {
+           e.classList.remove('messageOverviewColor');
+        });
+    }
+}
+
+// Fait disparaitre la div success apres 4 secondes
+var success = document.querySelector('.success');
+if(success){
+    setTimeout(function () {
+        success.classList.add('hide');
+    }, 4000)
 }

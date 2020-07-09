@@ -92,7 +92,8 @@ class FrontController
                     $article->setAuthor(intval($_SESSION['id']));
                     $article->setResolve(0);
                     $articleManager->save($article);
-                    $location = Helpers::getUrl('Front', 'frontforum');
+                    $actionMessage = "L'article a été enregistré avec succès";
+                    $location = Helpers::getUrl('Front', 'frontforum'). "?success=1&m=$actionMessage";
                     header("Location: $location");
                 }
             }
@@ -178,7 +179,8 @@ class FrontController
                     $article->setModificationDate(date("Y-m-d H:i:s"));
 
                     $articleManager->save($article);
-                    $location = Helpers::getUrl('Front', 'frontforum');
+                    $actionMessage = "L'article a été mis à jour avec succès";
+                    $location = Helpers::getUrl('Front', 'frontforum'). "?success=1&m=$actionMessage";
                     header("Location: $location");
                 }
             }
@@ -196,10 +198,11 @@ class FrontController
                 throw new RouteException("L'article que vous voulez supprimer n'existe pas ou plus");
             } else {
                 $articleManager->delete('id', intval($_POST['id']));
+                $actionMessage = "L'article a été supprimé avec succès";
+                $location = Helpers::getUrl('Front', 'frontforum'). "?success=1&m=$actionMessage";
+                header("Location: $location");
             }
         }
-        $location = Helpers::getUrl('Front', 'frontforum');
-        header("Location: $location");
     }
 
     public function resolvearticleAction()
@@ -215,10 +218,11 @@ class FrontController
                 $article->setAuthor($article->getAuthor()->getId());
                 $article->setCategory($article->getCategory()->getId());
                 $articleManager->save($article);
+                $actionMessage = "L'article a été marqué comme résolu avec succès";
+                $location = Helpers::getUrl('Front', 'frontforum'). "?success=1&m=$actionMessage";
+                header("Location: $location");
             }
         }
-        $location = Helpers::getUrl('Front', 'frontforum');
-        header("Location: $location");
     }
 
     public function addmessageAction()
@@ -244,9 +248,10 @@ class FrontController
                     $message->setAuthor(intval($_SESSION['id']));
                     $message->setArticle(intval($article->getId()));
                     $messageManager->save($message);
+                    $actionMessage = "Le message a été enregistré avec succès";
+                    $location = Helpers::getUrl('Front', 'readarticle') . "?id=" . $article->getId() . "&success=1&m=$actionMessage";
+                    header("Location: $location");
                 }
-                $location = Helpers::getUrl('Front', 'readarticle') . "?id=" . $article->getId();
-                header("Location: $location");
             }
         }
     }
@@ -289,7 +294,8 @@ class FrontController
                 $message->setAuthor(intval($message->getAuthor()->getId()));
                 $message->setModificationDate(date("Y-m-d H:i:s"));
                 $messageManager->save($message);
-                $location = Helpers::getUrl('Front', 'readarticle') . "?id=" . $message->getArticle();
+                $actionMessage = "Le message a été mis à jour avec succès";
+                $location = Helpers::getUrl('Front', 'readarticle') . "?id=" . $message->getArticle(). "&success=1&m=$actionMessage";
                 header("Location: $location");
             }
             $myView->assign('configUpdateMessage', $configUpdateMessage);
@@ -306,10 +312,11 @@ class FrontController
                 throw new RouteException("Le message que vous voulez supprimer n'existe pas ou plus");
             } else {
                 $messageManager->delete('id', intval($_POST['id']));
+                $actionMessage = "Le message a été supprimé avec succès";
+                $location = Helpers::getUrl('Front', 'readarticle') . "?id=" . $message->getArticle()->getId() ."&success=1&m=$actionMessage";
+                header("Location: $location");
             }
         }
-        $location = Helpers::getUrl('Front', 'readarticle') . "?id=" . $message->getArticle()->getId();
-        header("Location: $location");
     }
 
 

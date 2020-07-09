@@ -16,6 +16,14 @@ $configAddArticle = $forumWidget['configAddArticle'];
         <?php endif; ?>
     </div>
 
+
+    <?php if (isset($_GET['success']) && $_GET['success'] == '1'): ?>
+        <div class="success text-center">
+            <p><?=$_GET['m']?></p>
+            <br>
+        </div>
+    <?php endif; ?>
+
     <?php if($categories != null):
         // ["Pneumatique" => [ {"Jante"}], ["Carrrosserie" => [ {"Bas de caisse"}, {"Parchoc"}]
         //]

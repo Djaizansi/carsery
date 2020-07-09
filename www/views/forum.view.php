@@ -13,6 +13,15 @@
 </div>
 
 <div class="container">
+
+    <?php if (isset($_GET['success']) && $_GET['success'] == '1'): ?>
+        <div class="success text-center">
+            <p><?=$_GET['m']?></p>
+            <br>
+        </div>
+    <?php endif; ?>
+
+
     <?php if($user->getStatus() == 'Admin'): ?>
         <?php if ($categories != null): ?>
             <table id="myTable2" class="display">

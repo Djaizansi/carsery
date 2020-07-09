@@ -8,6 +8,14 @@
 </div>
 
 <div class="container">
+
+    <?php if (isset($_GET['success']) && $_GET['success'] == '1'): ?>
+        <div class="success text-center">
+            <p><?=$_GET['m']?></p>
+            <br>
+        </div>
+    <?php endif; ?>
+
     <div class="row">
         <p><b>Titre:</b> <?=$article->getTitle() ?></p>
         <p><b>Description:</b> <?=$article->getDescription() ?></p>

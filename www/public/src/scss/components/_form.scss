@@ -46,7 +46,7 @@
 .message{
     width: 600px;
     border: 1px solid black;
-    padding: 15px;
+    padding: 3px;
     border-radius: 5px;
 }
 
@@ -55,4 +55,39 @@
     padding: 15px;
     border-radius: 5px;
     width: 600px;
+}
+
+.hide{
+    display: none!important;
+}
+
+.show {
+    display: inline-block!important;
+}
+
+.readMessage{
+    float: left;
+    height: 1000px;
+    border-left: 1px solid black;
+    padding: 10px;
+}
+
+.messageOverview{
+    float: left;
+    padding: 10px;
+}
+
+.mail{
+    width: 500px;
+    height: 200px;
+}
+
+.messageOverviewColor{
+    background-color: #648ca6;
+    opacity: .7;
+}
+
+.success{
+    color: green;
+    opacity: .8;
 }
