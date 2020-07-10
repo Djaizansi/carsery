@@ -109,3 +109,7 @@
 /test:
   controller: Media
   action: test
+
+/template:
+  controller: Page
+  action: updateTemplate
