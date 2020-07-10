@@ -12,7 +12,7 @@ class PageManager extends DB {
         parent::__construct(Page::class, 'page');
     }
 
-    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$content,$date='',$publie,$uri,$menu,$home,$token = NULL)
+    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$content,$date='',$publie,$uri,$menu,$home,$template,$token = NULL)
     {
         empty($id) ? '' : $page->setId($id);
         isset($titre) ? $page->setTitre($titre) : '';
@@ -23,6 +23,7 @@ class PageManager extends DB {
         $page->setUri($uri);
         $page->setMenu($menu);
         $page->setHome($home);
+        $page->setTemplate($template);
         $page->setToken($token);
         $pageManager->save($page);
     }
