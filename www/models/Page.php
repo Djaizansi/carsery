@@ -13,6 +13,7 @@ class Page extends Model
     protected $uri;
     protected $menu;
     protected $home;
+    protected $template;
     protected $token;
 
 
@@ -218,6 +219,26 @@ class Page extends Model
     public function setHome($home)
     {
         $this->home = $home;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of template
+     */ 
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * Set the value of template
+     *
+     * @return  self
+     */ 
+    public function setTemplate($template)
+    {
+        $this->template = $template;
 
         return $this;
     }
