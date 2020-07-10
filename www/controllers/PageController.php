@@ -75,6 +75,10 @@ class PageController {
             foreach($findAll as $myPage){
                 if($myPage->getHome() == 1){
                     $homeExist = 1;
+                }elseif($myPage->getTemplate() == 0){
+                    $template = 0;
+                }elseif($myPage->getTemplate() == 1){
+                    $template = 1;
                 }
             }
             if(!empty($_POST)){
@@ -98,7 +102,7 @@ class PageController {
                         $unPublic = isset($_POST['public']) ? 1 : 0;
                         $unMenu = isset($_POST['checkbox']) ? 1 : 0;
                         if(empty($_SESSION['menu'])){
-                            PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,'Hello','',$unPublic,$titre_tiret,$unMenu,$home,$token);
+                            PageManager::addData($page,$pageManager,'',$_POST['titre'],$prenom,'Hello','',$unPublic,$titre_tiret,$unMenu,$home,$template,$token);
                             $location = Helpers::getUrl('Page','page');
                             header("Location: $location");
                         }
@@ -124,6 +128,7 @@ class PageController {
                 $uri = $unePage->getUri();
                 $date = $unePage->getDate();
                 $titre = htmlspecialchars($unePage->getTitre());
+                $template = $unePage->getTemplate();
 
                 $myView = new View("editpage");
                 $myView->assign('pageManager', $pageManager);
@@ -150,7 +155,7 @@ class PageController {
                             $myView->assign('errors',$errors);
                         }
                         elseif(empty($errors)){
-                            PageManager::addData($page,$pageManager,$_GET['id'], $titre,$auteur,$_POST['editPage'],$date,$unPublic,$uri,$unMenu,$home,$token);
+                            PageManager::addData($page,$pageManager,$_GET['id'], $titre,$auteur,$_POST['editPage'],$date,$unPublic,$uri,$unMenu,$home,$template,$token);
                             $location = Helpers::getUrl('Page','page');
                             header("Location: $location");
                         }
@@ -164,7 +169,7 @@ class PageController {
                             $myView->assign('errors',$errors);
                         }
                         elseif(empty($errors)){
-                            PageManager::addData($page,$pageManager,$_GET['id'], $titre,$auteur,$_POST['editPage'],$date,$unPublic,$uri,$unMenu,$home,$token);
+                            PageManager::addData($page,$pageManager,$_GET['id'], $titre,$auteur,$_POST['editPage'],$date,$unPublic,$uri,$unMenu,$home,$template,$token);
                             $location = Helpers::getUrl('Page','page');
                             header("Location: $location");
                         }
@@ -201,6 +206,37 @@ class PageController {
         }
         else {
             throw new RouteException("Vous devez être connecter pour accèder à cette page");
+        }
+    }
+
+    public function updateTemplateAction(){
+        if(Session::estConnecte() && Session::estAdmin()){
+                $pageManager = new PageManager();
+                $foundAll = $pageManager->findAll();
+                if(isset($_POST['template'])){
+                    foreach($foundAll as $unePage){
+                        $page = new Page();
+                        PageManager::addData(
+                            $page,
+                            $pageManager,
+                            $unePage->getId(), 
+                            $unePage->getTitre(),
+                            $unePage->getAuteur(),
+                            $unePage->getContent(),
+                            $unePage->getDate(),
+                            $unePage->getPublie(),
+                            $unePage->getUri(),
+                            $unePage->getMenu(),
+                            $unePage->getHome(),
+                            $_POST['template'],
+                            $unePage->getToken()
+                        );
+                    }
+                    $location = Helpers::getUrl('Page','page');
+                    header("Location: $location");
+                }else{
+                    throw new RouteException('Vous ne pouvez pas modifier le template comme ceci');
+                }
         }
     }
 }
