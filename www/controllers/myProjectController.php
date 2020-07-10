@@ -23,14 +23,15 @@ class myProjectController {
             }
         }
         $found = $pageManager->findByUri($uri);
+        $template = $found->getTemplate() == 0 ? 'template1' : 'template2';
         $public = $found->getPublie();
         if(isset($found))
         {
             if($public == 0 && Session::estConnecte() && Session::estAdmin() || $public == 1){
-                $myView = new View('showPage','template1');
+                $myView = new View('showPage', $template);
                 $myView->assign('found',$found);
             }elseif($found->getHome() === 1){
-                $myView = new View('showPage','template1');
+                $myView = new View('showPage', $template);
                 $myView->assign('found',$found);
             }
             elseif($public == 0 && !Session::estConnecte()) {
