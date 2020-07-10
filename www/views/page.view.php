@@ -17,6 +17,18 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
 ($tri === 'cree') ? $donnee = $listPageCree : '';
 ($tri === 'publie') ? $donnee = $listPagePubliee : '';
 
+if(!isset($listPage) || empty($listPage)){
+    $template = '';
+}
+
+foreach($listPage as $unePage){
+    if($unePage->getTemplate() == 0){
+        $template = 0;
+    }elseif($unePage->getTemplate() == 1){
+        $template = 1;
+    }
+}
+
 ?>
 <div class="container">
     <div class="row">
@@ -33,6 +45,17 @@ $tri = isset($_GET['champ']) ? $_GET['champ'] : '';
     <a href="/page?champ=cree" class="inline">Non Publiées (<?= $cree ?>)</a>
     <p class="inline">|</p>
     <a href="/page?champ=publie" class="inline">Publiées (<?= $publie ?>)</a>
+    <br>
+
+    <?php if(isset($listPage) || !empty($listPage)): ?>
+        <form action="<?=Helpers::getUrl('Page','updateTemplate')?>" method="POST" class="box" style="float: left; margin-bottom: 15px;">
+            <select name="template" onchange="submit();">
+                <option value="0" <?= $template == 0 ? 'selected' : '' ?>>Template 1</option>
+                <option value="1" <?= $template == 1 ? 'selected' : '' ?>>Template 2</option>
+            </select>
+        </form>
+    <?php else: ?>
+    <?php endif ?>
 </div>
 
 <div class="container">
