@@ -1,4 +1,7 @@
-<?php use carsery\core\Helpers; ?>
+
+<?php 
+use carsery\core\Helpers;
+?>
 
 <div class="container">
 
@@ -11,6 +14,13 @@
 					<?php endforeach ?>
 				</div>
         <?php endif ?>
+
+        
+        <?php if(!empty($_SESSION['success']) && $_SESSION['success'] === 1): ?>
+            <?= Helpers::alert('success','', 'Un email de confirmation vous a été envoyé !') ?>
+        <?php endif ?>
+        <?php $_SESSION['success'] = '' ?>
+        
         
         <h1>Connexion</h1>
         <?php $this->addModal("form", $configFormUser );?>
@@ -19,6 +29,8 @@
             <a href="<?php echo Helpers::getUrl("User", "register") ?>">Sign up</a>
             <br>
             <a href="<?php echo Helpers::getUrl("User", "forget") ?>">Mot de passe oublié ?</a>
+            <br>
+            <a href="<?php echo Helpers::getUrl("myProject", "view") ?>">Retour à l'accueil</a>
         </div>
         
     </div>
