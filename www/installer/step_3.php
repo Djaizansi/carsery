@@ -159,18 +159,17 @@ if (
   CREATE TABLE `ymnw_themes` (
     `id` int(11) NOT NULL,
     `title` varchar(20) NOT NULL,
-    `content` varchar(50) NOT NULL,
-    `thumbnail` varchar(255) NOT NULL
+    `content` varchar(50) NOT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
   
   --
   -- Déchargement des données de la table `ymnw_themes`
   --
   
-  INSERT INTO `ymnw_themes` (`id`, `title`, `content`, `thumbnail`) VALUES
-  (1, 'Theme 1', 'Par defaut', ''),
-  (2, 'Theme 2', 'Carsery Display', ''),
-  (3, 'Theme 3', 'Carsery Remote', '');
+  INSERT INTO `ymnw_themes` (`id`, `title`, `content`) VALUES
+  (1, 'Theme 1', 'Par defaut'),
+  (2, 'Theme 2', 'Carsery Display'),
+  (3, 'Theme 3', 'Carsery Remote');
   
   -- --------------------------------------------------------
   
