@@ -2,8 +2,6 @@
 
 namespace carsery\core\Connection;
 
-//Interface
-
 interface BDDInterface
 {
     public function connect();

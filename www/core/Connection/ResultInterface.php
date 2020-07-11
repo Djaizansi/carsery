@@ -2,8 +2,6 @@
 
 namespace carsery\core\Connection;
 
-//ResultInterface
-
 interface ResultInterface
 {
     public function getOneOrNullResult();
