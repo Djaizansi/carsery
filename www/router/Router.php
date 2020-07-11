@@ -4,7 +4,7 @@ namespace carsery\router;
 
 use carsery\core\Exceptions\RouteException;
 use carsery\Managers\PageManager;
-use carsery\controllers\queryBuilderController;
+use carsery\controllers\myProjectController;
 
 class Router {
 
@@ -19,7 +19,7 @@ class Router {
         $pageManager = new PageManager();
         $found = $pageManager->findByUri($uri);
         if($found){
-            $controller = new queryBuilderController();
+            $controller = new myProjectController();
             $controller->viewAction();
         }elseif(!empty($yaml[$uri])) {
 
