@@ -32,8 +32,8 @@ class ConfirmAccount
                                 <td>
                                     <div align="center">
                                         Bonjour <b>' . $pseudo . '</b>,<br>
-                                        Voici votre lien d\'activation de compte: <a href="http://151.80.149.232/confirmAccount?id=' . $id . '&token=' . $token . '">Activer mon compte</a> <br>
-                                        A bientôt sur <a href="http://151.80.149.232">Votre site</a> !
+                                        Voici votre lien d\'activation de compte: <a href="http://localhost/confirmAccount?id=' . $id . '&token=' . $token . '">Activer mon compte</a> <br>
+                                        A bientôt sur <a href="http://localhost">Votre site</a> !
                                     </div>
                                 </td>
                             </tr>

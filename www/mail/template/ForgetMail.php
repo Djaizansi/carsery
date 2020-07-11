@@ -2,8 +2,10 @@
 
 namespace carsery\mail\template;
 
-class ForgetMail {
-    public static function forgetpwd($pseudo, $recup_code){
+class ForgetMail
+{
+    public static function forgetpwd($pseudo, $recup_code)
+    {
 
         return '<!DOCTYPE html>
                 <html lang="en">
@@ -21,9 +23,9 @@ class ForgetMail {
                                 <td>
 
                                     <div align="center">
-                                        Bonjour <b>'.$pseudo.'</b>,<br>
-                                        Voici votre code de récupération: <b>'.$recup_code.'</b> <br>
-                                        A bientôt sur <a href="http://151.80.149.232">Votre site</a> !
+                                        Bonjour <b>' . $pseudo . '</b>,<br>
+                                        Voici votre code de récupération: <b>' . $recup_code . '</b> <br>
+                                        A bientôt sur <a href="http://localhost">Votre site</a> !
                                     </div>
                                 </td>
                             </tr>
