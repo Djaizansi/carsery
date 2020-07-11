@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="../public/dist/mains.css">
     <!-- CSS personnalisée -->
-    <link rel="stylesheet" href="../public/css/styles.css">
+    <link rel="stylesheet" href="../public/css/styl.css">
 
     <!-- Favicons -->
   <link rel="icon" href="../public/img/carsery.png">
