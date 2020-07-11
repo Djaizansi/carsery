@@ -2,6 +2,7 @@
 
 namespace carsery\controllers;
 
+use carsery\core\Exceptions\RouteException;
 use carsery\core\View;
 use carsery\core\Session;
 
@@ -10,10 +11,8 @@ class ForumController {
     {
         if(Session::estConnecte()){
             $myView = new View("forum");
-            $_SESSION['theme'] = "Par défaut";
-            //$myView->assign("theme", $theme);
         }else {
-            include_once "./error/notConnected.php";
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }
