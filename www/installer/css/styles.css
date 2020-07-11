@@ -1,0 +1,434 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap); /********** COULEURS **********/
+
+/********** GRILLE **********/
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  font-size: 100%;
+}
+
+/********** TYPOGRAPHIE **********/
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.375rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+}
+
+p {
+  font-size: 1.125rem;
+  font-weight: 200;
+  line-height: 1.8;
+}
+
+/********** GRILLE **********/
+
+.container {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (min-width: 33.75em) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 60em) {
+  .container {
+    width: 75%;
+    max-width: 60rem;
+  }
+}
+
+.row {
+  position: relative;
+  width: 100%;
+}
+
+.row [class^="col"] {
+  float: left;
+  margin: 0.5rem 2%;
+  min-height: 0.125rem;
+}
+
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+  width: 96%;
+}
+
+.col-1-sm {
+  width: 4.3333333333%;
+}
+
+.col-2-sm {
+  width: 12.6666666667%;
+}
+
+.col-3-sm {
+  width: 21%;
+}
+
+.col-4-sm {
+  width: 29.3333333333%;
+}
+
+.col-5-sm {
+  width: 37.6666666667%;
+}
+
+.col-6-sm {
+  width: 46%;
+}
+
+.col-7-sm {
+  width: 54.3333333333%;
+}
+
+.col-8-sm {
+  width: 62.6666666667%;
+}
+
+.col-9-sm {
+  width: 71%;
+}
+
+.col-10-sm {
+  width: 79.3333333333%;
+}
+
+.col-11-sm {
+  width: 87.6666666667%;
+}
+
+.col-12-sm {
+  width: 96%;
+}
+
+@media only screen and (min-width: 45em) {
+  .col-1 {
+    width: 4.3333333333%;
+  }
+
+  .col-2 {
+    width: 12.6666666667%;
+  }
+
+  .col-3 {
+    width: 21%;
+  }
+
+  .col-4 {
+    width: 29.3333333333%;
+  }
+
+  .col-5 {
+    width: 37.6666666667%;
+  }
+
+  .col-6 {
+    width: 46%;
+  }
+
+  .col-7 {
+    width: 54.3333333333%;
+  }
+
+  .col-8 {
+    width: 62.6666666667%;
+  }
+
+  .col-9 {
+    width: 71%;
+  }
+
+  .col-10 {
+    width: 79.3333333333%;
+  }
+
+  .col-11 {
+    width: 87.6666666667%;
+  }
+
+  .col-12 {
+    width: 96%;
+  }
+
+  .hidden-sm {
+    display: block;
+  }
+}
+
+/********** UTILITAIRES **********/
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.hidden-sm {
+  display: none;
+}
+
+.box-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.btn {
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  background-color: #fff;
+  color: #000;
+  padding: 1em;
+  font-size: rem(12);
+  letter-spacing: 0.05em;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+}
+
+.btn:hover {
+  background-color: white;
+}
+
+.btn--success {
+  background-color: #52ff33;
+}
+
+.btn--success:hover {
+  background-color: #93ff80;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background-color: #4acbff;
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: #97e1ff;
+  cursor: pointer;
+}
+
+.btn--danger {
+  background-color: #ff4a4a;
+  color: #fff;
+}
+
+.btn--danger:hover {
+  background-color: #ff9797;
+}
+
+/* Mode clair - normal */
+
+.box {
+  padding: 5px;
+  text-align: center;
+}
+
+.box input[type="text"],
+.box input[type="password"],
+.box input[type="mail"],
+.box input[type="number"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 15em;
+  outline: none;
+  color: #000;
+  border-radius: 24px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-size: 1rem;
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus,
+.box input[type="mail"]:focus,
+.box input[type="number"]:focus {
+  width: 20em;
+  border-color: #2ecc71;
+}
+
+/* Mode sombre - normal */
+
+.box-shadow {
+  padding: 5px;
+  text-align: center;
+  background-color: #000;
+}
+
+.box-shadow input[type="text"],
+.box-shadow input[type="password"],
+.box-shadow input[type="mail"],
+.box-shadow input[type="number"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 15em;
+  outline: none;
+  color: #fff;
+  border-radius: 24px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-size: 1rem;
+}
+
+.box-shadow input[type="text"]:focus,
+.box-shadow input[type="password"]:focus,
+.box-shadow input[type="mail"]:focus,
+.box-shadow input[type="number"]:focus {
+  width: 20em;
+  border-color: #2ecc71;
+}
+
+/* Mode clair - large */
+
+.box-large {
+  padding: 5px;
+  text-align: center;
+}
+
+.box-large input[type="text"] {
+  border: 0;
+  background: none;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 15em;
+  outline: none;
+  color: #fff;
+  border-radius: 24px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-size: 1rem;
+}
+
+.box-large input[type="password"] {
+  border: 0;
+  background: none;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 15em;
+  outline: none;
+  color: #fff;
+  border-radius: 24px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-size: 1rem;
+}
+
+.box-large input[type="mail"] {
+  border: 0;
+  background: none;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 15em;
+  outline: none;
+  color: #fff;
+  border-radius: 24px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-size: 1rem;
+}
+
+.box-large input[type="text"]:focus,
+.box-large input[type="password"]:focus,
+.box-large input[type="mail"]:focus,
+.box-large input[type="number"]:focus {
+  width: 20em;
+  border-color: #2ecc71;
+}
+
+.form-table {
+  display: inline-block;
+}
+
+th {
+  padding: 10px;
+}
+
+.desc {
+  padding: 10px;
+}
