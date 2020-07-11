@@ -1,29 +1,80 @@
 <?php
 
-namespace carsery\Managers;
+namespace carsery\models;
 
-use carsery\core\DB;
-use carsery\core\QueryBuilder;
-use carsery\models\Post;
+use carsery\models\Model;
+use carsery\models\User;
 
-class PostManager extends DB
+class Post extends Model
 {
+    protected $id;
+    protected $title;
+    protected $author;
 
-    public function __construct()
-    {
-        parent::__construct(Post::class, 'post');
+
+    public function initRelation(): array { //Initialisation de la relation entre Post et User
+        return [
+            'author' => User::class
+        ];
     }
 
-    public function getUserPost(int $id)
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
     {
-        return (new QueryBuilder())
-            ->select('p.*, u.*')
-            ->from('ymnw_posts','p')
-            ->join('ymnw_users','u')
-            ->where('p.author = :iduser')
-            ->setParameter('iduser',$id)
-            ->getQuery()
-            ->getArrayResultTp(Post::class)
-            ;
+        return $this->id;
     }
-} 
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of title
+     */ 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @return  self
+     */ 
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of author
+     */ 
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set the value of author
+     *
+     * @return  self
+     */ 
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+}
