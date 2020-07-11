@@ -23,7 +23,7 @@ class ForgetMail {
                                     <div align="center">
                                         Bonjour <b>'.$pseudo.'</b>,<br>
                                         Voici votre code de récupération: <b>'.$recup_code.'</b> <br>
-                                        A bientôt sur <a href="localhost">Votre site</a> !
+                                        A bientôt sur <a href="http://151.80.149.232">Votre site</a> !
                                     </div>
                                 </td>
                             </tr>
