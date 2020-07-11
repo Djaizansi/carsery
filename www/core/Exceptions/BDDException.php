@@ -5,8 +5,6 @@ namespace carsery\core\Exceptions;
 use Exception;
 use Throwable;
 
-//throw
-
 interface MyThrowable extends Throwable
 {}
 
@@ -20,4 +18,4 @@ class BDDException extends Exception implements MyThrowable {
     {
         return $this->message;
     }
-}
+} 
