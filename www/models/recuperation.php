@@ -8,9 +8,14 @@ class Recuperation extends Model
     protected $mail;
     protected $code;
     protected $confirme;
+
+    public function initRelation(): array
+    {
+        return [];
+    }
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -20,7 +25,7 @@ class Recuperation extends Model
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -30,7 +35,7 @@ class Recuperation extends Model
 
     /**
      * Get the value of mail
-     */ 
+     */
     public function getMail()
     {
         return $this->mail;
@@ -40,7 +45,7 @@ class Recuperation extends Model
      * Set the value of mail
      *
      * @return  self
-     */ 
+     */
     public function setMail($mail)
     {
         $this->mail = $mail;
@@ -50,7 +55,7 @@ class Recuperation extends Model
 
     /**
      * Get the value of code
-     */ 
+     */
     public function getCode()
     {
         return $this->code;
@@ -60,7 +65,7 @@ class Recuperation extends Model
      * Set the value of code
      *
      * @return  self
-     */ 
+     */
     public function setCode($code)
     {
         $this->code = $code;
@@ -70,7 +75,7 @@ class Recuperation extends Model
 
     /**
      * Get the value of confirme
-     */ 
+     */
     public function getConfirme()
     {
         return $this->confirme;
@@ -80,12 +85,11 @@ class Recuperation extends Model
      * Set the value of confirme
      *
      * @return  self
-     */ 
+     */
     public function setConfirme($confirme)
     {
         $this->confirme = $confirme;
 
         return $this;
     }
-
 }
