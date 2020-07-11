@@ -1,13 +1,25 @@
 <?php
 
+// On lance l'installeur lorsque l'utilisateur lance une première fois Carsery
+
+if (!file_exists('conf.inc.php')) {
+    header("Location: installer/step_1.php");
+    exit();
+} else {
+    if (file_exists("installer")) {
+        header("Location: installer/step_3.php");
+        exit();
+    }
+}
+
 function myAutoloader($class)
 {
-    $class = str_replace('carsery','',$class);
+    $class = str_replace('carsery', '', $class);
 
     $class = str_replace('\\', '/', $class);
-    if($class[0] == '/'){
-        include substr($class.'.php',1);
-    }else {
+    if ($class[0] == '/') {
+        include substr($class . '.php', 1);
+    } else {
         /* include 'controllers/'.$class.'.php'; */
     }
 }
@@ -25,8 +37,8 @@ new ConstantLoader();
 
 try {
     $router = new Router();
-}catch (RouteException $e) {
-    $myView = new View('testerror','erreur');
+} catch (RouteException $e) {
+    $myView = new View('testerror', 'erreur');
     $error = $e->getMessage();
-    $myView->assign('error',$error);
+    $myView->assign('error', $error);
 }
