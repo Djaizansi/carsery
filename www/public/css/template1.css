@@ -1,294 +1,124 @@
-* {
-    box-sizing: border-box; /* border-box permet a un élément lorsqu'on lui attribut une hauteur ou largeur de l'a respecté
-    EX: width: 60%; cet élément fera 60% de largeur et non 78% par exemple. Elle respecte la valeur inscrite. 
-    avec content : les paddings et border se rajoutent. Au lieu d'avoir 100px, on aura 162. Donc le border-box permet de ne pas 
-    compter le padding dans la largeur*/
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
 }
 
-
-html, body
-{
-    height: 99%
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
 }
 
-.logo {
-    /*float: left;*/
-    position: absolute; /*on occupe 100% de la largeur de l'élément parent et on est aussi grand que notre contenu.*/
-    top: 50%;
-    display: inline-block;
-    transform: translateY(-50%);
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
 }
 
-header nav {
-    float: right;
-    color: #000000;
+.header a:hover {
+  background-color: #ddd;
+  color: black;
 }
 
-header {
-    background-color: #fff;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    transition: 0.5s;
-}
-/* style de la nav */
-
-nav a {
-    color: currentColor;
-    text-decoration: none;
-    padding: 1.5em 1em; /* Zone de lien cliquable */
-    display: inline-block;
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
 }
 
-nav li {
-    /*display: inline-block;*/ 
-    float: left;
-    list-style: none;  
+.header-right {
+  float: right;
 }
 
-nav ul {
-    margin: 0;
-    padding: 0;
-}
-
-
-.sticky {
-    background-color:rgba(170, 170, 170, 0.6);
-    transition: 0.5s;
-}
-
-.clearfix::after {
-    content: '';
-    clear: both;
-    display: table;
-}
-
-.clearfix::before {
-    content: '';
-    display: table;
-}
-
-.container {
-    width: 1170px;
-    padding: 0 15px;
-    margin: 0 auto;
-    position: relative;
-}
-
-#section1 {
-    height: 700px;
-}
-
-#section1 .container {
-    height: 100%;
-    position: relative;
-}
-
-
-.benefit {
-    float: left;
-    margin-right: 20px;
-    width: calc((100% - 60px) / 4);
-    text-align: center;
-    margin-bottom: 90px;
-}
-
-.benefit:last-child {
-    margin-right: 0;
-}
-
-.benefit h2 {
-    font-size: 21px;
-    font-weight: 800;
-    padding-top: 20px;
-
-}
-
-.benefit img {
-    width: 75%
-}
-
-.container > h1 {
-    text-align: center;
-    font-weight: 800;
-}
-
-.vertically-centered > h1:nth-child(1) {
-    color: white;
-    font-size: 80px;
-    margin: 0;
-}
-
-.vertically-centered > p:nth-child(1) {
-    margin: 0 0 15px 30px;
-}
-
-.vertically-centered > p:last-child {
-    margin: 0 0 30px 1px;
-}
-
-
-.grandeur {
-    font-size: 48px;
-    padding-bottom: 25px;
-}
-
-.grandeur2 {
-    font-size: 38px;
-    margin: 0;
-}
-
-.smaller {
-    font-size: 16px;
-    text-align: center;
-    font-weight: 500;
-}
-
-main > section { /* récupere tous les sections enfant de main. 
-    Ex: <main> <section></section> <div> <section></section> </div> </main>
-    On prend les section de main et non de div */
-    padding: 67px 0;
-}
-
-.offer {
-    float: left;
-    min-height: 600px;
-    width: calc((100% - 40px) / 3);
-    border: 1px solid rgb(241, 241, 241);
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 8px; /* première valeur : soit à gauche soit à droite (mettre une négation 
-    pour aller à gauche etc...)de l'élément
-    2e: soit en haut ou en bas et 3e: l'expansion de l'ombre */
-    padding: 20px;
-    margin: 50px 0px 50px;
-    margin-right: 20px;
-    position: relative;
-}
-
-.offer div {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    color:#9E9E9E;
-    padding: 20px;
-}
-
-.offer div a {
-    margin-bottom: 10px;
-}
-
-.offer div small a {
-    color: #9E9E9E;
-}
-
-.offer h1 {
-    border-width: 4px;
-    border-style: solid;
-    border-color: rgb(63, 158, 215);
-    font-size: 14px;
-    font-weight: normal;
-    border-radius: 3px;
-    padding: 0 2px 0 3px;
-    background-color: rgb(63, 158, 215);
-    color: white;
-    width: 150px;
-}
-
-.offer h2 {
-    margin: 0;
-}
-
-.offer h3 {
-    margin: 0;
-    font-size: 15px;
-    font-weight: normal;
-}
-
-.offer hr {
-    margin-top: 25px;
-    opacity:0.4;
-}
-
-.offer:last-child {
-    margin-right: 0;
-}
-
-.cta-button {
-    color: white;
-    background-color: #1DB954;
-    text-decoration: none;
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 1em 3em;
-    border-radius: 500px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    transition: background-color 0.3s 0.1s, transform 0.3s;
-    transform-origin: center center;
-}
-
-@keyframes fadeIn{
-    from {opacity: 0; transform: translateY(100%);}
-    to {opacity: 1; transform: translateY(0%);}
-}
-
-#section1 .cta-button {
-    animation: fadeIn;
-}
-
-.cta-button--full{
-    width: 100%;
-    text-align: center;
-}
-
-.cta-button:hover{
-    background-color: rgb(30,215,96);
-    transform: scale(1.1);
-}
-
-.offer ul {
-    list-style: none;
-}
-
-.offer li {
-    position: relative;
-    margin: 0 -5px 6px;
-    line-height: 22px;
-    font-weight: 500;
-    font-size: 16.5px;
-}
-
-.offer li::before {
-    content:'';
-    width: 24px;
-    height: 24px;
-    background-image: url('./images/arrow.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: absolute;
-    top: -1%;
-    left: -35px;
-}
-
-.offer > small {
-    color: #9E9E9E;
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
     display: block;
-    margin-top: 15px;
-    text-align: center;
-    font-size: 12px;
-    font-weight: bold;
+    text-align: left;
+  }
+
+  .header-right {
+    float: none;
+  }
 }
 
-footer {
-    background-color: rgb(75, 75, 75);
-    position: relative;
-    color: #fff;
-    padding: 48px 0 20px;
-    font-size: 13px;
-    font-weight: 400;
-    height: 120px;
+.wrapper {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.site-footer {
+  background-color: #26272b;
+  padding: 45px 0 20px;
+  font-size: 15px;
+  line-height: 24px;
+  color: #737373;
+}
+.site-footer hr {
+  border-top-color: #bbb;
+  opacity: 0.5;
+}
+
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55acee;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+
+.fa-pinterest {
+  background: #cb2027;
+  color: white;
+}
+
+.fa-snapchat-ghost {
+  background: #fffc00;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.responsive {
+  width: 100%;
+  height: auto;
 }
