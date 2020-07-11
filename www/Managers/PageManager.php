@@ -1,10 +1,9 @@
 <?php
-
 namespace carsery\Managers;
 
 use carsery\core\DB;
 use carsery\models\Page;
-use carsery\core\Helpers;
+use carsery\core\Helpers; 
 
 class PageManager extends DB {
     
@@ -13,12 +12,29 @@ class PageManager extends DB {
         parent::__construct(Page::class, 'page');
     }
 
+    public static function addData($page,$pageManager,$id = '', $titre,$auteur,$content,$date='',$publie,$uri,$menu,$home,$template,$token = NULL)
+    {
+        empty($id) ? '' : $page->setId($id);
+        isset($titre) ? $page->setTitre($titre) : '';
+        $page->setAuteur($auteur);
+        $page->setContent($content);
+        !empty($id) && !empty($date) ? $page->setDate($date) : $page->setDate(date('Y-m-d H:i'));
+        $page->setPublie($publie);
+        $page->setUri($uri);
+        $page->setMenu($menu);
+        $page->setHome($home);
+        $page->setTemplate($template);
+        $page->setToken($token);
+        $pageManager->save($page);
+    }
+
     public function findByTitre($titre)
     {
         $table = $this->getTable();
+        $connection = $this->getConnection();
         $sql = "SELECT * FROM $table WHERE titre =:titre";
-        $results = $this->sql($sql,[':titre' => $titre]);
-        $row = $results->fetch();
+        $results = $connection->query($sql,[':titre' => $titre]);
+        $row = $results->getOneOrNullResult();
 
         if ($row) {
             $object = new $this->class;
@@ -28,12 +44,30 @@ class PageManager extends DB {
         }
     }
 
+    public function findByUri($uri)
+    {
+        $table = $this->getTable();
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM $table WHERE uri =:uri";
+        $results = $connection->query($sql,[':uri' => $uri]);
+        $row = $results->getOneOrNullResult();
+
+        if ($row) {
+            $object = new $this->class;
+            return $object->hydrate($row);
+        }else {
+            return null;
+        }
+    }
+
+
     public function findByPublic(bool $public)
     {
         $table = $this->getTable();
+        $connection = $this->getConnection();
         $sql = "SELECT * FROM $table WHERE publie =:publie";
-        $results = $this->sql($sql,[':publie' => $public]);
-        $row = $results->fetch();
+        $results = $connection->query($sql,[':publie' => $public]);
+        $row = $results->getOneOrNullResult();
 
         if ($row) {
             $object = new $this->class;
@@ -55,22 +89,74 @@ class PageManager extends DB {
 
                     "fields"=>[
                         "titre"=>[
+                            "balise"=>"",
                             "type"=>"text",
                             "placeholder"=>"Entrez un titre",
-                            /* "class"=>"form-control form-control-user", */
                             "id"=>"id_titre",
                             "required"=>true,
-                            "errorMsg"=>"Votre email n'est pas valide"
+                            "errorMsg"=>""
                         ],
 
-                        "action"=>[
-                            "type"=>"text",
-                            "placeholder"=>"Quel est votre action",
-                            /* "class"=>"form-control form-control-user", */
-                            "id"=>"id_action",
-                            "required"=>true,
-                            "errorMsg"=>"Votre email n'est pas valide"
+                        "checkbox"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox",
+                            "value"=>"yes"
                         ],
+
+                        "public"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox_public",
+                            "value"=>"yes"
+                        ],
+
+                        "home"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox_home",
+                            "value"=>"yes"
+                        ]
+                    ]
+                ];
+    }
+
+    public static function getWYSIWYGForm(){
+        return [
+                    "config"=>[
+                            "method"=>"POST",
+                            "action"=>"",
+                            "class"=>"box",
+                            "id"=>"formAddPage",
+                            "submit"=>"Créer"
+                    ],
+
+                    "fields"=>[
+                        "editPage"=>[
+                            "balise"=>"textarea",
+                            "type" => "text",
+                            "id"=>"myTextarea",
+                        ],
+                        "checkbox"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox",
+                            "value"=>"yes"
+                        ],
+
+                        "public"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox_public",
+                            "value"=>"yes"
+                        ],
+                        
+                        "home"=>[
+                            "balise"=>"",
+                            "type"=>"checkbox",
+                            "id"=>"id_checkbox_home",
+                            "value"=>"yes"
+                        ]
                     ]
                 ];
     }
