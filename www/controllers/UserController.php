@@ -63,7 +63,7 @@ class UserController
                         $user->setPwd($findUser->getPwd());
                         $user->setStatus($_POST['status']);
                         $user->setTheme($findUser->getTheme());
-                        $user->setBan($findUser->getBan());
+                        $user->setBan($findUser->isBan());
                         $userManager->save($user);
                         $_SESSION['success'] = "updateUser";
                         header("Location: /gestionuser");
@@ -276,7 +276,7 @@ class UserController
             $unNom = $unUser->getLastname();
             $unStatut = $unUser->getStatus();
             $unTheme = $unUser->getTheme();
-            $unBan = $unUser->getBan();
+            $unBan = $unUser->isBan();
             $myView = new View("changemdp", "account");
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -376,7 +376,7 @@ class UserController
                 $user->setStatus($found->getStatus());
                 $user->setToken(null);
                 $user->setTheme($found->getTheme());
-                $user->setBan($found->getBan());
+                $user->setBan($found->isBan());
                 $userManager->save($user);
             }elseif($token === null){
                 $location = Helpers::getUrl('User','login');
