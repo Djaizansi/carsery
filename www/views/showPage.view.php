@@ -1,9 +1,30 @@
 
-<?php 
-    use carsery\core\View;
-    use carsery\Managers\ShortCodeManager;
+<?php
 
-    $content = $found->getContent();
+use carsery\core\Helpers;
+use carsery\core\Session;
+use carsery\core\View;
+use carsery\Managers\ArticleManager;
+use carsery\Managers\CategoryManager;
+use carsery\Managers\ShortCodeManager;
+use carsery\Managers\UserManager;
+?>
+
+<?php if(isset($_SESSION['reussite']) && $_SESSION['reussite'] == "resolvearticle"):?>
+    <?= Helpers::alert('success','',"L'article a été résolu") ?>
+<?php elseif(isset($_SESSION['reussite']) && $_SESSION['reussite'] == "updatearticle"): ?>
+    <?= Helpers::alert('success','',"L'article a bien été modifié") ?>
+<?php elseif(isset($_SESSION['reussite']) && $_SESSION['reussite'] == "addarticle"): ?>
+    <?= Helpers::alert('success','',"L'article a bien été ajouté") ?>
+<?php elseif(isset($_SESSION['reussite']) && $_SESSION['reussite'] == "deletemessage"): ?>
+    <?= Helpers::alert('success','',"Le message a bien été supprimé") ?>
+<?php else: ?>
+
+<?php endif ?>
+<?php unset($_SESSION['reussite']) ?>
+
+<?php
+$content = $found->getContent();
 
     $findAll = $shortCodeManager->findAll();
     $shortCodeWrited =false;
@@ -22,7 +43,7 @@
             }
         }
         
-        if($found){
+        if($found && $unShort->getType() == "caroussel"){
             $shortCodeWrited = true;
             $index = stripos($content,$shortcode, 0);
             $pre = substr($content,0,$index);
@@ -38,6 +59,52 @@
             $this->addModal('carousel',$data);
             //if ($key == count($findAll) - 1){
                 echo $post;
+            //}
+        }elseif($found && $unShort->getType() == "forum"){
+            $shortCodeWrited = true;
+            $index = stripos($content,$shortcode, 0);
+            $pre = substr($content,0,$index);
+            $post = substr($content,$index+$sizeShortCode);
+            //if ($key < count($findAll) - 1){
+            echo $pre;
+            //}
+            $data = [];
+
+            $articleManager = new ArticleManager();
+            $categoryManager = new CategoryManager();
+            $userManager = new UserManager();
+
+            $articles = $articleManager->findAll();
+            $categories = $categoryManager->findAll();
+
+            $cats = [];
+            foreach ($categories as $category) {
+                foreach ($articles as $article) {
+                    if ($article->getCategory()->getId() == $category->getId()) {
+                        if (isset($cats[$category->getName()])) {
+                            $cats[$category->getName()] = array_merge($cats[$category->getName()], array($article));
+                        } else {
+                            $cats[$category->getName()] = array($article);
+                        }
+                    }
+                }
+            }
+
+            $data['categories'] = $cats;
+            $configAddArticle = $articleManager->getArticleForm();
+            $configAddArticle['fields']['categorie']['values'] = $categoryManager->findAll();
+            $data['configAddArticle'] = $configAddArticle;
+
+            if (Session::estConnecte()) {
+                $user = $userManager->find($_SESSION['id']);
+                $data['user'] = $user;
+                $this->addModal('article',$data);
+            } else {
+                echo "bjr";
+            }
+
+            //if ($key == count($findAll) - 1){
+            echo $post;
             //}
         }
     }
