@@ -16,8 +16,8 @@ function makeSlider(elem){
 
 	// Ajout de la navigation
 	$('.slider').append('<nav></nav>');
-	$('.slider nav').append('<button class="btn btn--prev" onclick="prev(); disableNav()"></button>');
-	$('.slider nav').append('<button class="btn btn--next" onclick="next(); disableNav()"></button>');
+	$('.slider nav').append('<button class="btnSlider btnSlider--prev" onclick="prev(); disableNav()"></button>');
+	$('.slider nav').append('<button class="btnSlider btnSlider--next" onclick="next(); disableNav()"></button>');
 	
 
 	// Fabrication du container de slides
