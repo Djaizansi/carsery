@@ -1,4 +1,8 @@
 /:
+  controller: myProject
+  action: view
+
+/connexion:
   controller: User
   action: login
 
@@ -14,6 +18,10 @@
   controller: Mail
   action: mail
 
+/mailbox/reponse:
+  controller: "Mail"
+  action: "answercontactemail"
+
 /apparence:
   controller: Apparence
   action: apparence
@@ -21,6 +29,66 @@
 /forum:
   controller: Forum
   action: forum
+
+/forum/ajout-article:
+  controller: "Forum"
+  action: "addarticle"
+
+/forum/article:
+  controller: "Forum"
+  action: "updatearticleview"
+
+/forum/modificaton-article:
+  controller: "Forum"
+  action: "updatearticle"
+
+/forum/resolution-article:
+  controller: "Forum"
+  action: "resolvearticle"
+
+/forum/suppression-article:
+  controller: "Forum"
+  action: "removearticle"
+
+/forum/lire-article:
+  controller: "Forum"
+  action: "readarticle"
+
+/forum/ajout-message:
+  controller: "Forum"
+  action: "addmessagearticle"
+
+/forum/message:
+  controller: "Forum"
+  action: "updatemessagearticleview"
+
+/forum/modification-message:
+  controller: "Forum"
+  action: "updatemessagearticle"
+
+/forum/suppression-message:
+  controller: "Forum"
+  action: "removemessagearticle"
+
+/forum/bannir-utilisateur:
+  controller: "Forum"
+  action: "banuser"
+
+/forum/ajout-categorie:
+  controller: "Forum"
+  action: "addcategory"
+
+/forum/categorie:
+  controller: "Forum"
+  action: "updatecategoryview"
+
+/forum/modification-categorie:
+  controller: "Forum"
+  action: "updatecategory"
+
+/forum/suppression-categorie:
+  controller: "Forum"
+  action: "removecategory"
 
 /media:
   controller: Media
@@ -30,10 +98,6 @@
   controller: Page
   action: page
 
-/lien:
-  controller: Page
-  action: lien
-
 /parametre:
   controller: Parametre
   action: parametre
@@ -41,6 +105,14 @@
 /gestionuser:
   controller: User
   action: gestionuser
+
+/supprimer-user:
+  controller: User
+  action: deleteUser
+
+/update-user:
+  controller: User
+  action: updateUser
 
 /ajout-utilisateur:
   controller: User
@@ -54,14 +126,6 @@
   controller: User
   action: changemdp
 
-/supprimer-utilisateur:
-  controller: User
-  action: remove
-
-/utilisateur:
-  controller: User
-  action: default
-  
 /inscription:
   controller: User
   action: register
@@ -90,10 +154,31 @@
   controller: Contact
   action: contact
 
+/testQuery:
+  controller: myProject
+  action: testQueryBuilder
 
-/myproject/:name:
-  controller: "myproject"
-  action: "view"
-  params:
-    - name: '#^[A-Za-z0-9\-]+$#'
+/widget:
+  controller: Page
+  action: widgetPage
 
+/confirmAccount:
+  controller: User
+  action: confirmAccount
+
+/supprimer-media:
+  controller: Media
+  action: suppMedia
+
+/modifier-media:
+  controller: Media
+  action: renameFile
+
+/test:
+  controller: Media
+  action: test
+
+/template:
+  controller: Page
+  action: updateTemplate
+  

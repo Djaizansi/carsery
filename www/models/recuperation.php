@@ -8,6 +8,12 @@ class Recuperation extends Model
     protected $mail;
     protected $code;
     protected $confirme;
+
+    public function initRelation(): array {
+        return [
+        
+        ];
+    }
     /**
      * Get the value of id
      */ 

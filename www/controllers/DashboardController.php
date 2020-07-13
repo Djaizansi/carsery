@@ -9,7 +9,7 @@ use carsery\core\Session;
 class DashboardController {
     public function dashboardAction()
     {
-        if(Session::estConnecte()){
+        if(Session::estConnecte() && Session::estAdmin()){
             $setVar = true;
             // setting the cookie
             setcookie('loader', $setVar ? '1' : '0');

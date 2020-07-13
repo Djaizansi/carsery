@@ -1,10 +1,24 @@
 <?php
 
+use carsery\core\Helpers;
 use carsery\Managers\PageManager;
 use carsery\Managers\ContactManager;
+use carsery\Managers\UserManager;
 
-$inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
+$inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; 
+$pageManager = new PageManager();
+$userManager = new UserManager();
 
+
+if(isset($_GET['id'])){
+  $pageFound = $pageManager->find($_GET['id']);
+  $menu = $pageFound->getMenu();
+  $public = $pageFound->getPublie();
+  $home = $pageFound->getHome();
+}
+
+$arrayRole = ['Admin','Client'];
+?>
 <form 
 method="<?= $data["config"]["method"]?>" 
 action="<?= $data["config"]["action"]?>"
@@ -21,35 +35,61 @@ class="<?= $data["config"]["class"]?>">
                 <img src="script/captcha.php" width="300px">
             <?php endif;?>
 
+            <?php if($configField["id"] == "id_checkbox_public"): ?>
+                <p>Voulez-vous publier cette page ? </p>
+                
+            <?php endif ?>
+
+            <?php if($configField["id"] == "id_checkbox"): ?>
+                <p>Voulez-vous ajouter cette page au menu ? </p>
+            <?php endif ?>
+
+            <?php if($configField["id"] == "id_checkbox_home"): ?>
+                <p>Doit-elle être la page d'accueil ? </p>
+            <?php endif ?>
+
             <?php if($configField["balise"] === "textarea"): ?>
               <textarea
-                value="<?= (isset($inputData[$name])) ? $inputData[$name] : '' ?>"
+                value="<?php $inputData[$name]??'' ?>"
+                name="<?= $name??'' ?>"
+                id="<?= $configField["id"]??'' ?>"
+                type="<?= $configField["type"]??'' ?>"
+              >
+              <?php if(isset($inputData[$name])): ?>
+                  <?= $inputData[$name] ?>
+              <?php else: ?>
+                <?= $pageFound->getContent()?>
+              <?php endif ?>
+              </textarea>
+
+            <?php elseif($configField['balise'] === "select"): ?>
+              <select
                 name="<?= $name??'' ?>"
                 id="<?= $configField["id"]??'' ?>"
                 type="<?= $configField["type"]??'' ?>"
                 placeholder="<?= $configField["placeholder"]??'' ?>"
               >
-              <?php if(empty($configField["placeholder"])): ?>
-                  <?php $pageManager = new PageManager() ?>
-                  <?php $pageFound = $pageManager->find($_GET['id']) ?>
-                  <?php $titre = $pageFound->getTitre() ?>
-                  <?= file_get_contents("Views/$titre.view.php") ?>
-              <?php else: ?>
-              <?php endif ?>
-
-              </textarea>
+                <?php foreach($arrayRole as $unRole): ?>
+                      <option value="<?= $unRole ?>"><?= $unRole ?></option>
+                <?php endforeach ?>
+              </select>
             <?php else: ?>
               <input 
                   value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
-                    <?php  /* $inputData -> $_POST | $name => les champs : firstname, lastname, email ... | $inputdData[$name]
-                    => $_POST[$name]=> ex: $_POST["firstname"] 
-                    value ici permet de stocker la valeur et de la laisser dans le champs */ ?>
                   type="<?= $configField["type"]??'' ?>"
                   name="<?= $name??'' ?>"
                   placeholder="<?= $configField["placeholder"]??'' ?>"
                   class="<?= $configField["class"]??'' ?>"
                   id="<?= $configField["id"]??'' ?>"
-                  <?= (!empty($configField["required"])) ? "required='required'" : "" ?> >
+                  value="<?= $configField["value"]??'' ?>"
+                  <?= (!empty($configField["required"])) ? "required='required'" : "" ?>
+                  <?= (!empty($configField["hidden"])) ? "hidden" : "" ?>
+                  <?php if(isset($_GET['id'])): ?>
+                    <?= $configField["id"] == "id_checkbox_public" && $public == 1 ? 'checked' : '' ?>
+                    <?= $configField["id"] == "id_checkbox" && $menu == 1  ? 'checked' : '' ?>
+                    <?= $configField["id"] == "id_checkbox_home" && $home == 1  ? 'checked' : '' ?>
+                  <?php endif ?>
+                  >
             <?php endif ?>
         <!--  </div>
       </div> -->
@@ -57,44 +97,6 @@ class="<?= $data["config"]["class"]?>">
     
 
 
-
+  <br><br>
   <button class="btn btn--primary" id="btnAdd"><?= $data["config"]["submit"];?></button>
 </form>
-
-
-
-
-
-<!--
-  <form class="user">
-    <div class="form-group row">
-      <div class="col-sm-6 mb-3 mb-sm-0">
-        <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
-      </div>
-      <div class="col-sm-6">
-        <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
-      </div>
-    </div>
-    <div class="form-group">
-      <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
-    </div>
-    <div class="form-group row">
-      <div class="col-sm-6 mb-3 mb-sm-0">
-        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-      </div>
-      <div class="col-sm-6">
-        <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
-      </div>
-    </div>
-    <a href="login.html" class="btn btn-primary btn-user btn-block">
-      Register Account
-    </a>
-    <hr>
-    <a href="index.html" class="btn btn-google btn-user btn-block">
-      <i class="fab fa-google fa-fw"></i> Register with Google
-    </a>
-    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-      <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-    </a>
-  </form>
-  -->

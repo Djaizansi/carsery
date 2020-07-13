@@ -2,7 +2,6 @@
 
 $(window).scroll(function(){
     var window_position = $(window).scrollTop();
-    console.log(window_position);
     // Si la fenêtre est scrollée (scrollTop > 0) alors ajouter la classe .sticky au header
     if(window_position > 0){
         $('header').addClass('sticky');

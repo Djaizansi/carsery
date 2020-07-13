@@ -310,6 +310,7 @@ fieldset {
 }
 
 .btn {
+  width: auto !important;
   text-transform: uppercase;
   display: inline-block;
   text-decoration: none;
@@ -364,7 +365,9 @@ fieldset {
 .box input[type=password],
 .box input[type=email],
 .box input[type=number],
-.box input[type=captcha] {
+.box input[type=captcha],
+.box textarea,
+.box select {
   border: 0;
   background: none;
   display: block;
@@ -385,7 +388,9 @@ fieldset {
 .box input[type=password]:focus,
 .box input[type=email]:focus,
 .box input[type=number]:focus,
-.box input[type=captcha]:focus {
+.box input[type=captcha]:focus,
+.box textarea:focus,
+.box select:focus {
   width: 20em;
   border-color: #2ecc71;
 }
@@ -397,6 +402,67 @@ fieldset {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.message {
+  width: 600px;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.article {
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 5px;
+  width: 600px;
+}
+
+.hide {
+  display: none !important;
+}
+
+.show {
+  display: inline-block !important;
+}
+
+.readMessage {
+  float: left;
+  height: 1000px;
+  border-left: 1px solid black;
+  padding: 10px;
+}
+
+.messageOverview {
+  float: left;
+  padding: 10px;
+}
+
+.mail {
+  width: 500px;
+  height: 200px;
+}
+
+.messageOverviewColor {
+  background-color: #648ca6;
+  opacity: 0.7;
+}
+
+.success {
+  color: green;
+  opacity: 0.8;
 }
 
 .alert {

@@ -15,4 +15,11 @@ class Json implements JsonSerializable {
     {
         return $this->array;
     }
+
+    public function initRelation(): array {
+        return [
+        
+        ];
+    }
+
 }

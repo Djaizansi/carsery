@@ -10,18 +10,68 @@ use carsery\core\Validator;
 use carsery\Managers\RecuperationManager;
 use carsery\mail\template\ForgetMail;
 use carsery\core\Mail;
+use carsery\mail\template\ConfirmAccount;
 use carsery\Managers\UserManager;
 use carsery\models\Recuperation;
 use carsery\models\User;
+
+define('CONFIGUPDATE', UserManager::getUpdateForm());
+
 
 class UserController
 {
     public function gestionUserAction() 
     {
         if(Session::estConnecte()){
-            $myView = new View("gestionuser");
-        }else {
+            if(Session::estAdmin()){
+                $myView = new View("gestionuser");
+                $userManager = new UserManager();
+
+                $foundUser = $userManager->find($_SESSION['id']);
+                $roleUserConnect = $foundUser->getStatus();
+                $foundAll = $userManager->findAll();
+                $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
+                $myView->assign('errors',$errors);
+                $myView->assign('foundAll',$foundAll);
+                $myView->assign('userManager',$userManager);
+                $myView->assign('configFormUpdate',CONFIGUPDATE);
+                $myView->assign('roleUserConnect',$roleUserConnect);
+            }elseif(!(Session::estAdmin())) {
+                throw new RouteException("Vous n'avez pas accès à cette page");
+            }
+        }else{
             throw new RouteException("Vous n'êtes pas connecté");
+        }
+    }
+
+    public function updateUserAction()
+    {
+        if(Session::estConnecte() && Session::estAdmin()){
+            $userManager = new UserManager();
+            $user = new User();
+            $findUser = $userManager->find($_POST['id']);
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
+                if(!empty($errors)){
+                    return $this->gestionUserAction();
+                }else{
+                    if(!empty($_POST)){
+                        $user->setId($_POST['id']);
+                        $user->setLastname($_POST['lastname']);
+                        $user->setFirstname($_POST['firstname']);
+                        $user->setEmail($_POST['email']);
+                        $user->setPwd($findUser->getPwd());
+                        $user->setStatus($_POST['status']);
+                        $user->setTheme($findUser->getTheme());
+                        $user->setBan($findUser->isBan());
+                        $userManager->save($user);
+                        $_SESSION['success'] = "updateUser";
+                        header("Location: /gestionuser");
+                    }
+                }
+            }
+        }else{
+            throw new RouteException("Vous n'avez pas le droit à cette action");
         }
     }
 
@@ -45,22 +95,29 @@ class UserController
                         !is_null($user_found) ? $pwd = $user_found->getPwd() : '';
                         !is_null($user_found) ? $email = $user_found->getEmail() : '';
 
+                        $token = $user_found->getToken();
                         $pwd_user = isset($pwd) ? $pwd : '';
                         $email_user = isset($email) ? $email : '';
 
                         $pwd_verif = password_verify($_POST['pwd'],$pwd_user);
 
-                        if($email_user === $_POST['email'] && $pwd_verif){
+                        if($email_user === $_POST['email'] && $pwd_verif && $token == null){
                             $function->affecterInfosConnecte((int)$user_found->getId());
-                            if($function){
+                            if($function && Session::estAdmin()){
                                 $location = Helpers::getUrl('Dashboard','dashboard');
+                                header("Location: $location");
+                            }elseif(Session::estClient()){
+                                $location = Helpers::getUrl('myProject','view');
                                 header("Location: $location");
                             }
                             else{
                                 echo "Vous n'êtes pas connecté !";
                             }
-                        }else {
+                        }elseif(!$pwd_verif) {
                             $errors[] = "Votre mot de passe est incorrect";
+                            $myView->assign('errors',$errors);
+                        }elseif($token !== null){
+                            $errors[] = "Veuillez activer votre compte";
                             $myView->assign('errors',$errors);
                         }
                     }
@@ -132,7 +189,7 @@ class UserController
             }
         $myView->assign("configFormUser", $configFormUser);
     }else{
-        $location = Helpers::getUrl('Dashboard','dashboard');
+        $location = Helpers::getUrl('myProject','view');
         header("Location: $location");
     }
 
@@ -213,11 +270,13 @@ class UserController
         if($confirmation == 1) {
             $id_exist_user = $userManager->findByEmail($_SESSION['email']);/* 'id','email',$_SESSION['email']); */
             $id = $id_exist_user->getId();
-            
+
             $unUser = $userManager->findById($id);
             $unPrenom = $unUser->getFirstname();
             $unNom = $unUser->getLastname();
             $unStatut = $unUser->getStatus();
+            $unTheme = $unUser->getTheme();
+            $unBan = $unUser->isBan();
             $myView = new View("changemdp", "account");
 
             if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -227,16 +286,19 @@ class UserController
                     $myView->assign('errors',$errors);
                 }else {
                     if(!empty($_POST)){
-                        $user->setId((int)$id_exist_user);
+                        $user->setId((int)$id);
                         $user->setLastname($unNom);
                         $user->setFirstname($unPrenom);
                         $user->setEmail($_SESSION['email']);
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus($unStatut);
+                        $user->setToken(null);
+                        $user->setTheme($unTheme);
+                        $user->setBan($unBan);
                         $userManager->save($user);
                         $location = Helpers::getUrl('User','login');
                         header("Location: $location");
-                        $del = $recup->delete('mail',$_SESSION['email']);
+                        $recup->delete('mail',$_SESSION['email']);
                         session_destroy();
                     }
                 }
@@ -250,9 +312,11 @@ class UserController
     public function registerAction()
     {
         $configFormUser = UserManager::getRegisterForm();
+        $token = Helpers::Salt(20);
         $userManager = new UserManager();
         $user = new User();
         $Session_Start = new Session();
+        $envoie = new Mail();
         $myView = new View("register", "account");
         
         if(empty($_SESSION['id'])){
@@ -270,23 +334,84 @@ class UserController
                         isset($_POST['email']) ? $user->setEmail($_POST['email']) : "";
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus('Client');
+                        $user->setToken($token);
+                        $user->setTheme(1);
+                        $user->setBan(0);
                         $userManager->save($user);
-                        $location = Helpers::getUrl('User','login');
-                        header("Location: $location");
+                        $unMail = ConfirmAccount::mailConfirm($_POST['lastname'],$_POST['email']);
+                        $unEnvoie = $envoie->sendmail('Confirmation de compte', $unMail, $_POST['email']);
+                        if($unEnvoie){
+                            $success = 1;
+                            $_SESSION['success'] = $success;
+                            $location = Helpers::getUrl('User','login');
+                            header("Location: $location");
+                        }else {
+                            throw new RouteException("Un problème est survenue lors de l'envoie de mail");
+                        }
                     }
                 }
             }
             $myView->assign("configFormUser", $configFormUser); //déclarer un nom d'une variable et mettre dedans. Envoyer des variables aux vues
         }else {
-            $location = Helpers::getUrl('Dashboard','dashboard');
+            $location = Helpers::getUrl('myProject','view');
             header("Location: $location");
+        }
+    }
+
+    public function confirmAccountAction(){
+        $userManager = new UserManager();
+        $user = new User();
+        if(isset($_GET['id']) && isset($_GET['token'])){
+            $found = $userManager->find($_GET['id']);
+            $token = isset($found) ? $found->getToken() : '';
+            $id = isset($found) ? $found->getId() : '';
+            if($id === $_GET['id'] && $token === $_GET['token']){
+                $myView = new View('confirmAccount','account');
+                $myView->assign('found',$found);
+                $user->setId((int)$id);
+                $user->setLastname($found->getLastname());
+                $user->setFirstname($found->getFirstname());
+                $user->setEmail($found->getEmail());
+                $user->setPwd($found->getPwd());
+                $user->setStatus($found->getStatus());
+                $user->setToken(null);
+                $user->setTheme($found->getTheme());
+                $user->setBan($found->isBan());
+                $userManager->save($user);
+            }elseif($token === null){
+                $location = Helpers::getUrl('User','login');
+                header("Location: $location");
+            }elseif($id !== $_GET['id'] && $token !== $_GET['token']){
+                throw new RouteException("Le lien n'est pas valide");
+            }
+        }else{
+            throw new RouteException("Vous n'avez pas accès à cette page");
+        }
+    }
+    
+
+    public function deleteUserAction()
+    {
+        if(Session::estConnecte() && Session::estAdmin()){
+            $userManager = new UserManager();
+            $id = isset($_GET['id']) ? $_GET['id'] : '';
+            
+            if($id){
+                $userManager->delete('id',$id);
+                $location= Helpers::getUrl('User','gestionuser');
+                var_dump($location);
+                $_SESSION['success'] = 'suppUser';
+                header("Location: $location");
+            }
+        }else{
+            throw new RouteException("Vous n'avez pas le droit à cette action");
         }
     }
 
     public function deconnecterAction(){
         $deconnecter = new Session();
         $deconnecter->deconnecter();
-        $location = Helpers::getUrl('User','login');
+        $location = Helpers::getUrl('myProject','view');
         header("Location: $location");
     }
 }
