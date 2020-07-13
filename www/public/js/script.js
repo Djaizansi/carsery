@@ -52,11 +52,13 @@ var id_user;
 var token;
 var file;
 var unId;
+var idarticleresolve;
 
 $(document).on("click", ".myBtn", function () {
   id_page_supprimer = $(this).data('id');
   token = $(this).data('token');
   id_user = $(this).data('id');
+  idarticleresolve = $(this).data('id');
 });
 
 $(document).on("click", ".myBtn", function () {
@@ -86,10 +88,24 @@ $('#btnYesFile').click(function() {
 	window.location.href = "/supprimer-media?file="+file;
 });
 
+$('#btnYesResolve').click(function() {
+	window.location.href = "/forum/resolution-article?id="+idarticleresolve;
+});
+
+$('#btnYesSupprimer').click(function() {
+	window.location.href = "/forum/suppression-message?id="+idarticleresolve;
+});
+
 
 $(function(){
   $('#btnNo').click(function(){
     $('#modal1').toggleClass('modal-hide')
+  })
+})
+
+$(function(){
+  $('#btnNo').click(function(){
+    $('#modal3').toggleClass('modal-hide')
   })
 })
 
@@ -118,3 +134,107 @@ tinymce.init({
   },
 });
 
+// Ecoute les boutons pour la suppression et marqué comme résolu
+var deleteButtons = document.querySelectorAll('.btnDelete');
+var resolveButtons = document.querySelectorAll('.btnResolve');
+var idToDelete = document.getElementById("idToDelete");
+var idToDeleteC = document.getElementById("idToDeleteC");
+var idToResolve = document.getElementById("idToResolve");
+var yesButtonDelete = document.getElementById("yesBtnD");
+var yesButtonDeleteC = document.getElementById("yesBtnC");
+var yesButtonResolve = document.getElementById("yesBtnR");
+if (deleteButtons) {
+    // Ajout d'un evenement pour tous les bouttons suppression 'Oui'
+    deleteButtons.forEach(
+        e => {
+        e.addEventListener('click', function () {
+        console.log('idToSent', e.getAttribute('data-id'));
+        if(e.getAttribute('data-model') == "article"){
+            if (idToDelete && yesButtonDelete) {
+                idToDelete.setAttribute('value', e.getAttribute('data-id'));
+            }
+        } else {
+            if (idToDeleteC && yesButtonDeleteC) {
+                idToDeleteC.setAttribute('value', e.getAttribute('data-id'));
+            }
+        }
+
+    })
+});
+};
+
+if(resolveButtons){
+    resolveButtons.forEach(
+        e => {
+        e.addEventListener('click', function () {
+        console.log('idToSentResolve', e.getAttribute('data-id'));
+        if (idToResolve && yesButtonResolve) {
+            idToResolve.setAttribute('value', e.getAttribute('data-id'));
+        }
+    })
+});
+}
+
+// Faire disparaitre la modal
+var noButtons = document.querySelectorAll('.btnNo');
+if(noButtons){
+    noButtons.forEach(
+        e => {
+        e.addEventListener('click', function () {
+        e.parentNode.parentNode.parentNode.classList.toggle('modal-hide');
+    })
+});
+}
+
+// Affichage message et réponse mailbox
+var messsageMailbox = document.querySelectorAll('.openMessageMailbox');
+if(messsageMailbox){
+    messsageMailbox.forEach(
+        e => {
+            e.addEventListener('click', function () {
+                removeAllColoredDiv();
+                e.firstElementChild.classList.add('messageOverviewColor');
+                var allReadMessages = document.querySelectorAll('.messageToHide');
+                if(allReadMessages){
+                    hideAllReadMessage(allReadMessages);
+                }
+                var id = e.getAttribute('data-id');
+                var messageDiv = document.querySelector('#message-' + id);
+                if(messageDiv){
+                    if(messageDiv.classList.contains('hide')){
+                        messageDiv.classList.remove('hide');
+                        messageDiv.classList.add('show');
+                    } else {
+                        messageDiv.classList.remove('show');
+                        messageDiv.classList.add('hide');
+                    }
+                }
+        })
+    });
+}
+
+function hideAllReadMessage(readMessages) {
+    if(readMessages){
+        readMessages.forEach( e => {
+            e.classList.remove('show');
+            e.classList.add('hide');
+        });
+    }
+}
+
+function removeAllColoredDiv(){
+    var divs = document.querySelectorAll('.removeColor');
+    if(divs){
+        divs.forEach(e => {
+          e.classList.remove('messageOverviewColor');
+        });
+    }
+}
+
+// Fait disparaitre la div success apres 4 secondes
+var success = document.querySelector('.success');
+if(success){
+    setTimeout(function () {
+        success.classList.add('hide');
+    }, 4000)
+}
