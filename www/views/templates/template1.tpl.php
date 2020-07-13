@@ -19,7 +19,7 @@ $foundMyPage = $pageManager->findByUri($_SERVER['REQUEST_URI']);
         <link rel="stylesheet" href="../public/dist/mains.css" />
         <link rel="stylesheet" href="../public/css/template1.css" />
         <link rel="stylesheet" href="../public/css/slider.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <script src="https://kit.fontawesome.com/42ce300797.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="../public/js/slider.js"></script>
     </head>
@@ -115,6 +115,7 @@ $foundMyPage = $pageManager->findByUri($_SERVER['REQUEST_URI']);
                 </div>
             </div>
 </footer>
-
+    <script src="../public/js/script.js"></script>
+    
     </body>
 </html>
