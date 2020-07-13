@@ -1,20 +1,25 @@
 <?php
 $listContact = $contactManager->findAll();
-$data = $listContact;
 ?>
 <div class="container">
-<table id="userTable">
+<table id="myTable">
     <thead>
         <th>ID</th>
         <th>Nom</th>
         <th>Adresse</th>
+        <th>Modifier</th>
     </thead>
     <tbody>
-        <?php foreach($data as $unContact): ?>
+        <?php foreach($listContact as $unContact): ?>
             <tr>
                 <td><?= $unContact->getId() ?></td>
-                <td><?= var_dump($unContact->getNom()) ?></td>
                 <td><?= $unContact->getAdresse() ?></td>
+                <td><?= $unContact->getNom() ?></td>
+                <td>
+                            <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
+                            <button data-modal-target="modal1" data-id="<?= $unContact->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
+                            <a <?=$unContact->getId()?>><i class="fas fa-edit"></i></a>
+                        </td>
             </tr>
         <?php endforeach ?>
     </tbody>
@@ -29,5 +34,17 @@ $data = $listContact;
       <button type="submit">Valider</button>
     </div>
   </fieldset>
+  <!-- <script>
+  var myTable = $('#userTable').DataTable();
+ 
+ $('#userTable').on( 'click', 'tbody tr', function () {
+     myTable.row( this ).edit( {
+         buttons: [
+             { label: 'Cancel', fn: function () { this.close(); } },
+             'Edit'
+         ]
+     } );
+ } );
+ </script> -->
 </form>
 </div>
