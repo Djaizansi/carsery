@@ -181,4 +181,8 @@
 /template:
   controller: Page
   action: updateTemplate
+
+/testcontact:
+  controller: testContact
+  action: frontContact
   
