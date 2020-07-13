@@ -114,7 +114,7 @@ class User extends Model
     /**
      * Get the value of ban
      */ 
-    public function getBan()
+    public function isBan()
     {
         return $this->ban;
     }
@@ -126,7 +126,7 @@ class User extends Model
      */ 
     public function setBan($ban)
     {
-        $this->ban = $ban;
+        $this->ban = intval($ban);
 
         return $this;
     }
