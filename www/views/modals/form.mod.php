@@ -1,6 +1,7 @@
 <?php
 
 use carsery\Managers\PageManager;
+use carsery\Managers\ContactManager;
 
 $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
 

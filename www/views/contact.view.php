@@ -18,7 +18,8 @@ $listContact = $contactManager->findAll();
                 <td>
                             <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
                             <button data-modal-target="modal1" data-id="<?= $unContact->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
-                            <a <?=$unContact->getId()?>><i class="fas fa-edit"></i></a>
+                            <?= "<button data-modal-target='modal2' data-idcontact=".$unContact->getId()." data-nom=".$unContact->getNom()." data-adresse=".$unContact->getAdresse()." class='myBtn' id='myBtn' href='#myBtn'><i class='fas fa-edit'></i></button>"?> 
+
                         </td>
             </tr>
         <?php endforeach ?>
@@ -34,17 +35,21 @@ $listContact = $contactManager->findAll();
       <button type="submit">Valider</button>
     </div>
   </fieldset>
-  <!-- <script>
-  var myTable = $('#userTable').DataTable();
- 
- $('#userTable').on( 'click', 'tbody tr', function () {
-     myTable.row( this ).edit( {
-         buttons: [
-             { label: 'Cancel', fn: function () { this.close(); } },
-             'Edit'
-         ]
-     } );
- } );
- </script> -->
 </form>
 </div>
+<div class="modal" id="modal1"> <!-- This is the background overlay -->
+        <div class="modal-content"> <!-- This is the actual modal/popup box -->
+            <span class="modal-close">&times;</span>
+            <p>Souhaitez-vous vraiment supprimer cette adresse?</p>
+			<a id="btnYesUser" class="btn btn--success">Oui</a>
+			<a id="btnNo" class="btn btn--danger">Non</a>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal2">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Modification contact</h3>
+            <?php $this->addModal("form", $configFormUpdate);?>
+        </div>
+    </div>

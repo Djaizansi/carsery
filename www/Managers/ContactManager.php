@@ -14,9 +14,9 @@ class ContactManager extends DB {
 
     public static function addData($contact,$contactManager,$id = '', $nom,$adresse)
     {
-        empty($id) ? '' : $page->setId($id);
-        $page->setNom($nom);
-        $page->setAdresse($adresse);
+        empty($id) ? '' : $contact->setId($id);
+        $contact->setNom($nom);
+        $contact->setAdresse($adresse);
         $contactManager->save($contact);
     }
 
@@ -48,16 +48,69 @@ class ContactManager extends DB {
                     ],
 
                     "fields"=>[
-                        "adresse"=>[
+                        "id"=>[
                             "balise"=>"",
-                            "type"=>"text",
-                            "placeholder"=>"Entrez une adresse",
-                            /* "class"=>"form-control form-control-user", */
-                            "id"=>"id_adresse",
+                            "type"=>"hidden",
+                            "id"=>"id",
                             "required"=>true,
-                            "errorMsg"=>""
                         ],
-                    ]
+                        "nom"=>[
+                                "balise"=>"",
+                                "type"=>"text",
+                                "placeholder"=>"Votre nom d'adresse",
+                                "required"=>true,
+                                "min-lenght"=>2,
+                                "max-lenght"=>255,
+                                "errorMsg"=>"Votre nom doit faire entre 2 et 255 caractères"
+                        ],
+                        "adresse"=>[
+                                "balise"=>"",
+                                "type"=>"text",
+                                "placeholder"=>"Votre adresse",
+                                "required"=>true,
+                                "min-length"=>2,
+                                "max-length"=>255,
+                                "errorMsg"=>"Votre prenom doit faire entre 2 et 255 caractères"
+                        ],
+                ]
                 ];
     }
+    public static function getUpdateForm(){
+        return [
+                "config"=>[
+                            "method"=>"POST",
+                            "action"=>Helpers::getUrl("Contact", "updateContact"),
+                            "class"=>"box",
+                            "id"=>"jqueryForm",
+                            "submit"=>"Modifier"
+                ],
+                "fields"=>[
+                            "id"=>[
+                                "balise"=>"",
+                                "type"=>"hidden",
+                                "id"=>"id",
+                                "required"=>true,
+                            ],
+                            "nom"=>[
+                                    "balise"=>"",
+                                    "type"=>"text",
+                                    "placeholder"=>"Votre nom d'adresse",
+                                    "required"=>true,
+                                    "min-lenght"=>2,
+                                    "max-lenght"=>255,
+                                    "errorMsg"=>"Votre nom doit faire entre 2 et 255 caractères"
+                            ],
+                            "adresse"=>[
+                                    "balise"=>"",
+                                    "type"=>"text",
+                                    "placeholder"=>"Votre adresse",
+                                    "required"=>true,
+                                    "min-length"=>2,
+                                    "max-length"=>255,
+                                    "errorMsg"=>"Votre prenom doit faire entre 2 et 255 caractères"
+                            ],
+                    ]
+            ];
+    }
+
 }
