@@ -335,8 +335,8 @@ class UserController
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus('Client');
                         $user->setToken($token);
-                        /* $user->setTheme(1);
-                        $user->setBan(0); */
+                        $user->setTheme(1);
+                        $user->setBan(0);
                         $userManager->save($user);
                         $unMail = ConfirmAccount::mailConfirm($_POST['lastname'],$_POST['email']);
                         $unEnvoie = $envoie->sendmail('Confirmation de compte', $unMail, $_POST['email']);
