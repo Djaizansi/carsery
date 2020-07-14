@@ -108,5 +108,5 @@ $listContact = $contactManager->findAll();
         });
     }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4GSNes5jn7bQZHCBzwEiQjDAlzgII568&callback=initMap">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap">
 </script>
