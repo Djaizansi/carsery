@@ -8,6 +8,12 @@ class Contact extends Model
     protected $adresse;
     protected $nom;
 
+    public function initRelation(): array {
+        return [
+        
+        ];
+    }
+
  /**
      * Get the value of id
      */ 

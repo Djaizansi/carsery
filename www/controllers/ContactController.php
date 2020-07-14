@@ -31,7 +31,7 @@ class ContactController {
             $configFormContact = ContactManager::getContactForm();
             $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
             $myView->assign('configFormContact',$configFormContact);
-            $myView->assign('configFormUpdate',CONFIGUPDATE);
+            $myView->assign('configFormContact',CONFIGUPDATE);
 
         }else {
             throw new RouteException("Vous devez être connecté");
@@ -50,13 +50,19 @@ class ContactController {
     }
 
     public function deleteContactAction(){
-        $contactManager = new ContactManager();
-        $contact = new Contact();
-        $contactFound = $contactManager->find($_GET['id']);
-
-        if(!isset($contactFound)){
-            throw new RouteException("Le contact que vous voulez supprimer n'existe pas ou plus");
-        }else {
+        if(Session::estConnecte() && Session::estAdmin()){
+            $contactManager = new ContactManager();
+            $id = isset($_GET['id']) ? $_GET['id'] : '';
+            
+            if($id){
+                $contactManager->delete('id',$id);
+                $location= Helpers::getUrl('Contact','contact');
+                var_dump($location);
+                $_SESSION['success'] = 'suppContact';
+                header("Location: $location");
+            }
+        }else{
+            throw new RouteException("Vous n'avez pas le droit à cette action");
         }
     }
 
@@ -67,20 +73,15 @@ class ContactController {
             $contact = new Contact();
             $findContact = $contactManager->find($_POST['id']);
             if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
-                if(!empty($errors)){
-                    return $this->contactAction();
-                }else{
                     if(!empty($_POST)){
                         $contact->setId($_POST['id']);
                         $contact->setNom($_POST['nom']);
                         $contact->setAdresse($_POST['adresse']);
                         $contactManager->save($contact);
                         $_SESSION['success'] = "updateContact";
-                        header("Location: /gestioncontact");
+                        header("Location: /contact");
                     }
                 }
-            }
         }else{
             throw new RouteException("Vous n'avez pas le droit à cette action");
         }

@@ -70,7 +70,7 @@ class ContactManager extends DB {
                                 "required"=>true,
                                 "min-length"=>2,
                                 "max-length"=>255,
-                                "errorMsg"=>"Votre prenom doit faire entre 2 et 255 caractères"
+                                "errorMsg"=>"Votre adresse doit faire entre 2 et 255 caractères"
                         ],
                 ]
                 ];
@@ -107,7 +107,7 @@ class ContactManager extends DB {
                                     "required"=>true,
                                     "min-length"=>2,
                                     "max-length"=>255,
-                                    "errorMsg"=>"Votre prenom doit faire entre 2 et 255 caractères"
+                                    "errorMsg"=>"Votre adresse doit faire entre 2 et 255 caractères"
                             ],
                     ]
             ];
