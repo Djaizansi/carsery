@@ -59,6 +59,7 @@ a {
 .container {
   width: 90%;
   margin: 1rem auto 3rem auto;
+  padding: 10px;
 }
 #contact {
   background: #F9F9F9;
@@ -79,7 +80,7 @@ fieldset {
 #contact input[type="tel"],
 #contact input[type="url"],
 #contact textarea {
-  width: 100%;
+  width: 98%;
   border: 1px solid #ccc;
   background: #FFF;
   margin: 0 0 5px;
