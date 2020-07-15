@@ -1,6 +1,17 @@
 <?php
 
-use carsery\core\Helpers; ?>
+use carsery\core\Helpers;
+use carsery\Managers\UserManager;
+use carsery\models\User;
+
+// Récupération du thème actuel de l'utilisateur
+$userManager = new UserManager();
+$user = new User();
+$id = $_SESSION['id'];
+$foundActualTheme = $userManager->find($id);
+$result = $foundActualTheme->getTheme();
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -13,6 +24,15 @@ use carsery\core\Helpers; ?>
     <link rel="stylesheet" href="../public/dist/mains.css">
     <!-- Dashboard CSS -->
     <link rel="stylesheet" href="../public/css/dashboards.css">
+    <?php if (isset($result)) {
+        if ($result === "2") { ?>
+            <!-- Thème 2 -->
+            <link rel="stylesheet" href="../public/css/theme2.css">
+        <?php } elseif ($result === "3") { ?>
+            <!-- Thème 3 -->
+            <link rel="stylesheet" href="../public/css/theme3.css">
+    <?php }
+    } ?>
     <!-- Loader CSS -->
     <link rel="stylesheet" href="../public/css/loader.css">
     <link rel="stylesheet" href="../public/css/dragdrop.css">
@@ -44,7 +64,15 @@ use carsery\core\Helpers; ?>
 
         <header class="header">
             <div class="header__search">Bienvenue sur votre dashboard</div>
-            <div class="header__avatar"><a href="<?= Helpers::getUrl("User", "deconnecter") ?>" style="text-decoration: none; color: #fff;">Déconnexion</a></div>
+            <div class="header__avatar">
+                <?php if (isset($result)) {
+                    if ($result === "2") { ?>
+                        <a href="<?= Helpers::getUrl("User", "deconnecter") ?>" style="text-decoration: none; color: #000;"><i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i>Déconnexion</a>
+                    <?php } else { ?>
+                        <a href="<?= Helpers::getUrl("User", "deconnecter") ?>" style="text-decoration: none; color: #fff;"><i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i>Déconnexion</a>
+                <?php }
+                } ?>
+            </div>
         </header>
 
         <aside class="sidenav">
@@ -57,7 +85,7 @@ use carsery\core\Helpers; ?>
                 <li>
                     <div class="user">
                         <h1>Carsery</h1>
-                        <img src="../public/img/mido.jpg" alt="User">
+                        <img src="../public/img/user_default.png" alt="User">
                         <p class="user-txt">Bonjour, <?= $firstname ?></p>
                     </div>
                 </li>
