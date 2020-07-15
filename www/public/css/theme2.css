@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Righteous&display=swap");
+
+* {
+  font-family: "Righteous", cursive;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+.menu-icon {
+  background-color: #dadae3;
+}
+
+/* Entête */
+.header {
+  color: #000;
+  background-color: #fff;
+}
+
+.sidenav {
+  background-color: #fff;
+}
+
+.sidenav__close-icon {
+  color: #000;
+}
+
+.sidenav__list-item {
+  color: #000;
+}
+
+.sidenav__list-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.overviewcard:first-child {
+  background-color: #eafaf1;
+}
+
+.overviewcard:nth-child(2) {
+  background-color: #f4ecf7;
+}
+
+.overviewcard:nth-child(3) {
+  background-color: #fef9e7;
+}
+
+.card {
+  background-color: #f3f3f3;
+}
+
+.card:first-child {
+  background-color: #fbfcfc;
+}
+
+.card:nth-child(3) {
+  background-color: #ebf5fb;
+}
+
+.footer {
+  background-color: #fff;
+  color: #000;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+}
+
+tr:nth-child(even) {
+  background-color: #e5e7e9;
+}
+
+hr {
+  color: #000;
+}

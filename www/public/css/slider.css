@@ -31,7 +31,7 @@
 	opacity: 0.8;
 }
 
-.btn{
+.btnSlider{
 	width: 3rem;
 	height: 3rem;
 	position: relative;
@@ -39,11 +39,11 @@
 	border:none;
 }
 
-.btn:hover{
+.btnSlider:hover{
 	opacity: 0.8;
 }
 
-.btn::before{
+.btnSlider::before{
 	content: '';
 	position: absolute;
 	width: 100%;
@@ -56,10 +56,10 @@
 }
 
 
-.btn--next{
+.btnSlider--next{
 
 }
 
-.btn--prev::before{	
+.btnSlider--prev::before{	
 	transform: rotate(180deg);
 }
