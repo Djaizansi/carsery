@@ -11,7 +11,7 @@ use carsery\Managers\ContactManager;
 use carsery\models\Json;
 use carsery\core\Validator;
 
-define('CONFIGUPDATE', ContactManager::getUpdateForm());
+define('UPDATECONTACT', ContactManager::getUpdateForm());
 
 class ContactController {
 
@@ -29,9 +29,9 @@ class ContactController {
             $myView = new View("contact");
             $myView->assign('contactManager',$contactManager);
             $configFormContact = ContactManager::getContactForm();
-            $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
+            $errors = Validator::checkForm(UPDATECONTACT ,$_POST);
             $myView->assign('configFormContact',$configFormContact);
-            $myView->assign('configFormContact',CONFIGUPDATE);
+            $myView->assign('formUpdateContact',UPDATECONTACT);
 
         }else {
             throw new RouteException("Vous devez être connecté");
@@ -71,7 +71,6 @@ class ContactController {
         if(Session::estConnecte()){
             $contactManager = new ContactManager();
             $contact = new Contact();
-            $findContact = $contactManager->find($_POST['id']);
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(!empty($_POST)){
                         $contact->setId($_POST['id']);

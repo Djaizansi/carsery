@@ -34,11 +34,13 @@ $listContact = $contactManager->findAll();
         <span id=submit class="floating-panel"></span>
         <h1>Nous contacter</h1>
         <h3>Choisissez un magasin : </h2>
+        <fieldset>
             <select name="magasin" id="magasin-select" class="selectmel" onchange="initMap()">
                 <?php foreach ($listContact as $unContact) : ?>
                     <option value="<?= $unContact->getAdresse() ?>"><?= $unContact->getNom() ?>(<?= $unContact->getAdresse() ?>)</option>
                 <?php endforeach ?>
             </select>
+        </fieldset>
             <div class="container">
                 <div id="map"></div>
             </div>
@@ -115,5 +117,5 @@ $listContact = $contactManager->findAll();
         });
     }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4GSNes5jn7bQZHCBzwEiQjDAlzgII568&callback=initMap">
 </script>

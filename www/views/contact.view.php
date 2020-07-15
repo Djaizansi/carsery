@@ -1,7 +1,18 @@
 <?php
+use carsery\core\Helpers;
+
 $listContact = $contactManager->findAll();
 ?>
 <div class="container">
+<?php if($_SESSION['success'] === 'suppContact'): ?>
+		<?= Helpers::alert('success','',"Le contact a bien été supprimé") ?>
+        <?php $_SESSION['success'] = ''?>
+    <?php elseif($_SESSION['success'] === 'updateContact'): ?>
+        <?= Helpers::alert('success','',"Le contact a bien été modifié") ?>
+        <?php $_SESSION['success'] = ''?>
+    <?php elseif(isset($errors)): ?>
+        <?= Helpers::alert('danger',$errors) ?>
+	<?php endif ?>
 <table id="myTable">
     <thead>
         <th>ID</th>
@@ -50,6 +61,6 @@ $listContact = $contactManager->findAll();
         <div class="modal-content">
             <span class="modal-close">&times;</span>
             <h3>Modification contact</h3>
-            <?php $this->addModal("form", $configFormUpdate);?>
+            <?php $this->addModal("form", $formUpdateContact);?>
         </div>
     </div>

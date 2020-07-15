@@ -30,8 +30,6 @@ class Contact extends Model
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -50,8 +48,6 @@ class Contact extends Model
     public function setAdresse($adresse)
     {
         $this->adresse = $adresse;
-
-        return $this;
     }
 
     /**
@@ -70,7 +66,5 @@ class Contact extends Model
     public function setNom($nom)
     {
         $this->nom = $nom;
-
-        return $this;
     }
 }

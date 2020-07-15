@@ -185,4 +185,15 @@
 /testcontact:
   controller: testContact
   action: frontContact
+
+/update-contact:
+  controller: Contact
+  action: updateContact
   
+/delete-contact:
+  controller: Contact
+  action: deleteContact
+
+/add-contact:
+  controller: Contact
+  action: addContact
