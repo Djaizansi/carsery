@@ -1,16 +1,21 @@
 .alert {
-    position: relative;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: .25rem;
-    &--success{
-        color: $green-alert-text;
-        background-color: $green-alert-background;
-        border-color: $green-alert-border;
-    }
-    &--danger{
-        color: $red-alert-text;
-        background-color: $red-alert-background;
-        border-color: $red-alert-border;    
-    }
+  position: relative;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  &--success {
+    color: $green-alert-text;
+    background-color: $green-alert-background;
+    border-color: $green-alert-border;
+  }
+  &--danger {
+    color: $red-alert-text;
+    background-color: $red-alert-background;
+    border-color: $red-alert-border;
+  }
+  &--info {
+    color: $info-alert-text;
+    background-color: $info-alert-background;
+    border-color: $info-alert-border;
+  }
 }

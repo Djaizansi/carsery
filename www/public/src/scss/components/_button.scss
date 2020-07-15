@@ -1,37 +1,38 @@
 .btn {
-    text-transform: uppercase;
-    display: inline-block;
-    text-decoration: none;
-    background-color: $white;
-    color: $dark;
-    padding: 1em;
-    font-size: rem(12);
-    letter-spacing: 0.05em;
-    transition: background-color 0.3s;
-    border-radius: 10px;
+  width: auto !important;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  background-color: $white;
+  color: $dark;
+  padding: 1em;
+  font-size: rem(12);
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+  &:hover{
+    background-color: lighten($white, 15%);
+  }
+  &--success{
+    background-color: $green;
     &:hover{
-      background-color: lighten($white, 15%);
-    }
-    &--success{
-      background-color: $green;
-      &:hover{
-        background-color: lighten($green, 15%);
-        cursor: pointer;
-      }
-    }
-    &--primary{
-      background-color: $primary;
-      color: $white;
-      &:hover{
-        background-color: lighten($primary, 15%);
-        cursor: pointer;
-      }
-    }
-    &--danger{
-      background-color: $red;
-      color: $white;
-      &:hover{
-        background-color: lighten($red, 15%);
-      }
+      background-color: lighten($green, 15%);
+      cursor: pointer;
     }
   }
+  &--primary{
+    background-color: $primary;
+    color: $white;
+    &:hover{
+      background-color: lighten($primary, 15%);
+      cursor: pointer;
+    }
+  }
+  &--danger{
+    background-color: $red;
+    color: $white;
+    &:hover{
+      background-color: lighten($red, 15%);
+    }
+  }
+}
