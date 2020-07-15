@@ -9,5 +9,6 @@
 </head>
 <body>
     <h1>Le Front</h1>
+    <?php include "views/".$this->view.".view.php"; ?>
 </body>
 </html>

@@ -1,13 +1,34 @@
 <?php
 
-include('core/Autoloader.php');
-include('core/ConstantLoader.php');
-include('router/Router.php');
+function myAutoloader($class)
+{
+    $class = str_replace('carsery','',$class);
 
-use Carsery\Core\ConstantLoader;
-use Carsery\Core\Autoloader;
-use Carsery\router\Router;
+    $class = str_replace('\\', '/', $class);
+    if($class[0] == '/'){
+        include substr($class.'.php',1);
+    }else {
+        /* include 'controllers/'.$class.'.php'; */
+    }
+}
 
-new Autoloader();
+spl_autoload_register("myAutoloader");
+
+use carsery\core\ConstantLoader;
+use carsery\core\Exceptions\RouteException;
+use carsery\router\Router;
+use carsery\core\View;
+
+
+
 new ConstantLoader();
-new Router();
+
+try {
+    $router = new Router();
+}catch (RouteException $e) {
+    $myView = new View('testerror','erreur');
+    $error = $e->getMessage();
+    $myView->assign('error',$error);
+}
+
+

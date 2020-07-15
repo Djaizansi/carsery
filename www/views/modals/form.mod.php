@@ -1,97 +1,101 @@
+<?php
 
-<?php $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])];?>
+use carsery\core\Helpers;
+use carsery\Managers\PageManager;
+use carsery\Managers\UserManager;
+
+$inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; 
+$pageManager = new PageManager();
+$userManager = new UserManager();
 
 
+if(isset($_GET['id'])){
+  $pageFound = $pageManager->find($_GET['id']);
+  $menu = $pageFound->getMenu();
+  $public = $pageFound->getPublie();
+  $home = $pageFound->getHome();
+}
+
+$arrayRole = ['Admin','Client'];
+?>
 <form 
 method="<?= $data["config"]["method"]?>" 
 action="<?= $data["config"]["action"]?>"
 id="<?= $data["config"]["id"]?>"
 class="<?= $data["config"]["class"]?>">
 
-	  <!--Récupération des informations-->
+
       <?php foreach ($data["fields"] as $name => $configField):?>
-        <div class="form-group row">
-          <div class="col-sm-12">
+        <!-- <div class="form-group row">
+          <div class="col-sm-12"> -->
 
-			<!--Si le champ est de type captcha : 
-			
-				* Intégration de l'image du captcha
-				* Intégration d'un champ de type input [text]-->
+
             <?php if($configField["type"] == "captcha"):?>
-			
                 <img src="script/captcha.php" width="300px">
+            <?php endif;?>
 
-				<input 
-					value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name]:'' ?>"
-					type="<?= $configField["type"]??'' ?>"
-					name="<?= $name??'' ?>"
-					placeholder="<?= $configField["placeholder"]??'' ?>"
-					class="<?= $configField["class"]??'' ?>"
-					id="<?= $configField["id"]??'' ?>"
-					<?=(!empty($configField["required"]))?"required='required'":""?>>
-				
-			
-			<!--Sinon si le champ est de type text ou number : 
-			
-				* Intégration d'un champ de type input [text]
-				* Intégration d'un champ de type input [number]-->
-			<?php elseif($configField["type"]== 'text' || $configField["type"]== 'number') : ?>
+            <?php if($configField["id"] == "id_checkbox_public"): ?>
+                <p>Voulez-vous publier cette page ? </p>
+                
+            <?php endif ?>
 
-				<input 
-					value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name]:'' ?>"
-					type="<?= $configField["type"]??'' ?>"
-					name="<?= $name??'' ?>"
-					placeholder="<?= $configField["placeholder"]??'' ?>"
-					class="<?= $configField["class"]??'' ?>"
-					id="<?= $configField["id"]??'' ?>"
-					<?=(!empty($configField["required"]))?"required='required'":""?>>
-					
-			<!--Sinon si le champ est de type select: 
-			
-				* Intégration d'une liste déroulante-->
-			<?php elseif($configField["type"]== 'select'):?>
-			
-				<select name="<?= $name??'' ?>" 
-						class="<?= $configField["class"]??'' ?>"
-						id="<?= $configField["id"]??'' ?>"
-						<?=(!empty($configField["required"]))?"required='required'":""?>>
-						
-						<option value="" disabled="disabled">Veuillez choisir un(e) <?= $name??'' ?></option>
-						
-						<!--Si le tableau de la liste déroulante contenant les valeurs n'est pas vide : 
-							* On parcours le tableau des clés
-								* On parcours le tableau des valeurs
-								* On affiche chaque valeur du tableau par la variable $value-->
-						<?php if(!empty($configField['valuesInSelect'])) : ?>
-						
-							<?php foreach($configField['valuesInSelect'] as $values) : ?>
+            <?php if($configField["id"] == "id_checkbox"): ?>
+                <p>Voulez-vous ajouter cette page au menu ? </p>
+            <?php endif ?>
 
-								<?php foreach ($values as $key => $value) : ?>
-									
-									<option value="<?= $value?>"
-										<?=(isset($inputData[$name]) && $inputData[$name] == $value) ? "selected='selected'":""?>><?= $value?>
-										
-									</option>
-							
-								<?php endforeach; ?>
+            <?php if($configField["id"] == "id_checkbox_home"): ?>
+                <p>Doit-elle être la page d'accueil ? </p>
+            <?php endif ?>
 
-							<?php endforeach; ?>
+            <?php if($configField["balise"] === "textarea"): ?>
+              <textarea
+                value="<?php $inputData[$name]??'' ?>"
+                name="<?= $name??'' ?>"
+                id="<?= $configField["id"]??'' ?>"
+                type="<?= $configField["type"]??'' ?>"
+              >
+              <?php if(isset($inputData[$name])): ?>
+                  <?= $inputData[$name] ?>
+              <?php else: ?>
+                <?= $pageFound->getContent()?>
+              <?php endif ?>
+              </textarea>
 
-							
-						<?php endif;?>
-
-				</select>
-			
-			<?php endif;?>
-
-
-			
-        </div>
-      </div>
+            <?php elseif($configField['balise'] === "select"): ?>
+              <select
+                name="<?= $name??'' ?>"
+                id="<?= $configField["id"]??'' ?>"
+                type="<?= $configField["type"]??'' ?>"
+                placeholder="<?= $configField["placeholder"]??'' ?>"
+              >
+                <?php foreach($arrayRole as $unRole): ?>
+                      <option value="<?= $unRole ?>"><?= $unRole ?></option>
+                <?php endforeach ?>
+              </select>
+            <?php else: ?>
+              <input 
+                  value="<?= (isset($inputData[$name]) && $configField["type"]!="password") ? $inputData[$name] : '' ?>"
+                  type="<?= $configField["type"]??'' ?>"
+                  name="<?= $name??'' ?>"
+                  placeholder="<?= $configField["placeholder"]??'' ?>"
+                  class="<?= $configField["class"]??'' ?>"
+                  id="<?= $configField["id"]??'' ?>"
+                  value="<?= $configField["value"]??'' ?>"
+                  <?= (!empty($configField["required"])) ? "required='required'" : "" ?>
+                  <?= (!empty($configField["hidden"])) ? "hidden" : "" ?>
+                  <?php if(isset($_GET['id'])): ?>
+                    <?= $configField["id"] == "id_checkbox_public" && $public == 1 ? 'checked' : '' ?>
+                    <?= $configField["id"] == "id_checkbox" && $menu == 1  ? 'checked' : '' ?>
+                    <?= $configField["id"] == "id_checkbox_home" && $home == 1  ? 'checked' : '' ?>
+                  <?php endif ?>
+                  >
+            <?php endif ?>
+        <!--  </div>
+      </div> -->
       <?php endforeach;?>
+    
 
-      <?php if(!empty($this->data['errors'])) print_r("<span>".implode("<br />",$this->data['errors'])."</span><br /><br />");?>
 
-  <button class="btn btn-primary"><?= $data["config"]["submit"];?></button>
+  <br><br>
+  <button class="btn btn--primary" id="btnAdd"><?= $data["config"]["submit"];?></button>
 </form>
-

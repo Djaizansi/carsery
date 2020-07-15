@@ -1,18 +1,18 @@
 <?php 
 
-namespace Carsery\Controllers;
+namespace carsery\controllers;
 
-require('core/View.php');
-use Carsery\Core\View; 
-require('core\Session.php');
-use Carsery\Core\Session; 
-
+use carsery\core\Exceptions\RouteException;
+use carsery\core\View;
+use carsery\core\Session;
 
 class PanierController {
     public function panierAction() 
     {
         if(Session::estConnecte()){
             $myView = new View("panier");
+        }else {
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }

@@ -1,111 +1,38 @@
-.button{
-  text-transform: uppercase;
-  display: inline-block;
-  text-decoration: none;
-  background-color: $white;
-  color: $dark;
-  padding: 1em;
-  font-size: rem(12);
-  letter-spacing: 0.05em;
-  transition: background-color 0.3s;
-  &:hover{
-    background-color: lighten($white, 15%);
-  }
-  &--success{
-    background-color: $green;
+.btn {
+    width: auto !important;
+    text-transform: uppercase;
+    display: inline-block;
+    text-decoration: none;
+    background-color: $white;
+    color: $dark;
+    padding: 1em;
+    font-size: rem(12);
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s;
+    border-radius: 10px;
     &:hover{
-      background-color: lighten($green, 15%);
+      background-color: lighten($white, 15%);
     }
-  }
-  &--alert{
-    background-color: $red;
-    &:hover{
-      background-color: lighten($red, 15%);
+    &--success{
+      background-color: $green;
+      &:hover{
+        background-color: lighten($green, 15%);
+        cursor: pointer;
+      }
     }
-  }
-  &--secondaire{
-    background-color: $secondaire;
-    &:hover{
-      background-color: lighten($secondaire, 15%);
-    }
-  }
-  &--warning{
-    background-color: $warning;
-    &:hover{
-      background-color: lighten($warning, 15%);
-    }
-  }
-  &--light{
-    background-color: $light;
-    &:hover{
-      background-color: lighten($light, 15%);
-    }
-  }
-  &--dark{
-    background-color: $dark;
-    color: $white;
-    &:hover{
-      background-color: lighten($dark, 15%);
-    }
-  }
-  &--info{
-    background-color: $info;
-    &:hover{
-      background-color: lighten($info, 15%);
-    }
-  }
-}
-
-
-// Outline 
-
-.button-outline{
-  text-transform: uppercase;
-  display: inline-block;
-  text-decoration: none;
-  background-color: transparent;
-  color: $dark;
-  padding: 1em;
-  font-size: rem(12);
-  letter-spacing: 0.05em;
-  transition: background-color 0.3s;
-  &:hover{
-    background-color: lighten($white, 15%);
-  }
-  &--success{
-    &:hover{
-      background-color: lighten($green, 15%);
-    }
-  }
-  &--alert{
-    &:hover{
-      background-color: lighten($red, 15%);
-    }
-  }
-  &--secondaire{
-    &:hover{
-      background-color: lighten($secondaire, 15%);
-    }
-  }
-  &--warning{
-    &:hover{
-      background-color: lighten($warning, 15%);
-    }
-  }
-  &--light{
-    &:hover{
-      background-color: lighten($light, 15%);
-    }
-  }
-  &--dark{
-    &:hover{
+    &--primary{
+      background-color: $primary;
       color: $white;
-      background-color: lighten($dark, 15%);
+      &:hover{
+        background-color: lighten($primary, 15%);
+        cursor: pointer;
+      }
+    }
+    &--danger{
+      background-color: $red;
+      color: $white;
+      &:hover{
+        background-color: lighten($red, 15%);
+      }
     }
   }
-  &--info{
-    &:hover{
-      background-color: lighten($info, 15%);
-    }
-  }
-}

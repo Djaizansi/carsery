@@ -1,20 +1,38 @@
-<form class="form-signin" method="post" action="/">
 
-    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+<?php 
+use carsery\core\Helpers;
+?>
 
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+<div class="container">
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="mdp" id="inputPassword" class="form-control" placeholder="Password" required>
+    <div class="col-4 intro box-center">
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
+        <?php if(!empty($errors)): ?>
+				<div class="alert alert--danger">
+					<?php foreach($errors as $uneErreur): ?>
+						<p> <?=$uneErreur?> </p>
+					<?php endforeach ?>
+				</div>
+        <?php endif ?>
+
+        
+        <?php if(!empty($_SESSION['success']) && $_SESSION['success'] === 1): ?>
+            <?= Helpers::alert('success','', 'Un email de confirmation vous a été envoyé !') ?>
+        <?php endif ?>
+        <?php $_SESSION['success'] = '' ?>
+        
+        
+        <h1>Connexion</h1>
+        <?php $this->addModal("form", $configFormUser );?>
+
+        <div class="txt-center">
+            <a href="<?php echo Helpers::getUrl("User", "register") ?>">Sign up</a>
+            <br>
+            <a href="<?php echo Helpers::getUrl("User", "forget") ?>">Mot de passe oublié ?</a>
+            <br>
+            <a href="<?php echo Helpers::getUrl("myProject", "view") ?>">Retour à l'accueil</a>
+        </div>
+        
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
-    <a href="/inscription">Sign up</a>
-</form>
+</div>

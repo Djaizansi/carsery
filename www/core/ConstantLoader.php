@@ -1,6 +1,6 @@
 <?php
 
-namespace Carsery\Core;
+namespace carsery\core;
 
 class ConstantLoader
 {

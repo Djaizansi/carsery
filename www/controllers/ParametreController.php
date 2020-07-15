@@ -1,11 +1,10 @@
 <?php 
 
-namespace Carsery\Controllers;
+namespace carsery\controllers;
 
-require('core/View.php');
-require('core\Session.php');
-use Carsery\Core\Session; 
-use Carsery\Core\View; 
+use carsery\core\Exceptions\RouteException;
+use carsery\core\View;
+use carsery\core\Session;
 
 
 class ParametreController {
@@ -13,6 +12,8 @@ class ParametreController {
     {
         if(Session::estConnecte()){
             $myView = new View("parametre");
+        }else {
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }

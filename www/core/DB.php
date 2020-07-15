@@ -1,179 +1,180 @@
 <?php
 
-namespace Carsery\Core;
+namespace carsery\core;
 
-use \PDO;
-
-use Carsery\Exceptions\BDDExceptions;
+use carsery\core\Connection\BDDInterface;
+use carsery\core\Connection\PDOConnection;
+use carsery\core\Exceptions\BDDException;
 
 class DB
 {
-    private $table;
-    private $pdo;
-    protected $class;
+    private $table;
+    private $connection;
+    protected $class;
 
-    public function __construct(string $class, string $table)
-    {
-        //SINGLETON
-        $this->class = $class;
-        try {
+    public function __construct(string $class, string $table, BDDInterface $connection = NULL)
+    {
+        $this->class = $class;  
+        $this->table = DB_PREFIXE.$table;
 
-            $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
-		
-        } 
-		catch (Exception $e) {
-            die("Erreur SQL : ".$e->getMessage());
-        }
+        $this->connection = $connection;
+        if(is_null($connection)){
+            $this->connection = new PDOConnection();
+        }
+        /* $table = DB_PREFIXE.get_called_class();
+        $this->table = DB_PREFIXE.substr($table,strrpos($table,'\\')+1,strlen($table)); //.get_called_class() => la classe appelé quand on se dirige vers register est USER
+        var_dump($this->table); */
+    }
 
-        $this->table =  DB_PREFIXE.$table;
-	
-    }
+    public function save($objectToSave)
+    {
+        $objectArray = $objectToSave->__toArray();
+        $columnsData = array_values($objectArray);
+        $columns = array_keys($objectArray);
 
-	/**
-	 * Génère dynamiquement les requetes d'insertion et de modification en fonction d'un model donné
-	 */
-    public function save($objectToSave)
-    {
-		
-		$objectArray = $objectToSave->__toArray();
-        $columnsData = array_values($objectArray);
-        $columns = array_keys($objectArray);
+        $params = array_combine(array_map(function($k){ return ':'.$k; }, array_keys($objectArray)),$objectArray);
 
-        $params = array_combine(array_map(function($k){ return ':'.$k; }, array_keys($objectArray)),$objectArray);
+        if (!is_numeric($objectToSave->getId())) {
+            $sql = "INSERT INTO ".$this->table. "(".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
+        } else {
+            //"UPDATE users SET id=:id, firstname=:firstname, .... WHERE id = :id;"
+            foreach ($columns as $column) {
+                $sqlUpdate[] = $column."=:".$column;
+            }
 
-        
-          if (!is_numeric($objectToSave->getId())) {
-			            
-            //INSERT
-            $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
-			echo($sql);
-			
-        } 
-		
-		
-		else {
+            $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
+        }
+        
+        $this->connection->query($sql, $params);
+    }
 
-            //UPDATE
-            foreach ($columns as $column) {
-                $sqlUpdate[] = $column."=:".$column;
-				
-            }
+    
+    public function findAll() : array 
+    {
+        $sql = "SELECT * FROM $this->table";
+        $result = $this->connection->query($sql);
+        $rows = $result->getArrayResult();
+        $find = [];
+        foreach($rows as $row){
+            $object = new $this->class();
+            try {
+                array_push($find, $object->hydrate($row));
+            } catch (BDDException $e){
+                die($e->getMessage());
+            }
+        }
+        
+        return $find;
+    }
 
-            $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
-			echo($sql);
-        }
+    public function findBy(array $params, array $order = null): array{
+        $results = array();
+        $sql = "SELECT * FROM $this->table WHERE ";
+        foreach($params as $key => $value){
+            if(is_string($value)){
+                $comparator = 'LIKE';
+            }else{
+                $comparator = '=';
+            }
+            $sql .= "$key $comparator :$key AND ";
 
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($columnsData);
-    }
-    
-    /**
-     * Supprime un tuple en fonction de son id et d'un model donné
-     */
-	public function remove() : bool{
+            $params[":$key"] = $value;
+            unset($params[$key]);
+        }
+        $sql = rtrim($sql,'AND ');
 
-        try{
-    
-        
-            if(!$this->id){
-    			
-                    throw new Exception('Aucun identifiant n\' est mentionné , la suppression ne peut pas etre effectuer');
-                }
+        if($order){
+            $sql .= "ORDER BY '". key($order). " ". $order[key($order)];
+        }
 
-            else{
+        $result = $this->connection->query($sql, $params);
+        $rows = $result->getArrayResult();
 
-                $sql = "DELETE FROM ".$this->table." WHERE id= :id;";
-                $result = $this->pdo->prepare($sql);
-                $result->execute([':id' => $id]);
+        foreach($rows as $row){
+            $object = new $this->class();
+            try {
+                array_push($results, $object->hydrate($row));
+            } catch (BDDException $e){
+                die($e->getMessage());
+            }
+        }
 
-            }
-        }
+        return $results;
+    }
 
-        catch(Exception $e){
+    public function count(array $params): int
+    {
+        $results = array();
 
-            echo $e->getMessage();
-        }
-    }
-	
-	/**
-     * Retourne le résultat d'une requete SELECT sous de tableau d'objets
-     * @param type $sql
-     * @param Object $object
-     * @param Object $params
-     * @param $class_name
-     * @return array
-     */
-    function findBy($sql,Object $object,$params = null,$class_name) : array{
+        $sql = "SELECT COUNT(*) FROM $this->table WHERE";
 
-        if(empty($params)){
+        foreach($params as $key => $value){
+            if(is_string($value)){
+                $comparator = 'LIKE';
+            }else{
+                $comparator = '=';
+            }
+            $sql .= "$key $comparator :$key AND";
 
-         $statement = $this->pdo->query($sql) or die(print_r($this->pdo->errorInfo()));
-         $statement->execute();
+            $params[":$key"] = $value;
+            unset($params[$key]);
+        }
+        $sql = rtrim($sql, 'AND');
 
-	try{
-         	$this->hydrate($object);
-	}
+        $result = $this->connection->query($sql, $params);
+        return $result->getValueResult();
 
-	catch(BDDException $e){
+        
+    }
 
-		echo $e->getMessage();
-	}
+    public function find(int $id): ?\carsery\models\Model
+    {
+        $sql = "SELECT * FROM $this->table WHERE id =:id";
+        $results = $this->connection->query($sql,[':id' => $id]);
+        $row = $results->getOneOrNullResult();
 
-         $results = $statement->fetchAll(PDO::FETCH_CLASS, $class_name);
+        if ($row) {
+            $object = new $this->class;
+            try {
+                return $object->hydrate($row);
+            } catch (BDDException $e){
+                die($e->getMessage());
+            }
+        }else {
+            return null;
+        }
+
+    }
 
 
-         return $results;
+    
 
-        }
+    public function delete($attribut, $value){
+        $sql = "DELETE FROM $this->table WHERE $attribut = :$attribut";
+        $result = $this->connection->query($sql, [":$attribut" => $value]);
+    }
 
-        else{
+    /**
+     * Get the value of table
+     */ 
+    public function getTable()
+    {
+        return $this->table;
+    }
 
-            $statement = $this->pdo->prepare($sql) or die(print_r($this->pdo->errorInfo()));
-            $statement->execute($params);
+    /**
+     * Get the value of class
+     */ 
+    public function getClass()
+    {
+        return $this->class;
+    }
 
-            try{
-         	$this->hydrate($object);
-	    }
-
-	    catch(BDDException $e){
-
-		echo $e->getMessage();
-	    }
-
-            $results = $statement->fetchAll(PDO::FETCH_CLASS, $class_name);
-
-    
-            return $results ;
-
-        }
-
-    }
-
-     public function findAll(){
-
-        $stmt = $this->pdo->query("SELECT * FROM ".$this->table) 
-        or die(print_r($this->pdo->errorInfo()));
-        
-        $objects = [];
-
-        while ($currentObject = $stmt->fetchObject(__CLASS__)) {
-            
-            $objects[] = $currentObject;
-        }
-        
-        return $objects;
-
-    }
-
-     public function find(int $id){
-
-        $result = $this->pdo->prepare("SELECT * FROM ".$this->table." WHERE id = :id");
-
-        //$result->bindParam(':id', $id, PDO::PARAM_INT);
-        $result->execute([':id' => $id]);
-
-        return $result->fetchObject(__CLASS__);
-    }
-    
+    /**
+     * Get the value of connection
+     */ 
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 }
-

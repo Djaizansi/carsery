@@ -1,16 +1,15 @@
 <?php 
+namespace carsery\controllers;
 
-namespace Carsery\Controllers;
+use carsery\core\Exceptions\RouteException;
+use carsery\core\View;
+use carsery\core\Session;
 
-require('core/View.php');
-use Carsery\Core\View; 
-require('core\Session.php');
-use Carsery\Core\Session; 
 
 class DashboardController {
     public function dashboardAction()
     {
-        if(Session::estConnecte()){
+        if(Session::estConnecte() && Session::estAdmin()){
             $setVar = true;
             // setting the cookie
             setcookie('loader', $setVar ? '1' : '0');
@@ -24,7 +23,7 @@ class DashboardController {
             endif;
             $myView = new View("dashboard");
         }else {
-            include_once "./error/notConnected.php";
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }

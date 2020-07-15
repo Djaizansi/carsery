@@ -1,6 +1,8 @@
 <?php 
 
-namespace Carsery\Core;
+namespace carsery\core;
+
+use carsery\Managers\UserManager;
 
 session_start();
 class Session {
@@ -11,6 +13,36 @@ class Session {
 
     public static function estConnecte() {
         return isset($_SESSION["id"]);
+    }
+
+    public static function estAdmin() {
+        $userManager = new UserManager();
+        $foundUser = isset($_SESSION['id']) ? $userManager->find($_SESSION['id']) : '';
+        if($foundUser){
+            $role = $foundUser->getStatus();
+            if($role === "Admin") return true;
+        }elseif(empty($foundUser)){
+        }
+        else{
+            unset($_SESSION['id']);
+            $location = Helpers::getUrl('myProject','view');
+            header("Location: $location");
+        }
+    }
+
+    public static function estClient() {
+        $userManager = new UserManager();
+        $foundUser = isset($_SESSION['id']) ? $userManager->find($_SESSION['id']) : '';
+        if($foundUser){
+            $role = $foundUser->getStatus();
+            if($role === "Client") return true;
+        }elseif(empty($foundUser)){
+
+        }else{
+            unset($_SESSION['id']);
+            $location = Helpers::getUrl('myProject','view');
+            header("Location: $location");
+        }
     }
 
     public function deconnecter() 

@@ -1,17 +1,18 @@
 <?php 
 
-namespace Carsery\Controllers;
+namespace carsery\controllers;
 
-require('core/View.php');
-use Carsery\Core\View;  
-require('core\Session.php');
-use Carsery\Core\Session; 
+use carsery\core\Exceptions\RouteException;
+use carsery\core\View;
+use carsery\core\Session;
 
 class ContactController {
     public function contactAction() 
     {
         if(Session::estConnecte()){
             $myView = new View("contact");
+        }else {
+            throw new RouteException("Vous devez être connecté");
         }
     }
 }
