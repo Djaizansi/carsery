@@ -75,4 +75,14 @@ class Helpers
         var_dump($data);
         die();
     }
+
+    /**
+ 	 * Se charge des redirections de page en page
+ 	 * @param type $url
+ 	 */
+	public static function redirect($url) {
+ 	
+ 		header('Location: ' . $url);
+ 		exit;
+	}
 }

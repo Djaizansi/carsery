@@ -177,4 +177,20 @@
 /template:
   controller: Page
   action: updateTemplate
+
+/commandPiece:
+  controller: Panier
+  action: commandPiece
+
+/consultPanier:
+  controller: Panier
+  action: consultPanier
+  
+/addPieceToPanier:
+  controller: Panier
+  action: addPieceToPanier
+
+/updateQteDeletePiece:
+  controller: Panier
+  action: updateQteDeletePiece
   
