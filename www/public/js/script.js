@@ -73,10 +73,10 @@ $(document).on("click", ".myBtn", function () {
   $("#id_role").val($(this).data("role"));
 });
 
-$(document).on("click", ".myBtnContact", function () {
+$(document).on("click", ".myBtn", function () {
   $("#id").val($(this).data("idcontact"));
-  $("#id_name").val($(this).data("nom"));
-  $("#id_adresse").val($(this).data("adresse"));
+  $("#id_nomcontact").val($(this).data("nom"));
+  $("#id_adressecontact").val($(this).data("adresse"));
 });
 
 $("#btnAdd").click(function () {});
@@ -84,6 +84,25 @@ $("#btnAdd").click(function () {});
 $(document).on("click", ".file", function () {
   file = $(this).data("file");
 });
+$(document).ready(function() {
+  var t = $('#myTable').DataTable();
+  var counter = 1;
+
+  $('#addRow').on( 'click', function () {
+      t.row.add( [
+          counter +'.1',
+          counter +'.2',
+          counter +'.3',
+          counter +'.4',
+          counter +'.5'
+      ] ).draw( false );
+
+      counter++;
+  } );
+
+  // Automatically add a first row of data
+  $('#addRow').click();
+} );
 
 $("#btnYes").click(function () {
   window.location.href =

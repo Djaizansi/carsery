@@ -12,6 +12,7 @@ use carsery\models\Json;
 use carsery\core\Validator;
 
 define('UPDATECONTACT', ContactManager::getUpdateForm());
+define('ADDCONTACT', ContactManager::getContactForm());
 
 class ContactController
 {
@@ -33,7 +34,7 @@ class ContactController
             $configFormContact = ContactManager::getContactForm();
             $errors = Validator::checkForm(UPDATECONTACT, $_POST);
             $myView->assign('configFormContact', $configFormContact);
-            $myView->assign('formUpdateContact', UPDATECONTACT);
+            $myView->assign('formAddContact', ADDCONTACT);
         } else {
             throw new RouteException("Vous devez être connecté");
         }
@@ -41,13 +42,27 @@ class ContactController
 
     public function addContactAction()
     {
-        $contactManager = new ContactManager();
-        $contact = new Contact();
-        $contactFound = $contactManager->find($_GET['id']);
-
-        if (!isset($contactFound)) {
-            throw new RouteException("Le contact que vous voulez ajouter existe deja");
+        if (Session::estConnecte() && Session::estAdmin()) {
+            $contactManager = new ContactManager();
+            $contact = new Contact();
+            $findContact = $contactManager->find((int)$_POST['id']);
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $errors = Validator::checkForm(ADDCONTACT, $_POST);
+                if (!empty($errors)) {
+                    return $this->contactAction();
+                } else {
+                    if (!empty($_POST)) {
+                        $contact->setId($_POST['id']);
+                        $contact->setAdresse($_POST['adresse']);
+                        $contact->setNom($_POST['nom']);
+                        $contactManager->save($contact);
+                        $_SESSION['success'] = "addContact";
+                        header("Location: /contact");
+                    }
+                }
+            }
         } else {
+            throw new RouteException("Vous n'avez pas le droit à cette action");
         }
     }
 
@@ -76,7 +91,7 @@ class ContactController
             $contact = new Contact();
             $findContact = $contactManager->find((int)$_POST['id']);
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $errors = Validator::checkForm(CONFIGUPDATE, $_POST);
+                $errors = Validator::checkForm(UPDATECONTACT, $_POST);
                 if (!empty($errors)) {
                     return $this->contactAction();
                 } else {

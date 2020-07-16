@@ -10,15 +10,18 @@ $listContact = $contactManager->findAll();
     <?php elseif($_SESSION['success'] === 'updateContact'): ?>
         <?= Helpers::alert('success','',"Le contact a bien été modifié") ?>
         <?php $_SESSION['success'] = ''?>
+        <?php elseif($_SESSION['success'] === 'addContact'): ?>
+        <?= Helpers::alert('success','',"Le contact a bien été ajouté") ?>
+        <?php $_SESSION['success'] = ''?>
     <?php elseif(isset($errors)): ?>
         <?= Helpers::alert('danger',$errors) ?>
 	<?php endif ?>
 <table id="myTable">
     <thead>
         <th>ID</th>
-        <th>Nom</th>
         <th>Adresse</th>
-        <th>Modifier</th>
+        <th>Nom</th>
+        <th>Action</th>
     </thead>
     <tbody>
         <?php foreach($listContact as $unContact): ?>
@@ -27,14 +30,14 @@ $listContact = $contactManager->findAll();
                 <td><?= $unContact->getAdresse() ?></td>
                 <td><?= $unContact->getNom() ?></td>
                 <td>
-                            <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
-                            <button data-modal-target="modal1" data-id="<?= $unContact->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
-                            <?= "<button data-modal-target='modal2' data-idcontact=".$unContact->getId()." data-nom=".$unContact->getNom()." data-adresse=".$unContact->getAdresse()." class='myBtn' id='myBtn' href='#myBtn'><i class='fas fa-edit'></i></button>"?> 
-
-                        </td>
+                    <!-- <a href="/modifier_page"><i class="fas fa-edit"></i></a> --> 
+                    <button data-modal-target="modal1" data-id="<?= $unContact->getId() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class="fas fa-trash-alt"></i></button>
+                    <button data-modal-target="modal2" data-idcontact="<?= $unContact->getId() ?>" data-adresse="<?= $unContact->getAdresse() ?>" data-nom="<?= $unContact->getNom() ?>" class="myBtn" id="myBtn" href="#myBtn"><i class='fas fa-edit'></i></button> 
+                </td>
             </tr>
         <?php endforeach ?>
     </tbody>
+    <button data-modal-target="modal3" data-idcontact="" data-adresse="" data-nom="" class="myBtn" id="myBtn" href="#myBtn"><i class='fas fa-add'></i></button>
 </table>
 <form>
   <fieldset>
@@ -62,5 +65,12 @@ $listContact = $contactManager->findAll();
             <span class="modal-close">&times;</span>
             <h3>Modification contact</h3>
             <?php $this->addModal("form", $formUpdateContact);?>
+        </div>
+    </div>
+    <div class="modal" id="modal3">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Modification contact</h3>
+            <?php $this->addModal("form", $formAddContact);?>
         </div>
     </div>
