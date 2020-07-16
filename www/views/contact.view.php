@@ -4,7 +4,7 @@ use carsery\core\Helpers;
 $listContact = $contactManager->findAll();
 ?>
 <div class="container">
-<?php if($_SESSION['success'] === 'suppContact'): ?>
+<?php if($_SESSION['success'] === 'deleteContact'): ?>
 		<?= Helpers::alert('success','',"Le contact a bien été supprimé") ?>
         <?php $_SESSION['success'] = ''?>
     <?php elseif($_SESSION['success'] === 'updateContact'): ?>
@@ -52,7 +52,7 @@ $listContact = $contactManager->findAll();
         <div class="modal-content"> <!-- This is the actual modal/popup box -->
             <span class="modal-close">&times;</span>
             <p>Souhaitez-vous vraiment supprimer cette adresse?</p>
-			<a id="btnYesUser" class="btn btn--success">Oui</a>
+			<a id="btnYesContact" class="btn btn--success">Oui</a>
 			<a id="btnNo" class="btn btn--danger">Non</a>
         </div>
     </div>
