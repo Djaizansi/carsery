@@ -2,21 +2,20 @@
 
 namespace carsery\core;
 
-use carsery\models\users;
-use carsery\models\recuperation;
-
+use carsery\Managers\CategoryManager;
+use carsery\Managers\UserManager;
+use carsery\Managers\RecuperationManager;
 
 class Validator{
 	//$data = $_POST ou $_GET 
 	public static function checkForm($configForm, $data){
 		$listOfErrors = [];
 		//Vérifications
-
 		//Vérifier le nb de input
 		if( count($configForm["fields"]) == count($data) ) {
 			
 			foreach ($configForm["fields"] as $name => $config) {
-				
+
 				//Vérifie que l'on a bien les champs attendus
 				//Vérifier les required
 
@@ -25,13 +24,23 @@ class Validator{
 				}
 				
 				//Vérifier l'email
+
+
 				if($config["type"]=="email"){
-					$user = new users();
-					$email = $user->find("email","email",$data[$name]);
-					if(!(self::checkEmail($data[$name]))){
-						$listOfErrors[]=$config["errorMsg"];
-					}elseif($email){
-						$listOfErrors[]="Votre email existe déjà";
+					$user = new UserManager();
+					if(isset($data['id']) && !empty($data['id'])){
+						$findUser = $user->find($data['id']);
+						if($findUser->getEmail() === $data[$name]){
+						}else{
+							$email = $user->findByEmail($data[$name]);
+							!is_null($email) ? $unEmail = $email->getEmail() : '';
+							$mail = isset($unEmail) ? $unEmail : '';
+							if(!(self::checkEmail($data[$name]))){
+								$listOfErrors[]=$config["errorMsg"];
+							}elseif($mail){
+								$listOfErrors[]="Votre email existe déjà";
+							}
+						}
 					}
 				}
 
@@ -74,6 +83,8 @@ class Validator{
 					}
 				}
 			}
+		}elseif($configForm['config']['id'] == 'jqueryForm'){
+			return $listOfErrors;
 		}else{
 			return ["Tentative de hack !!!"];
 		}
@@ -91,34 +102,33 @@ class Validator{
 				
 				//Vérifie que l'on a bien les champs attendus
 				//Vérifier les required
-
 				if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
 					return ["Tentative de hack !!!"];
 				}
 				
 				//Vérifier l'email
 				if($config["type"]=="email"){
-					$user = new users();
-					$email = $user->find("email","email",$data[$name]);
+					$user = new UserManager();
+					$email = $user->findByEmail($data[$name]);
+					!is_null($email) ? $unEmail = $email->getEmail() : '';
+					$mail = isset($unEmail) ? $unEmail : '';
 					if(!(self::checkEmail($data[$name]))){
 						$listOfErrors[]=$config["errorMsg"];
-					}elseif(!$email){
+					}elseif(!$mail){
 						$listOfErrors[]="Votre email n'existe pas";
 					}
 				}
 
 				if($config['type']=="text" && $name = 'code'){
-					$recup = new recuperation();
-					$code = $recup->find('code','mail',$_SESSION['email']);
-					$recup_code = $code->getCode();
-
-					if($recup_code !== $data[$name]){
+					$recupManager = new RecuperationManager();
+					$code = $recupManager->findByEmail($_SESSION['email']);
+					isset($code) ? $recup_code = $code->getCode() : '';
+					if(empty($recup_code) || $recup_code !== $data[$name]){
 						$listOfErrors[]=$config["errorMsg"];
 					}elseif(empty($data[$name])){
 						$listOfErrors[]= "Veuillez entrer votre code de confirmation";
 					}
 				}
-
 			}
 		}else{
 			return ["Tentative de hack !!!"];
@@ -167,4 +177,101 @@ class Validator{
 		$email = htmlspecialchars(trim($email));
 		return filter_var($email, FILTER_VALIDATE_EMAIL);
 	}
+
+	public static function checkArticleForm($configForm, $data){
+		$listOfErrors = [];
+		//Vérifications
+
+		//Vérifier le nb de input
+		if( count($configForm["fields"]) == count($data) ) {
+			
+			foreach ($configForm["fields"] as $name => $config) {
+				
+				//Vérifie que l'on a bien les champs attendus
+				//Vérifier les required
+
+				if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+					return ["Tentative de hack !!!"];
+				}
+
+				if($config["type"] == "text" && $name == "titre"){
+					if(strlen($data[$name]) < $config["min-lenght"] || strlen($data[$name]) > $config["max-lenght"]) {
+						$listOfErrors[]=$config["errorMsg"];
+					}
+				}
+
+				if($config["type"] == "text" && $name == "description"){
+					if(strlen($data[$name]) < $config["min-lenght"]) {
+						$listOfErrors[]=$config["errorMsg"];
+					}
+				}
+
+				if($config["type"] == "relation" && $name == "categorie"){
+					$categoryManager = new CategoryManager();
+					if(!isset($data[$name]) || !is_numeric($data[$name])) {
+						if($categoryManager->find($data[$name]) == null){
+							$listOfErrors[]=$config["errorMsg"];
+						}
+					}
+				}
+			}
+		}else{
+			return ["Tentative de hack !!!"];
+		}
+		return $listOfErrors;
+	}
+
+    public static function checkMessageForm($configForm, $data){
+        $listOfErrors = [];
+        //Vérifications
+
+        //Vérifier le nb de input
+        if( count($configForm["fields"]) == count($data) ) {
+
+            foreach ($configForm["fields"] as $name => $config) {
+
+                //Vérifie que l'on a bien les champs attendus
+                //Vérifier les required
+                if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+                    return ["Tentative de hack !!!"];
+                }
+
+                if($config["type"] == "text" && $name == "message"){
+                    if(strlen($data[$name]) < $config["min-lenght"]) {
+                        $listOfErrors[]=$config["errorMsg"];
+                    }
+                }
+            }
+        }else{
+            return ["Tentative de hack !!!"];
+        }
+        return $listOfErrors;
+    }
+
+    public static function checkCategoryForm($configForm, $data){
+        $listOfErrors = [];
+        //Vérifications
+
+        //Vérifier le nb de input
+        if( count($configForm["fields"]) == count($data) ) {
+
+            foreach ($configForm["fields"] as $name => $config) {
+
+                //Vérifie que l'on a bien les champs attendus
+                //Vérifier les required
+                if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+                    return ["Tentative de hack !!!"];
+                }
+
+                if($config["type"] == "text" && $name == "name"){
+                    if(strlen($data[$name]) < $config["min-lenght"] && strlen($data[$name]) > $config["max-lenght"]) {
+                        $listOfErrors[]=$config["errorMsg"];
+                    }
+                }
+            }
+        }else{
+            return ["Tentative de hack !!!"];
+        }
+        return $listOfErrors;
+    }
 }

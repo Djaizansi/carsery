@@ -1,72 +1,203 @@
 /:
-  controller: "User"
-  action: "login"
+  controller: myProject
+  action: view
+
+/connexion:
+  controller: User
+  action: login
 
 /deconnexion:
-  controller: "User"
-  action: "deconnecter"
+  controller: User
+  action: deconnecter
 
-/dashboard: 
-  controller: "Dashboard"
-  action: "dashboard"
+/dashboard:
+  controller: Dashboard
+  action: dashboard
 
 /mailbox:
+  controller: Mail
+  action: mail
+
+/mailbox/reponse:
   controller: "Mail"
-  action: "mail"
+  action: "answercontactemail"
 
 /apparence:
-  controller: "Apparence"
-  action: "apparence"
+  controller: Apparence
+  action: apparence
+  
+/forum:
+  controller: Forum
+  action: forum
 
-/forum: 
+/forum/ajout-article:
   controller: "Forum"
-  action: "forum"
+  action: "addarticle"
 
-/media: 
-  controller: "Media"
-  action: "media"
+/forum/article:
+  controller: "Forum"
+  action: "updatearticleview"
 
-/page: 
-  controller: "Page"
-  action: "page"
+/forum/modificaton-article:
+  controller: "Forum"
+  action: "updatearticle"
 
-/lien: 
-  controller: "Page"
-  action: "lien"
+/forum/resolution-article:
+  controller: "Forum"
+  action: "resolvearticle"
+
+/forum/suppression-article:
+  controller: "Forum"
+  action: "removearticle"
+
+/forum/lire-article:
+  controller: "Forum"
+  action: "readarticle"
+
+/forum/ajout-message:
+  controller: "Forum"
+  action: "addmessagearticle"
+
+/forum/message:
+  controller: "Forum"
+  action: "updatemessagearticleview"
+
+/forum/modification-message:
+  controller: "Forum"
+  action: "updatemessagearticle"
+
+/forum/suppression-message:
+  controller: "Forum"
+  action: "removemessagearticle"
+
+/forum/bannir-utilisateur:
+  controller: "Forum"
+  action: "banuser"
+
+/forum/ajout-categorie:
+  controller: "Forum"
+  action: "addcategory"
+
+/forum/categorie:
+  controller: "Forum"
+  action: "updatecategoryview"
+
+/forum/modification-categorie:
+  controller: "Forum"
+  action: "updatecategory"
+
+/forum/suppression-categorie:
+  controller: "Forum"
+  action: "removecategory"
+
+/media:
+  controller: Media
+  action: media
+
+/page:
+  controller: Page
+  action: page
 
 /parametre:
-  controller: "Parametre"
-  action: "parametre"
+  controller: Parametre
+  action: parametre
 
 /gestionuser:
-  controller: "User"
-  action: "gestionuser"
+  controller: User
+  action: gestionuser
+
+/supprimer-user:
+  controller: User
+  action: deleteUser
+
+/update-user:
+  controller: User
+  action: updateUser
 
 /ajout-utilisateur:
-  controller: "User"
-  action: "add"
-
+  controller: User
+  action: add
 
 /recupcode:
-  controller: "User"
-  action: "recupcode"
+  controller: User
+  action: recupcode
 
 /changemdp:
-  controller: "User"
-  action: "changemdp"
-
-/supprimer-utilisateur:
-  controller: "User"
-  action: "remove"
-
-/utilisateur:
-  controller: "User"
-  action: "default"
+  controller: User
+  action: changemdp
 
 /inscription:
-  controller: "User"
-  action: "register"
+  controller: User
+  action: register
 
 /mdpoublie:
-  controller: "User"
-  action: "forget"
+  controller: User
+  action: forget
+
+/ajouter-page:
+  controller: Page
+  action: addPage
+
+/supprimer-page:
+  controller: Page
+  action: deletePage
+
+/edit-page:
+  controller: Page
+  action: modifierPage
+
+/json:
+  controller: Page
+  action: json
+
+/contact:
+  controller: Contact
+  action: contact
+
+/testQuery:
+  controller: myProject
+  action: testQueryBuilder
+
+/widget:
+  controller: Page
+  action: widgetPage
+
+/confirmAccount:
+  controller: User
+  action: confirmAccount
+
+/supprimer-media:
+  controller: Media
+  action: suppMedia
+
+/modifier-media:
+  controller: Media
+  action: renameFile
+
+/test:
+  controller: Media
+  action: test
+
+/template:
+  controller: Page
+  action: updateTemplate
+
+/testcontact:
+  controller: testContact
+  action: frontContact
+  
+/sendcontact:
+  controller: testContact
+  action: sendContact
+
+/update-contact:
+  controller: Contact
+  action: updateContact
+  
+/delete-contact:
+  controller: Contact
+  action: deleteContact
+
+/add-contact:
+  controller: Contact
+  action: addContact

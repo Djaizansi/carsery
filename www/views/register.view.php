@@ -2,11 +2,7 @@
 
 <div class="col-4 intro box-center">
     <?php if(!empty($errors)): ?>
-        <div class="alert alert--danger">
-            <?php foreach($errors as $uneErreur): ?>
-                <p> <?=$uneErreur?> </p>
-            <?php endforeach ?>
-        </div>
+        <?= Helpers::alert('danger', $errors) ?>
     <?php endif ?>
 
     <h1>Inscription</h1>
@@ -15,6 +11,8 @@
 
     <div class="txt-center">
         <a href="<?php echo Helpers::getUrl("User", "login") ?>">Sign in</a>
+        <br>
+        <a href="<?php echo Helpers::getUrl("myProject", "view") ?>">Retour accueil</a>
     </div>
     
 </div>

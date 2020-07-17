@@ -2,9 +2,9 @@
 
 namespace carsery\core;
 
+use carsery\core\Exceptions\RouteException;
 use carsery\core\Session;
-use carsery\models\users;
-
+use carsery\Managers\UserManager;
 
 
 class View
@@ -17,12 +17,15 @@ class View
     {
         $this->setTemplate($template);
         $this->setView($view);
-        if($this->template === "back"){
-            $connecter = new Session();
-            $user = new users();
-            $utilisateur = $user->find('firstname','id',$_SESSION['id']);
-            $prenom = $utilisateur->getFirstname();
-            self::assign("firstname",$prenom);
+        if($this->template === "back" && Session::estConnecte()){
+            $userManager = new UserManager();
+            $utilisateur = $userManager->find($_SESSION['id']);
+            if(!is_null($utilisateur)){
+                $prenom = htmlspecialchars($utilisateur->getFirstname());
+                self::assign("firstname",$prenom);
+            }else {
+                session_destroy();
+            }
         }
     }
 
@@ -39,7 +42,7 @@ class View
         }
     }
 
-    public function addModal($modal, $data)
+    public function addModal($modal, $data = null)
     {
         if (!file_exists("views/modals/".$modal.".mod.php")) {
             die("Le modal n'existe pas!!!");
@@ -49,8 +52,9 @@ class View
 
     public function setView($v)
     {
-        $this->view = strtolower(trim($v));
-        if (!file_exists("views/".$this->view.".view.php")) {
+        $titre = $this->view = strtolower(trim($v));
+        $unTitre = explode('?',$titre)[0];
+        if (!file_exists("views/".$unTitre.".view.php")) {
             die("La vue n'existe pas");
         }
     }
@@ -60,6 +64,17 @@ class View
         $this->data[$key] = $value; //permet d'envoyer une variable à la vue.
     }
 
+    public static function checkShortcode($content)
+    {
+        $regex = '/\[[^]]*\]/i';
+        if(preg_match_all($regex, $content, $matches)){
+            foreach ($matches[0] as $match) {
+                preg_match_all("/\[([^ ]*) ([^]]*)\]/", $match, $result);
+            }
+        }
+        return $matches[0];
+    }
+
     public function __destruct()
     {
         //$this->data = ["firstname"=>"yves"];
@@ -67,8 +82,4 @@ class View
         include "views/templates/".$this->template.".tpl.php";
         //$firstname = "yves";
     }
-
-    /**
-     * Get the value of template
-     */ 
 }
