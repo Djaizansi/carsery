@@ -37,8 +37,8 @@ $listContact = $contactManager->findAll();
             </tr>
         <?php endforeach ?>
     </tbody>
-    <button data-modal-target="modal3" data-idcontact="" data-adresse="" data-nom="" class="myBtn" id="myBtn" href="#myBtn"><i class='fas fa-add'></i></button>
 </table>
+<button data-modal-target="modal3" data-idcontact="" data-adresse="" data-nom="" class="btn" id="myBtn" href="#myBtn"><i class='icon-repeat'>Ajouter un contact</i></button></br>
 <form>
   <fieldset>
     <p>Souhaitez vous activer la page contact sur le front</p>
