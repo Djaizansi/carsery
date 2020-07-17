@@ -185,6 +185,10 @@
 /testcontact:
   controller: testContact
   action: frontContact
+  
+/sendcontact:
+  controller: testContact
+  action: sendContact
 
 /update-contact:
   controller: Contact

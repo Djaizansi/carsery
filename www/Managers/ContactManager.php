@@ -48,12 +48,6 @@ class ContactManager extends DB {
                     ],
 
                     "fields"=>[
-                        "id"=>[
-                            "balise"=>"",
-                            "type"=>"hidden",
-                            "id"=>"id",
-                            "required"=>true,
-                        ],
                         "nom"=>[
                                 "balise"=>"",
                                 "type"=>"text",

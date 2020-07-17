@@ -45,14 +45,12 @@ class ContactController
         if (Session::estConnecte() && Session::estAdmin()) {
             $contactManager = new ContactManager();
             $contact = new Contact();
-            $findContact = $contactManager->find((int)$_POST['id']);
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $errors = Validator::checkForm(ADDCONTACT, $_POST);
                 if (!empty($errors)) {
                     return $this->contactAction();
                 } else {
                     if (!empty($_POST)) {
-                        $contact->setId($_POST['id']);
                         $contact->setAdresse($_POST['adresse']);
                         $contact->setNom($_POST['nom']);
                         $contactManager->save($contact);

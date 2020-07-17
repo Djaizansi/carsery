@@ -30,14 +30,14 @@ $listContact = $contactManager->findAll();
     }
 </style>
 <div class="container">
-    <form action="" method="post" id="contact">
+    <form method="post" id="contact" action="<?= Helpers::getUrl('testContact','sendContact') ?>">
         <span id=submit class="floating-panel"></span>
         <h1>Nous contacter</h1>
         <h3>Choisissez un magasin : </h2>
         <fieldset>
             <select name="magasin" id="magasin-select" class="selectmel" onchange="initMap()">
                 <?php foreach ($listContact as $unContact) : ?>
-                    <option value="<?= $unContact->getAdresse() ?>"><?= $unContact->getNom() ?>(<?= $unContact->getAdresse() ?>)</option>
+                    <option value="<?= $unContact->getAdresse() ?>" ><?= $unContact->getNom() ?>(<?= $unContact->getAdresse() ?>)</option>
                 <?php endforeach ?>
             </select>
         </fieldset>
@@ -45,16 +45,19 @@ $listContact = $contactManager->findAll();
                 <div id="map"></div>
             </div>
             <fieldset>
-                <input placeholder="Votre nom" type="text" tabindex="1" required autofocus>
+                <input placeholder="Votre nom" type="text" tabindex="1" name="contact_nom" required autofocus>
             </fieldset>
             <fieldset>
-                <input placeholder="Votre adresse mail" type="email" tabindex="2" required>
+                <input placeholder="Votre prénom" type="text" tabindex="1" name="contact_prenom" required autofocus>
             </fieldset>
             <fieldset>
-                <input placeholder="Votre numéro de téléphone" type="tel" tabindex="3" required>
+                <input placeholder="Votre adresse mail" type="email" tabindex="2" name="contact_mail" required>
             </fieldset>
             <fieldset>
-                <textarea placeholder="Entrez votre message ici..." tabindex="4" required></textarea>
+                <input placeholder="Votre numéro de téléphone" type="tel" tabindex="3" name="contact_tel" required>
+            </fieldset>
+            <fieldset>
+                <textarea placeholder="Entrez votre message ici..." tabindex="4" name="contact_message" required></textarea>
             </fieldset>
             <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Envoyez !</button>
     </form>
@@ -117,5 +120,5 @@ $listContact = $contactManager->findAll();
         });
     }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4GSNes5jn7bQZHCBzwEiQjDAlzgII568&callback=initMap">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap">
 </script>

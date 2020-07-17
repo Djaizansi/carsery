@@ -70,7 +70,7 @@ $listContact = $contactManager->findAll();
     <div class="modal" id="modal3">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
-            <h3>Modification contact</h3>
+            <h3>Ajouter un contact</h3>
             <?php $this->addModal("form", $formAddContact);?>
         </div>
     </div>

@@ -1,5 +1,5 @@
 
 <?php
-$data = null;
-$this->addModal("contact", $data);
+//$data = null;
+$this->addModal("contact");
 ?>
