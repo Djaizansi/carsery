@@ -66,7 +66,7 @@
                 <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Apparence","apparence")?>"><i class="fas fa-palette"></i>Apparence<i class="fas fa-chevron-right"></i></a></li>
                 <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("User","gestionuser")?>"><i class="fas fa-user"></i>Utilisateurs<i class="fas fa-chevron-right"></i></a></li>
                 <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Mail","mail")?>"><i class="far fa-envelope"></i>MailBox<i class="fas fa-chevron-right"></i></a></li>
-                <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Parametre","parametre")?>"><i class="fas fa-cogs"></i>Réglages<i class="fas fa-chevron-right"></i></a></li>
+                <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Contact","contact")?>"><i class="fas fa-cogs"></i>Contact<i class="fas fa-chevron-right"></i></a></li>
             </ul>
 
         </aside>
