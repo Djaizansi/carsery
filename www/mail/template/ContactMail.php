@@ -4,7 +4,7 @@ namespace carsery\mail\template;
 
 class ContactMail
 {
-    public static function sendContact($message, $magasin, $nom, $prenom, $telephone, $mail){
+    public static function sendContact($message, $magasin, $nom, $prenom, $mail, $telephone){
 
         return '<!DOCTYPE html>
                 <html lang="en">
@@ -21,7 +21,7 @@ class ContactMail
                                 <tr>
                                     <td>
                                         <div align="center">
-                                            <p>Contenu du message'. $message .' <br> Envoyé par <br> Nom : '. $nom .' <br> Prénom : '. $prenom .' <br> Tél. : '. $telephone .' <br> E-mail : '. $mail .'</p>
+                                            <p>Contenu du message : <br><br>'. $message .' <br><br> Envoyé par <br><br> Nom : '. $nom .' <br> Prénom : '. $prenom .' <br> Tél. : '. $telephone .' <br> E-mail : '. $mail .'</p>
                                         </div>
                                     </td>
                                 </tr>
