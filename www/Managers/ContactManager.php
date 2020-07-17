@@ -53,6 +53,7 @@ class ContactManager extends DB {
                                 "type"=>"text",
                                 "placeholder"=>"Votre nom d'adresse",
                                 "required"=>true,
+                                "id"=>"id_nomcontact",
                                 "min-lenght"=>2,
                                 "max-lenght"=>255,
                                 "errorMsg"=>"Votre nom doit faire entre 2 et 255 caractères"
@@ -61,6 +62,7 @@ class ContactManager extends DB {
                                 "balise"=>"",
                                 "type"=>"text",
                                 "placeholder"=>"Votre adresse",
+                                "id"=>"id_adressecontact",
                                 "required"=>true,
                                 "min-length"=>2,
                                 "max-length"=>255,
@@ -75,7 +77,7 @@ class ContactManager extends DB {
                             "method"=>"POST",
                             "action"=>Helpers::getUrl("Contact", "updateContact"),
                             "class"=>"box",
-                            "id"=>"jqueryForm",
+                            "id"=>"formUpdateContact",
                             "submit"=>"Modifier"
                 ],
                 "fields"=>[

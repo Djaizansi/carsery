@@ -35,6 +35,7 @@ class ContactController
             $errors = Validator::checkForm(UPDATECONTACT, $_POST);
             $myView->assign('configFormContact', $configFormContact);
             $myView->assign('formAddContact', ADDCONTACT);
+            $myView->assign('formUpdateContact', UPDATECONTACT);
         } else {
             throw new RouteException("Vous devez être connecté");
         }
@@ -49,6 +50,7 @@ class ContactController
                 $errors = Validator::checkForm(ADDCONTACT, $_POST);
                 if (!empty($errors)) {
                     return $this->contactAction();
+                    $findContact = $contactManager->find((int)$_POST['id']);
                 } else {
                     if (!empty($_POST)) {
                         $contact->setAdresse($_POST['adresse']);
