@@ -7,29 +7,7 @@ $contactManager = new ContactManager();
 $listContact = $contactManager->findAll();
 
 ?>
-<style>
-    /* Toujours définir la hauteur de la map pour l'élément qui contient la map */
-    div[id^=map],
-    div[id^=map] div {
-        height: 800px;
-    }
-
-    .selectmel {
-        display: block;
-        width: 100%;
-        height: 40px;
-        padding: 6px 12px;
-        font-size: 15px;
-        line-height: 1.5;
-        color: #6c6c6c;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ddd;
-        border-radius: 0;
-        box-shadow: none;
-    }
-</style>
-<div class="container">
+<div class="container-contact">
     <form method="post" id="contact" action="<?= Helpers::getUrl('testContact','sendContact') ?>">
         <span id=submit class="floating-panel"></span>
         <h1>Nous contacter</h1>

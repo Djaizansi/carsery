@@ -56,10 +56,29 @@ a {
 
 /********** GRILLE **********/
 
-.container {
+.container-contact {
   width: 90%;
   margin: 1rem auto 3rem auto;
   padding: 10px;
+}
+div[id^=map],
+div[id^=map] div {
+    height: 800px;
+}
+
+.selectmel {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #6c6c6c;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    box-shadow: none;
 }
 #contact {
   background: #F9F9F9;
