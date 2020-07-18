@@ -193,7 +193,7 @@
 /updateQteDeletePiece:
   controller: Panier
   action: updateQteDeletePiece
-  
+
 /gestionPieces:
   controller: Piece
   action: piece
@@ -213,5 +213,3 @@
 /showFormUpdatePiece:
   controller: Piece
   action: showFormUpdatePiece
-  
-  

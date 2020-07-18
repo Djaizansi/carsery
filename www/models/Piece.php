@@ -1,11 +1,10 @@
 <?php
 
 namespace carsery\models;
-use carsery\core\Model;
-use carsery\core\ModelInterface;
 
+use carsery\models\Model;
 
-class Piece extends Model implements ModelInterface{
+class Piece extends Model {
     
     protected $id;
     protected $nomPiece;

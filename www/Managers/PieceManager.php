@@ -34,7 +34,7 @@ class PieceManager extends DB {
 		}
 
     
-    return $query->getQuery()->getArrayResultTp(Piece::class) ;
+    return $query->getQuery()->getArrayResult(Piece::class) ;
         
     }
 	
@@ -121,86 +121,4 @@ class PieceManager extends DB {
                 ];
     }
 	
-
-	public static function formEditPiece($action, $idForm, $options = null) : array {
-        
-        return [
-                    "config"=>[
-                        "method"=>"POST", 
-                        "action"=>$action,
-                        "class"=>"box",
-                        "id"=>$idForm,
-                        "submit"=>"Modifier"
-                    ],
-					
-                    "fields"=>[
-                    
-                        "nom"=>[
-								"balise" => "",
-                                "type"=>"text",
-                                "placeholder"=>"Votre nom",
-                                "class"=>"",
-                                "id"=>"",
-                                "required"=>true,
-                                "min-length"=>"",
-                                "max-length"=>"",
-                                "errorMsg"=>"Le nom est invalide",
-								//"edit" => $options->getNomPiece()
-                            ],
-							
-						"description"=>[
-								"balise" => "",
-                                "type"=>"text",
-                                "placeholder"=>"Votre description",
-                                "class"=>"",
-                                "id"=>"",
-                                "required"=>true,
-                                "min-length"=>"",
-                                "max-length"=>"",
-                                "errorMsg"=>"La description est invalide",
-								//"edit" => $options->getDescription()
-                            ],
-						
-						"prix"=>[
-								"balise" => "",
-                                "type"=>"text",
-                                "placeholder"=>"Prix : 20.25 et non 20,25 ",
-                                "class"=>"",
-                                "id"=>"",
-                                "required"=>true,
-                                "min-length"=>"",
-                                "max-length"=>"",
-                                "errorMsg"=>"Le prix est invalide",
-								//"edit" => $options->getPrix()
-                            ],
-						
-						"reference"=>[
-								"balise" => "",
-                                "type"=>"text",
-                                "placeholder"=>"reference",
-                                "class"=>"",
-                                "id"=>"",
-                                "required"=>true,
-                                "min-length"=>"",
-                                "max-length"=>"",
-                                "errorMsg"=>"La référence est invalide",
-								//"edit" => $options->getReference()
-                            ],
-							
-						"stock"=>[
-								"balise" => "",
-                                "type"=>"number",
-                                "placeholder"=>"Votre stock ",
-                                "class"=>"",
-                                "id"=>"",
-                                "required"=>true,
-                                "min-length"=>"",
-                                "max-length"=>"",
-                                "errorMsg"=>"Le stock est invalide",
-								//"edit" => $options->getStock()
-                            ]
-                            
-                    ]
-                ];
-    }
 }
