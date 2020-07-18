@@ -213,3 +213,27 @@
 /showFormUpdatePiece:
   controller: Piece
   action: showFormUpdatePiece
+
+/addVoiture:
+  controller: Voiture
+  action: createVoiture
+
+/editVoiture:
+  controller: Voiture
+  action: updateVoiture
+
+/removeVoiture:
+  controller: Voiture
+  action: deleteVoiture
+  
+/gestionVoitures:
+  controller: Voiture
+  action: retrieveVoitures
+  
+/addMarque:
+  controller: Voiture
+  action: createMarque
+
+/addModele:
+  controller: Voiture
+  action: createModele
