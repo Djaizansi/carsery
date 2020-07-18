@@ -4,7 +4,7 @@ namespace carsery\Managers;
 use carsery\core\DB;
 use carsery\models\Piece;
 use carsery\core\Helpers; 
-use carsery\core\QueryBuilder;
+use carsery\core\Builder\QueryBuilder;
 
 
 class PieceManager extends DB {
