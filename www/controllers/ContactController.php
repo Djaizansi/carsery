@@ -77,7 +77,6 @@ class ContactController
             if ($id) {
                 $contactManager->delete('id', $id);
                 $location = Helpers::getUrl('Contact', 'contact');
-                var_dump($location);
                 $_SESSION['success'] = 'suppContact';
                 header("Location: $location");
             }
@@ -123,12 +122,8 @@ class ContactController
         $telephone = $_POST['contact_tel'];
         $mail = $_POST['contact_mail'];
         $unMail = ContactMail::sendContact($message,$magasin, $nom, $prenom, $mail, $telephone);
-        var_dump($unMail);
         $unEnvoi = $envoi->sendmail('Nouveau message de contact du magasin : ' .$magasin, $unMail, 'service.carsery@outlook.com');
-        var_dump($unEnvoi);
         if($unEnvoi){
-            var_dump($unMail);
-            var_dump($unEnvoi);
             header("Location: /testcontact");
         }else {
             throw new RouteException("Un problème est survenue lors de l'envoi de mail");
