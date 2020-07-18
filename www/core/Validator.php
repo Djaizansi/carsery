@@ -398,9 +398,176 @@ class Validator{
             }
         }
 
+		else{
+
+			echo'Dommage , vous etes passez par là <br />';
+				return ["Tentative de hack !!!"];
+			}
+			return $listOfErrors;
+    }
+	
+	/**
+      * Vérifie que le formulaire de marque est conforme
+      * @param type $configForm
+      * @param type $data
+      * @return type
+      */
+	public static function checkMarqueForm($configForm, $data){
+        $listOfErrors = [];
+        //Vérifications
+	print_r($listOfErrors);
+
+        //Vérifier le nb de input
+        if( count($configForm["fields"]) == count($data) ) {
+
+	    $nbField_POST = count($data);
+
+	    $configFormField = count($configForm["fields"]);
+
+            foreach ($configForm["fields"] as $name => $config) {
+
+
+                //Vérifie que l'on a bien les champs attendus
+                //Vérifier les required
+                if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+
+		    
+                    return ["Tentative de hack !!!"];
+                }
+
+			
+			//Vérifier le nom de la marque
+			if($config['type'] === "text" && $name == "marque"){
+
+					if(!self::checkStringFields(htmlspecialchars($data[$name]),
+							"#^[A-Za-z]+([\s]{0,1}|[\'-]{0,1})[A-Za-z]+[\s]{0,1}$#")){
+
+							$listOfErrors[] = $config['errorMsg'];
+						}
+		}
+                
+            }
+        }
+
 	else{
 
-	    echo'Dommage , vous etes passez par là <br />';
+            return ["Tentative de hack !!!"];
+        }
+        return $listOfErrors;
+    }
+	
+    /**
+     * Vérifie que le formulaire de modèle est conforme
+     * @param type $configForm
+     * @param type $data
+     * @return type
+     */
+	public static function checkModeleForm($configForm, $data){
+        $listOfErrors = [];
+        //Vérifications
+
+        //Vérifier le nb de input
+        if( count($configForm["fields"]) == count($data) ) {
+
+	    $nbField_POST = count($data);
+
+	    $configFormField = count($configForm["fields"]);
+
+            foreach ($configForm["fields"] as $name => $config) {
+
+                //Vérifie que l'on a bien les champs attendus
+                //Vérifier les required
+                if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+
+		    
+                    return ["Tentative de hack !!!"];
+                }
+
+			
+			//Vérifier le nom du modèle
+			if($config['type'] === "text" && $name == "modele"){
+
+					if(!self::checkStringFields(htmlspecialchars($data[$name]),
+						"#^[A-Za-z]+([\s]{0,1}|[\s]{0,1}[\'-]{0,1}[\s]{0,1})[A-Za-z]+[\s]{0,1}[0-9]{0,3}$#")){
+
+							$listOfErrors[]=$config["errorMsg"];
+						}
+		}
+                
+            }
+        }
+
+	else{
+
+            return ["Tentative de hack !!!"];
+        }
+        return $listOfErrors;
+    }
+	
+    /**
+     * Vérifie que le formulaire de voiture est conforme
+     * @param type $configForm
+     * @param type $data
+     * @return type
+     */
+	public static function checkVoitureForm($configForm, $data){
+        $listOfErrors = [];
+        //Vérifications
+
+        //Vérifier le nb de input
+        if( count($configForm["fields"]) == count($data) ) {
+
+	    $nbField_POST = count($data);
+
+	    $configFormField = count($configForm["fields"]);
+	   
+
+            foreach ($configForm["fields"] as $name => $config) {
+
+
+                //Vérifie que l'on a bien les champs attendus
+                //Vérifier les required
+                if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+
+		    
+                    return ["Tentative de hack !!!"];
+                }
+
+			
+			//Vérifier l'immatriculation
+			if($config['type'] === "text" && $name == "immatriculation"){
+
+					if(!self::checkStringFields($data[$name],
+						"#^[A-Z]{2}-[0-9]{3}-[A-Z]{2}$#")){
+
+							$listOfErrors[]=$config["errorMsg"];
+					}
+
+				}
+
+			//Vérifier le compteur
+			if($config['type'] === "number" && $name == "compteur"){
+
+					if( !self::checkCompteurField($data[$name]) ){
+
+							$listOfErrors[]=$config["errorMsg"];
+					}
+
+				}
+
+			//Vérifier l'année de création
+			if($config['type'] === "number" && $name == "anneeCreation"){
+
+					if( !self::checkAnneCreationField($data[$name]) ){
+
+							$listOfErrors[]=$config["errorMsg"];
+						}
+		}
+                
+            }
+        }
+
+	else{
             return ["Tentative de hack !!!"];
         }
         return $listOfErrors;
