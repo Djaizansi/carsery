@@ -8,7 +8,7 @@ $listContact = $contactManager->findAll();
 
 ?>
 <div class="container-contact">
-    <form method="post" id="contact" action="<?= Helpers::getUrl('testContact','sendContact') ?>">
+    <form method="post" id="contact" action="<?= Helpers::getUrl('Contact','sendContact') ?>">
         <span id=submit class="floating-panel"></span>
         <h1>Nous contacter</h1>
         <h3>Choisissez un magasin : </h2>
