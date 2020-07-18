@@ -274,4 +274,135 @@ class Validator{
         }
         return $listOfErrors;
     }
+	
+	/**
+      * Vérifie que le formulaire de pièce détachée est conforme
+      * @param type $configForm
+      * @param type $data
+      * @return type
+      */
+	public static function checkPieceForm($configForm, $data){
+        $listOfErrors = [];
+        //Vérifications
+	print_r($listOfErrors);
+
+        //Vérifier le nb de input
+        if( count($configForm["fields"]) == count($data) ) {
+
+	    echo'$data<br />';
+	    $nbField_POST = count($data);
+	    echo($nbField_POST); 
+
+	    echo'$configForm<br />';
+	    $configFormField = count($configForm["fields"]);
+	    echo($configFormField); 
+
+            foreach ($configForm["fields"] as $name => $config) {
+
+		//echo'Boucle $configForm'; echo"\n";
+		//print_r($configForm["fields"] );
+		//print_r($config);
+
+                //Vérifie que l'on a bien les champs attendus
+                //Vérifier les required
+                if( !array_key_exists($name, $data) || ( $config["required"] && empty($data[$name]) ) ){
+
+		    echo"Est-ce que passe par là" ;
+		    //print_r($name);
+		    //print_r($data);
+		    //print_r($config['required']);
+		    //print_r($data[$name]);
+		    
+                    return ["Tentative de hack !!!"];
+                }
+
+		    echo'<pre>';
+		    //print_r($name);
+		    //print_r($data);
+		    //print_r($config['required']);
+		    //print_r($data[$name]);
+		    //print_r($config['type']);
+		    echo'</pre>';
+		   
+		    //echo $data[$name];
+		    
+		//Vérifier le nom de la pièce
+	        if($config['type'] === "text" && $name == "nom"){
+			
+			echo'<pre>';
+			echo $data[$name];
+			echo'</pre>';
+		  
+
+			if(!self::checkStringFields(htmlspecialchars($data[$name]),
+			   "#^([A-Za-z]+[\s]{0,1}|[\s]{0,1}[\'-]{0,1}[\s]{0,1}|[\s]{0,1}[\',]{0,1}[\s]{0,1}[A-Za-z])*$#")){
+
+			   $listOfErrors[] = $config['errorMsg'];
+			}
+		}
+
+		//Vérfier la description de la pièce
+		if($config['type'] === "text" && $name == "description"){
+
+			echo'<pre>';
+			echo $data[$name];
+			echo'</pre>';
+
+			if(!self::checkStringFields(htmlspecialchars($data[$name]),
+			   "#^([A-Za-z0-9]+[\s]{0,1}|[\s]{0,1}[\'-]{0,1}[\s]{0,1}|[\s]{0,1}[\',]{0,1}[\s]{0,1}|[\s]{0,1}[\':][\s]{0,1}[A-Za-z0-9])*$#")){
+
+			   $listOfErrors[] = $config['errorMsg'];
+			}
+		}
+
+		//Vérifier le prix de la pièce
+		if($config['type'] === "text" && $name == "prix"){
+
+			echo'<pre>';
+			echo $data[$name];
+			echo'</pre>';
+
+			if(!self::checkStringFields($data[$name],"#^[0-9]+(\\.[0-9]{2})?$#")){
+
+			   $listOfErrors[] = $config['errorMsg'];
+			}
+		}
+
+		//Vérifier la référence de la pièce
+		if($config['type'] === "text" && $name == "reference"){
+
+			echo'<pre>';
+			echo $data[$name];
+			echo'</pre>';
+
+			if(!self::checkStringFields(htmlspecialchars($data[$name]),
+			   "#^([A-Za-z0-9]+[\s]{0,1}[\'-]{0,1}[\s]{0,1}|[\s]{0,1}[\'.]{0,1}[\s]{0,1}[A-Za-z0-9])+$#")){
+
+			   $listOfErrors[] = $config['errorMsg'];
+			}
+		}
+
+		//Vérifier le stock de la pièce
+		if($config['type'] === "number" && $name == "stock"){
+
+			echo'<pre>';
+			echo $data[$name];
+			echo'</pre>';
+
+			if(!self::checkStringFields($data[$name],"#^([0-9]+[^.])+$#")){
+
+			   $listOfErrors[] = $config['errorMsg'];
+			}
+		}
+                
+            }
+        }
+
+	else{
+
+	    echo'Dommage , vous etes passez par là <br />';
+            return ["Tentative de hack !!!"];
+        }
+        return $listOfErrors;
+    }
 }

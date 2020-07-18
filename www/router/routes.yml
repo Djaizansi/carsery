@@ -194,3 +194,24 @@
   controller: Panier
   action: updateQteDeletePiece
   
+/gestionPieces:
+  controller: Piece
+  action: piece
+
+/appendPiece:
+  controller: Piece
+  action: createPiece
+ 
+/removePiece:
+  controller: Piece
+  action: removePiece
+ 
+/editPiece:
+  controller: Piece
+  action: editPiece
+ 
+/showFormUpdatePiece:
+  controller: Piece
+  action: showFormUpdatePiece
+  
+  
