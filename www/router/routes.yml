@@ -237,3 +237,7 @@
 /addModele:
   controller: Voiture
   action: createModele
+
+/voituresDisponible:
+  controller: Voiture
+  action: retrieveVoituresDisponible
