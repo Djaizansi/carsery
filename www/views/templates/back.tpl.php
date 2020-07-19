@@ -36,8 +36,10 @@ $result = $foundActualTheme->getTheme();
     <!-- Loader CSS -->
     <link rel="stylesheet" href="../public/css/loader.css">
     <link rel="stylesheet" href="../public/css/dragdrop.css">
+    <!-- Page infos -->
+    <link rel="stylesheet" href="../public/css/team.css">
     <!-- FontAwesome -->
-    <script src="https://kit.fontawesome.com/42ce300797.js" crossorigin="anonymous"></script>
+    <script src="../public/js/font_awesome.js" crossorigin="anonymous"></script>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- ChartJS -->
@@ -98,7 +100,7 @@ $result = $foundActualTheme->getTheme();
                 <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Apparence", "apparence") ?>"><i class="fas fa-palette"></i>Apparence<i class="fas fa-chevron-right"></i></a></li>
                 <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("User", "gestionuser") ?>"><i class="fas fa-user"></i>Utilisateurs<i class="fas fa-chevron-right"></i></a></li>
                 <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Mail", "mail") ?>"><i class="far fa-envelope"></i>MailBox<i class="fas fa-chevron-right"></i></a></li>
-                <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Parametre", "parametre") ?>"><i class="fas fa-cogs"></i>Réglages<i class="fas fa-chevron-right"></i></a></li>
+                <li class="sidenav__list-item"><a href="<?= Helpers::getUrl("Parametre", "parametre") ?>"><i class="fas fa-info-circle"></i>Infos<i class="fas fa-chevron-right"></i></a></li>
             </ul>
 
         </aside>
