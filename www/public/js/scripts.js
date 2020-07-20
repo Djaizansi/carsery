@@ -1,5 +1,7 @@
 function showContent(){
-  document.querySelector('.loader-container').classList.add('hidden');
+  if(document.querySelector('.loader-container')){
+      document.querySelector('.loader-container').classList.add('hidden');
+  }
 }
 setTimeout(showContent, 3000);
 
@@ -53,16 +55,18 @@ var token;
 var file;
 var unId;
 var idarticleresolve;
+var id_contact;
 
 $(document).on("click", ".myBtn", function () {
 id_page_supprimer = $(this).data('id');
 token = $(this).data('token');
 id_user = $(this).data('id');
 idarticleresolve = $(this).data('id');
+id_contact = $(this).data("id");
 });
 
 $(document).on("click", ".myBtn", function () {
-  $('#id').val($(this).data('iduser'));
+  $('#iduser').val($(this).data('iduser'));
   $('#id_firstname').val($(this).data('prenom'));
   $('#id_lastname').val($(this).data('nom'));
   $('#id_email').val($(this).data('email'));
@@ -74,11 +78,21 @@ $(document).on("click", ".unBtn", function () {
   $('#unId').val($(this).data('id'));
 });
 
+$(document).on("click", ".myBtn", function () {
+  $("#id").val($(this).data("idcontact"));
+  $("#id_nomcontact").val($(this).data("nom"));
+  $("#id_adressecontact").val($(this).data("adresse"));
+});
+
 $('#btnAdd').click(function() {
 });
 
 $(document).on("click", ".file", function () {
 file = $(this).data('file');
+});
+
+$("#btnYesContact").click(function () {
+  window.location.href = "/delete-contact?id=" + id_contact;
 });
 
 $('#btnYes').click(function() {
@@ -151,53 +165,57 @@ file_picker_callback: function (cb, value, meta) {
 // Ecoute les boutons pour la suppression et marqué comme résolu
 var deleteButtons = document.querySelectorAll('.btnDelete');
 var resolveButtons = document.querySelectorAll('.btnResolve');
+var unBanButtons = document.querySelectorAll('.btnUnBan');
 var idToDelete = document.getElementById("idToDelete");
+var idToUnBan = document.getElementById("idToUnBan");
 var idToDeleteC = document.getElementById("idToDeleteC");
 var idToResolve = document.getElementById("idToResolve");
 var yesButtonDelete = document.getElementById("yesBtnD");
 var yesButtonDeleteC = document.getElementById("yesBtnC");
 var yesButtonResolve = document.getElementById("yesBtnR");
-if (deleteButtons) {
-  // Ajout d'un evenement pour tous les bouttons suppression 'Oui'
-  deleteButtons.forEach(
-      e => {
-      e.addEventListener('click', function () {
-      console.log('idToSent', e.getAttribute('data-id'));
-      if(e.getAttribute('data-model') == "article"){
-          if (idToDelete && yesButtonDelete) {
-              idToDelete.setAttribute('value', e.getAttribute('data-id'));
-          }
-      } else {
-          if (idToDeleteC && yesButtonDeleteC) {
-              idToDeleteC.setAttribute('value', e.getAttribute('data-id'));
-          }
-      }
+var yesButtonUnBan = document.getElementById("yesBtnUB");
 
-  })
-});
-};
-
-if(resolveButtons){
-  resolveButtons.forEach(
-      e => {
-      e.addEventListener('click', function () {
-      console.log('idToSentResolve', e.getAttribute('data-id'));
-      if (idToResolve && yesButtonResolve) {
-          idToResolve.setAttribute('value', e.getAttribute('data-id'));
-      }
-  })
-});
-}
+pushId(deleteButtons, idToDelete, yesButtonDelete);
+pushId(deleteButtons, idToDeleteC, yesButtonDeleteC);
+pushId(resolveButtons, idToResolve, yesButtonResolve);
+pushId(unBanButtons, idToUnBan, yesButtonUnBan);
 
 // Faire disparaitre la modal
 var noButtons = document.querySelectorAll('.btnNo');
 if(noButtons){
   noButtons.forEach(
-      e => {
-      e.addEventListener('click', function () {
+    e => {
+    e.addEventListener('click', function () {
       e.parentNode.parentNode.parentNode.classList.toggle('modal-hide');
-  })
-});
+    });
+  });
+}
+
+// Affichage message et réponse mailbox
+var messsageMailbox = document.querySelectorAll('.openMessageMailbox');
+if(messsageMailbox){
+  messsageMailbox.forEach(
+      e => {
+          e.addEventListener('click', function () {
+              removeAllColoredDiv();
+              e.firstElementChild.classList.add('messageOverviewColor');
+              var allReadMessages = document.querySelectorAll('.messageToHide');
+              if(allReadMessages){
+                  hideAllReadMessage(allReadMessages);
+              }
+              var id = e.getAttribute('data-id');
+              var messageDiv = document.querySelector('#message-' + id);
+              if(messageDiv){
+                  if(messageDiv.classList.contains('hide')){
+                      messageDiv.classList.remove('hide');
+                      messageDiv.classList.add('show');
+                  } else {
+                      messageDiv.classList.remove('show');
+                      messageDiv.classList.add('hide');
+                  }
+              }
+      })
+  });
 }
 
 // Affichage message et réponse mailbox
@@ -238,17 +256,31 @@ function hideAllReadMessage(readMessages) {
 
 function removeAllColoredDiv(){
   var divs = document.querySelectorAll('.removeColor');
-  if(divs){
+    if(divs){
       divs.forEach(e => {
         e.classList.remove('messageOverviewColor');
       });
+    }
+}
+
+function pushId(allButtons, hiddenId, yesButton) {
+  if (allButtons) {
+      allButtons.forEach(
+          e => {
+          e.addEventListener('click', function () {
+          if (hiddenId && yesButton) {
+              hiddenId.setAttribute('value', e.getAttribute('data-id'));
+          }
+      })
+  });
   }
 }
 
-// Fait disparaitre la div success apres 4 secondes
+// Fait disparaitre la div success/danger apres 4 secondes
 var success = document.querySelector('.success');
+var danger = document.querySelector('.danger');
 if(success){
-  setTimeout(function () {
-      success.classList.add('hide');
-  }, 4000)
+  hideMessage(success);
+}else if(danger){
+  hideMessage(danger);
 }
