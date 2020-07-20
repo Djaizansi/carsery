@@ -30,19 +30,32 @@ docker-compose up -d
 
 ## Démarrage
 
-Pour lancer le projet, il faut tout simplement lancer la commande : 
+Pour lancer le projet, il faut tout simplement taper la commande pour lancer le projet : 
 
 ```docker
 docker-compose up -d
 ```
 
-Il faudra passer l'installation : Mettez database au lieu de localhost 
+Faites un docker-compose build si vous voulez modifiez votre DockerFile
 
-<img width="773" alt="Capture d’écran 2020-02-01 à 17 02 22" src="https://user-images.githubusercontent.com/52085560/73595109-ee6ced80-4514-11ea-96fa-2ca7bd52f300.png">
+```docker
+docker-compose build
+```
 
-Ensuite, rendez-vous sur un navigateur et tapez tout simplement ``localhost``ou ``127.0.0.1`` dans l'URL de votre navigateur :
+Une fois ceci fait, vous tomberez sur l'installeur du CMS pour initialiser toutes les données et les charger directement dans le fichier ```.env```
 
-<img width="1440" alt="Capture d’écran 2020-02-01 à 17 05 48" src="https://user-images.githubusercontent.com/52085560/73595128-1f4d2280-4515-11ea-85f2-2a37ab5192e5.png">
+<img width="773" alt="Capture d’écran 2020-02-01 à 17 02 22" src="https://user-images.githubusercontent.com/52085560/87892526-9338a400-ca3d-11ea-835e-8e7321e94f1e.png">
+
+Il faudra changer l'adresse de la base de donnée et mettre ```database```
+Ne pas oublier de créer la base de donnée avant !
+
+<img width="773" alt="Capture d’écran 2020-02-01 à 17 02 22" src="https://user-images.githubusercontent.com/52085560/87892855-86688000-ca3e-11ea-9ff3-1f3811004ed4.png">
+
+Dès que l'installation s'est faite avec succès, supprimez le dossier installeur pour commencer
+Vous tomberez directement sur l'accueil
+
+<img width="773" alt="Capture d’écran 2020-02-01 à 17 02 22" src="https://user-images.githubusercontent.com/52085560/87891836-a6e30b00-ca3b-11ea-97f6-710a38f91910.png">
+
 
 ## Fabriqué avec
 
