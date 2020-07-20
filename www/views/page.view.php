@@ -35,6 +35,11 @@ foreach($listPage as $unePage){
         <?php if(isset($_SESSION['menu']) && !empty($_SESSION['menu']) && $_SESSION['menu'] == 'erreurmenu'): ?>
             <?= Helpers::alert('danger','','Ajout dans le menu impossible ou une page home a déjà été défini'); ?>
             <?php $_SESSION['menu'] = '' ?>
+        <?php elseif(isset($_SESSION['success']) && !empty($_SESSION['success']) && $_SESSION['success'] == 'updateTitre'): ?>
+            <?= Helpers::alert('success','','Le titre a bien été modifié') ?>
+            <?php unset($_SESSION['success']) ?>
+        <?php elseif(!empty($errors)): ?>
+            <?= Helpers::alert('danger',$errors) ?>
         <?php endif ?>
         <h2 class="inline">Pages</h2>
 <!--         <a class="btn btn--primary" style="font-size: 0.7rem !important;" href="/ajouter-page">Ajouter</a> -->
@@ -78,7 +83,10 @@ foreach($listPage as $unePage){
                         <?php $titre = isset($unTitre) ? $unTitre : '' ?>
                         <?php $url = htmlspecialchars($unePage->getUri()) ?>
                         <td><a href="<?=$url?>"><?=$url?></a</td>
-                        <td><?=$titre?></td>
+                        <td>
+                            <?=$titre?> 
+                            <button data-modal-target="modal3" data-id="<?= $unePage->getId() ?>" data-untitre="<?= $unePage->getTitre() ?>" class="unBtn" id="unBtn" href="#unBtn" style="border: none;background-color:inherit;"><i class="fas fa-edit"></i></button>
+                        </td>
                         <td><?= htmlspecialchars($unePage->getAuteur()) ?></td>
                             <td>
                             <?php if($unePage->getPublie() == 0): ?>
@@ -120,5 +128,13 @@ foreach($listPage as $unePage){
             <span class="modal-close">&times;</span>
             <h2 class="txt-center">Création de page</h2>
             <?php $this->addModal("form", $configFormPage );?>
+        </div>
+    </div>
+
+    <div class="modal" id="modal3">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Modification titre de la page</h3>
+            <?php $this->addModal("form", $configFormTitle);?>
         </div>
     </div>
