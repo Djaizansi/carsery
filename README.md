@@ -1,11 +1,10 @@
-# Projet Git
+# CMS CARSERY
 
 Projet annuel permettant la création d'un CMS pour concessionaire from scratch.
 
 ## Pour commencer
 
-Il faut être à l'aise avec le PHP. Ici, vous avez du code de qualité et rapide à comprendre.
-Il faudra mettre à jour votre PHP afin de pouvoir bénéficier au maximum du code.
+Ce CMS permet de créer votre propre site complet en fonction de vos choix. Si vous voulez un site vitrine de voiture, vous pouvez. Si vous voulez avoir un panier et acheter des pièces, vous pouvez le mettre en place
 
 ### Pré-requis
 
@@ -36,6 +35,9 @@ Pour lancer le projet, il faut tout simplement lancer la commande :
 ```docker
 docker-compose up -d
 ```
+
+Il faudra passer l'installation : Mettez database au lieu de localhost 
+
 <img width="773" alt="Capture d’écran 2020-02-01 à 17 02 22" src="https://user-images.githubusercontent.com/52085560/73595109-ee6ced80-4514-11ea-96fa-2ca7bd52f300.png">
 
 Ensuite, rendez-vous sur un navigateur et tapez tout simplement ``localhost``ou ``127.0.0.1`` dans l'URL de votre navigateur :
