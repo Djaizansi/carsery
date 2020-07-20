@@ -14,6 +14,7 @@ class myProjectController {
     public function viewAction()
     {
         $uri = $_SERVER['REQUEST_URI'];
+        $uri = explode("?",$uri)[0];
         $shortCodeManager = new ShortCodeManager();
         $pageManager = new PageManager();
         $findAll = $pageManager->findAll();
