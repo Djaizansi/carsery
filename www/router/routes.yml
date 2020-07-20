@@ -74,6 +74,10 @@
   controller: "Forum"
   action: "banuser"
 
+/forum/debannir-utilisateur:
+  controller: "Forum"
+  action: "unbanuser"
+
 /forum/ajout-categorie:
   controller: "Forum"
   action: "addcategory"
@@ -97,6 +101,10 @@
 /page:
   controller: Page
   action: page
+
+/modiftitre:
+  controller: Page
+  action: modifTitle
 
 /parametre:
   controller: Parametre
@@ -178,3 +186,82 @@
   controller: Page
   action: updateTemplate
   
+/consultPanier:
+  controller: Panier
+  action: consultPanier
+  
+/addPieceToPanier:
+  controller: Panier
+  action: addPieceToPanier
+
+/updateQteDeletePiece:
+  controller: Panier
+  action: updateQteDeletePiece
+
+/gestionPieces:
+  controller: Piece
+  action: piece
+
+/appendPiece:
+  controller: Piece
+  action: createPiece
+
+/removePiece:
+  controller: Piece
+  action: removePiece
+
+/editPiece:
+  controller: Piece
+  action: editPiece
+
+/showFormUpdatePiece:
+  controller: Piece
+  action: showFormUpdatePiece
+  
+/contact:
+  controller: Contact
+  action: contact
+
+/sendcontact:
+  controller: Contact
+  action: sendContact
+
+/update-contact:
+  controller: Contact
+  action: updateContact
+  
+/delete-contact:
+  controller: Contact
+  action: deleteContact
+
+/add-contact:
+  controller: Contact
+  action: addContact
+
+/profile:
+  controller: Parametre
+  action: profileUser
+
+/addVoiture:
+  controller: Voiture
+  action: createVoiture
+
+/editVoiture:
+  controller: Voiture
+  action: updateVoiture
+
+/removeVoiture:
+  controller: Voiture
+  action: deleteVoiture
+  
+/gestionVoitures:
+  controller: Voiture
+  action: retrieveVoitures
+  
+/addMarque:
+  controller: Voiture
+  action: createMarque
+
+/addModele:
+  controller: Voiture
+  action: createModele
