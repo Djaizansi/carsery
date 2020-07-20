@@ -1,133 +1,139 @@
-    <div class="main-overview">
+<div class="main-overview">
 
-        <div class="overviewcard">
-            <p>Véhicules déposés</p>
+    <div class="overviewcard">
+        <p>Véhicules déposés</p>
 
-            <div class="overviewcard__icon">
-                <p class="info">344</p>
-            </div>
-
-            <div class="overviewcard__info">
-                <img src="./public/img/cars.png" alt="cars">
-            </div>
-            
+        <div class="overviewcard__icon">
+            <p class="info"><?php echo $numberOfVoiture; ?></p>
         </div>
 
-        <div class="overviewcard">
-            <p>Pièces vendues</p>
-
-            <div class="overviewcard__icon">
-                <p class="info">212</p>
-            </div>
-
-            <div class="overviewcard__info">
-                <img src="./public/img/piece.png" alt="piece">
-            </div>
+        <div class="overviewcard__info">
+            <img src="./public/img/cars.png" alt="cars">
         </div>
 
-        <div class="overviewcard">
-            <p>Utilisateurs inscrits</p>
+    </div>
 
-            <div class="overviewcard__icon">
-                <p class="info">976</p>
-            </div>
-            <div class="overviewcard__info">
-                <img src="./public/img/user.png" alt="user">
-            </div>
+    <div class="overviewcard">
+        <p>Pièces</p>
+
+        <div class="overviewcard__icon">
+            <p class="info"><?php echo $numberOfPiece; ?></p>
+        </div>
+
+        <div class="overviewcard__info">
+            <img src="./public/img/piece.png" alt="piece">
         </div>
     </div>
 
-    <div class="main-cards">
-        <div class="card">
-            Nombre de visiteurs sur votre site (par millier de vue)
+    <div class="overviewcard">
+        <p>Utilisateurs inscrits</p>
 
-            <div class="visitor">
-                <canvas id="canvas" height="240"></canvas>
-            </div>
-
-        <script src="./public/js/visitor.js"></script>
+        <div class="overviewcard__icon">
+            <p class="info"><?php echo $numberOfUser; ?></p>
         </div>
-
-        <div class="card">
-            Activité récente
-            <table>
-                <thead>
-                    <th>Date de l'activité</th>
-                    <th>Ajout ou modification</th>
-                </thead>
-
-                <tr>
-                    <td>Juin 24/19, 14:30</td>
-                    <td>Ajout de la page contact</td>
-                </tr>
-
-                <tr>
-                    <td>Juil 13/19, 20:09</td>
-                    <td>Modification de la page d'inscription</td>
-                </tr>
-
-                <tr>
-                    <td>Juin 29/19, 08:47</td>
-                    <td>Création de l'utilisateur Technicien</td>
-                </tr>
-
-                <tr>
-                    <td>Juin 24/19, 14:30</td>
-                    <td>Modification du mot de passe</td>
-                </tr>
-            </table>
-        </div>
-
-
-        <div class="card">
-            Statistiques
-            <div class="money">
-                <canvas id="chartjs-4" class="chartjs" width="1540" height="770" style="display: block; height: 385px; width: 470px;"></canvas>
-                <script src="./public/js/money.js"></script>
-            </div>
+        <div class="overviewcard__info">
+            <img src="./public/img/user.png" alt="user">
         </div>
     </div>
+</div>
 
-    <div class="main-footer">
-        Liste des utilisateurs
-        <div class="user_list">
-            <table id="myTable" class="display">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Status</th>
-                        <th>Inscription</th>
-                    </tr>
-                </thead>
+<div class="main-cards">
+    <div class="card">
+        Nombres de pages et de shortcodes.
 
-                <tbody>
-                    <tr>
-                        <td>43</td>
-                        <td>JALLALI</td>
-                        <td>Youcef</td>
-                        <td>Client</td>
-                        <td>17-01-2020</td>
-                    </tr>
+        <div class="visitor">
+            <canvas id="chartjs-1" height="240"></canvas>
+        </div>
 
-                    <tr>
-                        <td>44</td>
-                        <td>BOUABDELLAH</td>
-                        <td>Marwane</td>
-                        <td>Client</td>
-                        <td>16-01-2020</td>
-                    </tr>
+        <script>
+            var val3 = "<?php echo $numberOfPage; ?>"
+            var val4 = "<?php echo $numberOfShortcode; ?>"
+            new Chart(document.getElementById("chartjs-1"), {
+                type: "bar",
+                data: {
+                    labels: ["Pages", "Shortcode"],
+                    datasets: [{
+                        label: "My First Dataset",
+                        data: [val3, val4],
+                        fill: false,
+                        backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)"],
+                        borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)"],
+                        borderWidth: 1,
+                    }, ],
+                },
+                options: {
+                    legend: {
+                        display: false,
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                },
+            });
+        </script>
+    </div>
 
-                    <tr>
-                        <td>45</td>
-                        <td>DISPAGNE</td>
-                        <td>Mel</td>
-                        <td>Client</td>
-                        <td>16-01-2020</td>
-                    </tr>
+    <div class="card">
+        <p>Nouveautés</p>
 
-                </tbody>
-            </table>
+        <ul class="check-list">
+            <li>Ajout du français</li>
+            <li>Nouvelle template</li>
+            <li>Nouveaux thèmes</li>
+            <li>Ajout du forum</li>
+        </ul>
+    </div>
+
+
+    <div class="card">
+        <div class="money">
+            <canvas id="chartjs-4" class="chartjs" width="1540" height="770" style="display: block; height: 385px; width: 470px;"></canvas>
+            <script>
+                var val1 = "<?php echo $numberOfPiece; ?>";
+                var val2 = "<?php echo $numberOfVoiture; ?>";
+
+                new Chart(document.getElementById("chartjs-4"), {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Pièce(s) disponible(s)", "Véhicule(s) disponible(s)"],
+                        datasets: [{
+                            label: "My First Dataset",
+                            data: [val1, val2],
+                            backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 205, 86)"],
+                        }, ],
+                    },
+                });
+            </script>
         </div>
     </div>
+</div>
+
+<div class="main-footer">
+    Liste des utilisateurs
+    <div class="user_list">
+        <table id="myTable" class="display">
+            <thead>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Role</th>
+            </thead>
+            <tbody>
+                <?php foreach ($foundAll as $unUser) : ?>
+                    <tr>
+                        <td><?= $unUser->getId() ?></td>
+                        <td><?= $unUser->getLastname() ?></td>
+                        <td><?= $unUser->getFirstname() ?></td>
+                        <td><?= $unUser->getEmail() ?></td>
+                        <td><?= $unUser->getStatus() ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+</div>
