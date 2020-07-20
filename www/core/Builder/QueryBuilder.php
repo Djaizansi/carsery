@@ -40,6 +40,18 @@ class QueryBuilder
         return $this;
     }
 
+    public function whereAnd( string $condition ): QueryBuilder
+    {
+        $this->query.=" AND $condition"; //Toujours concatener pour ajouter les autres bouts de requete
+        return $this;
+    }
+
+    public function orCondition( string $condition ): QueryBuilder
+    {
+        $this->query.=" OR $condition"; //Toujours concatener pour ajouter les autres bouts de requete
+        return $this;
+    }
+
     public function setParameter( string $key, string $value): QueryBuilder
     {
         $this->parameters[$key] = $value; //Recupère la clé et la valeur en fonction du WHERE
