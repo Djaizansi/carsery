@@ -42,7 +42,7 @@ class View
         }
     }
 
-    public function addModal($modal, $data)
+    public function addModal($modal, $data = null)
     {
         if (!file_exists("views/modals/".$modal.".mod.php")) {
             die("Le modal n'existe pas!!!");

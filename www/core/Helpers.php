@@ -75,4 +75,9 @@ class Helpers
         var_dump($data);
         die();
     }
+
+    public static function redirect($url) {
+        header('Location: ' . $url);
+        exit;
+    }
 }

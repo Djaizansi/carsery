@@ -25,13 +25,13 @@ class Mail {
             $mail->isSMTP();                                            // Send using SMTP
             $mail->Host       = 'smtp.office365.com';                    // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-            $mail->Username   = 'service.carsery@outlook.com';                     // SMTP username
-            $mail->Password   = 'marwaneyoucef9392';                     // SMTP password
+            $mail->Username   = 'carsery@outlook.com';                     // SMTP username
+            $mail->Password   = 'YoucefMarwaneMel20192020';                     // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
             //Recipients
-            $mail->setFrom('service.carsery@outlook.com', 'Carsery');
+            $mail->setFrom('carsery@outlook.com', 'Carsery');
             $mail->addAddress($email_send);     // Add a recipient
             //$mail->addAddress('ellen@example.com');               // Name is optional
             /*  $mail->addReplyTo('contact@relax.com', 'Information'); */
