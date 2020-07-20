@@ -25,7 +25,7 @@
         <?php foreach ($foundTheme as $theme) { ?>
             <div class="col-4">
                 <div class="card-theme">
-                    <img src="../public/img/theme.jpg" alt="Thème" style="width:100%">
+                    <img src="../public/img/theme.jpg" alt="Thème" style="width:70%">
                     <div class="card-theme-info">
                         <h4>
                             <b><?php echo $theme->getTitle(); ?></b>
