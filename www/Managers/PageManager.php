@@ -160,4 +160,35 @@ class PageManager extends DB {
                     ]
                 ];
     }
-}
+
+    public static function getUpdateTitleForm(){
+        return [
+                    "config"=>[
+                            "method"=>"POST",
+                            "action"=>Helpers::getUrl("Page", "modifTitle"),
+                            "class"=>"box",
+                            "id"=>"",
+                            "submit"=>"Modifier"
+                    ],
+
+                    "fields"=>[
+
+                        "id"=>[
+                            "balise"=>"",
+                            "type"=>"hidden",
+                            "id"=>"unId",
+                            "required"=>true,
+                        ],
+                        
+                        "untitre"=>[
+                            "balise"=>"",
+                            "type"=>"text",
+                            "placeholder"=>"Entrez un titre",
+                            "id"=>"idtitre",
+                            "required"=>true,
+                            "errorMsg"=>"La page existe déjà"
+                            ]
+                        ]
+                ];
+        }
+    }
