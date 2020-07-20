@@ -4,15 +4,15 @@ use carsery\Managers\UserManager;
 
 ?>
 <div class="container">
-	<?php if($_SESSION['success'] === 'suppUser'): ?>
+	<?php if(isset($_SESSION['success']) && $_SESSION['success'] === 'suppUser'): ?>
 		<?= Helpers::alert('success','',"L'utilisateur a bien été supprimé") ?>
-        <?php $_SESSION['success'] = ''?>
-    <?php elseif($_SESSION['success'] === 'updateUser'): ?>
+    <?php elseif(isset($_SESSION['success']) && $_SESSION['success'] === 'updateUser'): ?>
         <?= Helpers::alert('success','',"L'utilisateur a bien été modifié") ?>
-        <?php $_SESSION['success'] = ''?>
     <?php elseif(isset($errors)): ?>
         <?= Helpers::alert('danger',$errors) ?>
-	<?php endif ?>
+    <?php endif ?>
+    
+    <?php unset($_SESSION['success']) ?>
 
     <h2>Gestion utilisateur</h2>
     <table id="myTable" class="display">
