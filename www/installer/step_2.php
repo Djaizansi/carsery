@@ -72,10 +72,10 @@ if (!isset($_SESSION['namewebsite']) && !isset($_SESSION['descwebsite'])) {
                                 <label for="namewebsite">Adresse de la base de données</label>
                             </th>
                             <td>
-                                <input name="dbhost" id="dbhost" type="text" aria-describedby="dbhost-desc" value="localhost" placeholder="Adresse de la base de données" required>
+                                <input name="dbhost" id="dbhost" type="text" aria-describedby="dbhost-desc" value="database" placeholder="Adresse de la base de données" required>
                             </td>
                             <td id="dbhost-desc" class="desc">
-                                Si localhost ne fonctionne pas, demandez cette information à l’hébergeur de votre site.
+                                Demandez cette information à l’hébergeur de votre site.
                             </td>
                         </tr>
 
