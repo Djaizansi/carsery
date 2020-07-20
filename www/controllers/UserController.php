@@ -30,8 +30,10 @@ class UserController
                 $foundUser = $userManager->find($_SESSION['id']);
                 $roleUserConnect = $foundUser->getStatus();
                 $foundAll = $userManager->findAll();
-                $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
-                $myView->assign('errors',$errors);
+                if(!empty($_POST)){
+                    $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
+                    $myView->assign('errors',$errors);
+                }
                 $myView->assign('foundAll',$foundAll);
                 $myView->assign('userManager',$userManager);
                 $myView->assign('configFormUpdate',CONFIGUPDATE);
@@ -44,29 +46,34 @@ class UserController
         }
     }
 
+
     public function updateUserAction()
     {
         if(Session::estConnecte() && Session::estAdmin()){
             $userManager = new UserManager();
             $user = new User();
             $findUser = $userManager->find($_POST['id']);
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
+            
+            if(!empty($_POST)){
                 $errors = Validator::checkForm(CONFIGUPDATE ,$_POST);
-                if(!empty($errors)){
-                    return $this->gestionUserAction();
-                }else{
-                    if(!empty($_POST)){
-                        $user->setId($_POST['id']);
-                        $user->setLastname($_POST['lastname']);
-                        $user->setFirstname($_POST['firstname']);
-                        $user->setEmail($_POST['email']);
-                        $user->setPwd($findUser->getPwd());
-                        $user->setStatus($_POST['status']);
-                        $user->setTheme($findUser->getTheme());
-                        $user->setBan($findUser->isBan());
-                        $userManager->save($user);
-                        $_SESSION['success'] = "updateUser";
-                        header("Location: /gestionuser");
+            }
+
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($_POST)){
+                    if(!empty($errors)){
+                        return $this->gestionUserAction();
+                    }else{
+                            $user->setId($_POST['id']);
+                            $user->setLastname(htmlspecialchars($_POST['lastname']));
+                            $user->setFirstname(htmlspecialchars($_POST['firstname']));
+                            $user->setEmail(htmlspecialchars($_POST['email']));
+                            $user->setPwd($findUser->getPwd());
+                            $user->setStatus(htmlspecialchars($_POST['status']));
+                            $user->setTheme($findUser->getTheme());
+                            $user->setBan($findUser->isBan());
+                            $userManager->save($user);
+                            $_SESSION['success'] = "updateUser";
+                            header("Location: /gestionuser");
                     }
                 }
             }
@@ -329,17 +336,17 @@ class UserController
                     
                 } else {
                     if(!empty($_POST)){
-                        isset($_POST['lastname']) ? $user->setLastname($_POST['lastname']) : "";
-                        isset($_POST['firstname']) ? $user->setFirstname($_POST['firstname']) : "";
-                        isset($_POST['email']) ? $user->setEmail($_POST['email']) : "";
+                        isset($_POST['lastname']) ? $user->setLastname(htmlspecialchars($_POST['lastname'])) : "";
+                        isset($_POST['firstname']) ? $user->setFirstname(htmlspecialchars($_POST['firstname'])) : "";
+                        isset($_POST['email']) ? $user->setEmail(htmlspecialchars($_POST['email'])) : "";
                         isset($_POST['pwd']) ? $user->setPwd(Helpers::cryptage($_POST['pwd'])) : "";
                         $user->setStatus('Client');
                         $user->setToken($token);
                         $user->setTheme(1);
                         $user->setBan(0);
                         $userManager->save($user);
-                        $unMail = ConfirmAccount::mailConfirm($_POST['lastname'],$_POST['email']);
-                        $unEnvoie = $envoie->sendmail('Confirmation de compte', $unMail, $_POST['email']);
+                        $unMail = ConfirmAccount::mailConfirm(htmlspecialchars($_POST['lastname']),htmlspecialchars($_POST['email']));
+                        $unEnvoie = $envoie->sendmail('Confirmation de compte', $unMail, htmlspecialchars($_POST['email']));
                         if($unEnvoie){
                             $success = 1;
                             $_SESSION['success'] = $success;
@@ -399,7 +406,6 @@ class UserController
             if($id){
                 $userManager->delete('id',$id);
                 $location= Helpers::getUrl('User','gestionuser');
-                var_dump($location);
                 $_SESSION['success'] = 'suppUser';
                 header("Location: $location");
             }
