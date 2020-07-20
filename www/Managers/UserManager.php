@@ -171,14 +171,14 @@ class UserManager extends DB {
                             "method"=>"POST",
                             "action"=>Helpers::getUrl("User", "updateUser"),
                             "class"=>"box",
-                            "id"=>"jqueryForm",
+                            "id"=>"",
                             "submit"=>"Modifier"
                 ],
                 "fields"=>[
                             "id"=>[
                                 "balise"=>"",
                                 "type"=>"hidden",
-                                "id"=>"id",
+                                "id"=>"iduser",
                                 "required"=>true,
                             ],
                             "lastname"=>[
@@ -244,5 +244,58 @@ class UserManager extends DB {
                         ]
                     ]
                 ];
+    }
+
+    public static function getFormProfile(){
+        return [
+                "config"=>[
+                            "method"=>"POST",
+                            "action"=>Helpers::getUrl("Parametre", "profileUser"),
+                            "class"=>"box",
+                            "id"=>"profile",
+                            "submit"=>"Modifier"
+                ],
+                "fields"=>[
+                            "lastname"=>[
+                                    "balise"=>"",
+                                    "type"=>"text",
+                                    "placeholder"=>"Votre nom",
+                                    "id"=>"id_lastname",
+                                    "required"=>true,
+                                    "min-lenght"=>2,
+                                    "max-lenght"=>100,
+                                    "errorMsg"=>"Votre nom doit faire entre 2 et 100 caractères"
+                            ],
+                            "firstname"=>[
+                                    "balise"=>"",
+                                    "type"=>"text",
+                                    "placeholder"=>"Votre prénom",
+                                    "id"=>"id_firstname",
+                                    "required"=>true,
+                                    "min-lenght"=>2,
+                                    "max-lenght"=>50,
+                                    "errorMsg"=>"Votre prenom doit faire entre 2 et 50 caractères"
+                            ],
+                            "email"=>[
+                                    "balise"=>"",
+                                    "type"=>"email",
+                                    "placeholder"=>"Votre email",
+                                    "id"=>"id_email",
+                                    "required"=>true,
+                                    "uniq"=>["table"=>"users", "column"=>"email"],
+                                    "errorMsg"=>"Votre email ne correspond pas"
+                            ],
+                            "pwd"=>[
+                                "balise"=>"",
+                                "type"=>"password",
+                                "placeholder"=>"Votre mot de passe",
+                                /* "class"=>"form-control form-control-user", */
+                                "id"=>"",
+                                "required"=>'',
+                                "errorMsg"=>"Votre mot de passe doit être compris entre 6 et 16 caractères 
+                                avec une Majuscule et Minuscule"
+                            ],
+                    ]
+            ];
     }
 }
