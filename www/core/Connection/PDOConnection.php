@@ -18,6 +18,7 @@ class PDOConnection implements BDDInterface
     {
         try {
             $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
+            $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
         } catch (Exception $e) {
             die("Erreur SQL : ".$e->getMessage());
         }
