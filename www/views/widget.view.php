@@ -1,24 +1,27 @@
 <?php
+
 use carsery\core\Helpers;
+
 $i = 1;
 $files = glob("./public/images_upload/*.*");
 $choix = [];
+$findAllShort = $shortCodeManager->findAll(); 
 ?>
 
-        <div class="container">
-            <h2>Ajout de widget</h2>
-            <form action="" method="POST">
-                <label>Caroussel</label>
-                <input id="check" type="checkbox" name="caroussel" value="caroussel">
-                <div class="caroussel off">
-                    <h3>Ajouter les images pour votre caroussel</h3>
-                    <table id="myTable" class="display" style="width:300px;float: left;">
-                        <thead>
-                            <th>Image</th>
-                            <th>Nom</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
+    <div class="container">
+        <h2 class="txt-center">Ajout de widget</h2>
+        <form action="" method="POST" class="box">
+            <label>Caroussel</label>
+            <input id="check" type="checkbox" name="caroussel" value="caroussel">
+            <div class="caroussel off">
+                <h3>Ajouter les images pour votre caroussel</h3>
+                <table id="myTable" class="display">
+                    <thead>
+                        <th>Image</th>
+                        <th>Nom</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
                         <?php foreach($files as $file): ?>
                             <tr>
                                 <td><img src="<?=$file?>" style="width:100px !important; height:100px !important;" alt="Image" /></td>
@@ -35,47 +38,69 @@ $choix = [];
                             </tr>
                             <?php $i++ ?>
                         <?php endforeach ?>
-                        </tbody>
-                    </table>
-                    <label>Nom du shortcode: </label>
-                    <input type="text" name="namecarousel" required>
-                    <br><br><br>
-                </div>
+                    </tbody>
+                </table>
+                <br>
+                <label>Nom du shortcode: </label>
+                <input type="text" name="namecarousel" required>
 
-                <label>Forum</label>
-                <input id="check" type="checkbox" name="forum" value="forum">
-                <div class="forum off">Vous avez sélectionné le rouge</div>
+                <label>Description: </label>
+                <textarea type="text" name="description" required></textarea>
+                <br><br><br>
+            </div>
 
-                <label>Formulaire Contact</label>
-                <input id="check" type="checkbox" name="contact" value="contact">
-                <div class="contact off">Vous avez sélectionné le vert</div>
+            <br><br>
+            <button type="submit" class="btn btn--primary">Ajout Widget</button>
+            <br><br>
+        </form>
 
-                <label>Tableau vehicule</label>
-                <input id="check" type="checkbox" name="vehicule" value="vehicule">
-                <div class="vehicule off">Vous avez sélectionné le vert</div>
+        <?php 
+            if(isset($_POST['caroussel'])){
+                $findShortCode = false;
+                $shortcodechoice = '['.htmlspecialchars($_POST['namecarousel']).']';
+                foreach($findAllShort as $unCode){
+                    $shortcode = $unCode->getShortcode();
+                    if($shortcode == $shortcodechoice){
+                        $findShortCode = true;
+                    }
+                }
+                $data = implode(',',$choix);
+                if(empty($_POST['namecarousel']) && !empty($_POST['description'] && !empty($_POST['image']))){
+                    $errors[] = "Vous devez renseigner le nom de votre shortcode";
+                }
 
-                <label>Pièce détaché Disponible</label>
-                <input id="check" type="checkbox" name="piece" value="piece">
-                <div class="piece off">Vous avez sélectionné le vert</div>
-                
-                <br><br>
-                <button type="submit" class="btn btn--primary">Ajout Widget</button>
-                <br><br>
-            </form>
-            <?php if(isset($_POST['caroussel'])): ?>
-                <?php $data = implode(',',$choix) ?>
-                <?php if(empty($_POST['namecarousel'])): ?>
-                    <?php $errors[] = "Vous devez renseigner le nom de votre shortcode" ?>
-                    <?php if(!empty($errors)): ?>
-                        <?= Helpers::alert('danger',$errors) ?>
-                    <?php endif ?>
-                <?php else: ?>
-                    <?php $shortCode->setShortCode('['.$_POST['namecarousel'].']'); ?>
-                <?php endif ?>
-                <?php $shortCode->setImages($data); ?>
-                <?php $shortCode->setType('caroussel'); ?>
-                <?php $shortCodeManager->save($shortCode); ?>
-            <?php endif ?>
+                elseif(empty($_POST['image']) && !empty($_POST['namecarousel']) && !empty($_POST['description'])){
+                    $errors[] = "Veuillez choisir une image";
+                }
+
+                elseif(empty($_POST['description']) && !empty($_POST['namecarousel']) && !empty($_POST['image'])){
+                    $errors[] = "Vous devez renseigner une description";
+                }
+                elseif(empty($_POST['description']) && empty($_POST['namecarousel']) && empty($_POST['image'])){
+                    $errors[] = "Vous devez renseigner une description";
+                    $errors[] = "Vous devez renseigner le nom de votre shortcode";
+                    $errors[] = "Veuillez choisir une image";
+                    
+                }
+                else{
+                    if($findShortCode){
+                        $errors[] = "Le shortcode existe déjà";
+                    }else{
+                        $shortCode->setShortCode('['.htmlspecialchars($_POST['namecarousel']).']');
+                        $shortCode->setDescription(htmlspecialchars($_POST['description']));
+                        $shortCode->setImages($data);
+                        $shortCode->setType('caroussel');
+                        $shortCodeManager->save($shortCode);
+                        $success[] = 'Le shortcode a été ajouté avec succès';
+                    }
+                }
+                if(!empty($errors)){
+                    echo Helpers::alert('danger',$errors);
+                }elseif(!empty($success)){
+                    echo Helpers::alert('success',$success);
+                }
+            }
+        ?>
     </div>
 
     <script type="text/javascript">
